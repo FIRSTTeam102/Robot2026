@@ -251,6 +251,18 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
+  public Rotation2d aimAtHub() {
+    Pose2d robotpose = getPose();
+    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), Constants.RedHubX-robotpose.getX()));
+  }
+
+  public double getHubAngleErrorRadians() {
+  Rotation2d target = aimAtHub();
+  Rotation2d current = getHeading();
+  return target.minus(current).getRadians();
+  }
+
+
   /**
    * Get the path follower with events.
    *

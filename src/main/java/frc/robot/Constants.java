@@ -25,6 +25,12 @@ public final class Constants
   public static final double MAX_SPEED  = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
+  public static final double BlueHubX = 4.597;
+  public static final double RedHubX = 11.938;
+  public static final double HubY = 4.035;
+
+  public static final double AlignTolerance = 1.0; //deg
+
 //  public static final class AutonConstants
 //  {
 //
