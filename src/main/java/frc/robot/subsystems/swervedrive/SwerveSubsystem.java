@@ -251,14 +251,38 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  public Rotation2d aimAtHub() {
+  public Pose2D MakeFakeTarget(Pose2D RealTarget){
+    double timeSeconds = //insert code to get the time in seconds it takes for the ball to reach the target from the distance the robot is at//;     
+    ChassisSpeeds fieldRelativeSpeeds = getFieldVelocity();
+
+    double offsetX = fieldRelativeSpeeds.vxMetersPerSecond * timeSeconds;
+    double offsetY = fieldRelativeSpeeds.vyMetersPerSecond * timeSeconds;
+
+    return new Pose2d(
+        RealTarget.getX() - offsetX,
+        RealTarget.getY() - offsetY,
+        RealTarget.getRotation() // Rotation of the target usually doesn't change
+      }
+  
+  public Rotation2d aimAtHub(Pose2D target) { //insert FakeTargetPose as the parameter
     Pose2d robotpose = getPose();
-    double hubX = Constants.RedHubX;
+    /*   MAY NOT BE NEEDED/WRONG SINCE COORDINATES ARE MIRRORED ON EACH ALLIANCE, SO THE HUB COORDINATES FOR RED AND BLUE ARE THE SAME.  JUST USE THE COORDS FOR ONE HUB
+    double hubX = Constants.RedHubX;  //code to get blue or red hub X coordinate for aiming
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
         hubX = Constants.BlueHubX;
     }
-    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), hubX-robotpose.getX()) + Math.PI);
+    */
+    return new Rotation2d(Math.atan2(target.getX()-robotpose.getY(), target.getY-robotpose.getX()) + Math.PI);
   }
+
+public double getAngularVelocityToAimAtHub(Rotation2d targetAngle) {
+    // Ensure the PID controller is configured for Continuous Input [-pi, pi]
+    // so the robot takes the shortest path to the angle.
+    return headingPID.calculate(
+        getPose().getRotation().getRadians(), 
+        targetAngle.getRadians()
+    );
+}
 
   public double getHubAngleErrorRadians() {
     Rotation2d target = aimAtHub();
