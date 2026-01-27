@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
+import frc.robot.commands.AimWhileMoving;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -145,8 +146,14 @@ public class RobotContainer {
                         ));
         driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
+        driverXbox.leftBumper().whileTrue(new AimWhileMoving(
+          drivebase,
+            () -> -driverXbox.getLeftY(),
+            () -> -driverXbox.getLeftX()
+          )
+        );
 
-        operatorXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
+        driverXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
         
     if (RobotBase.isSimulation())
     {
