@@ -251,19 +251,34 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  public Rotation2d aimAtHub() {
+  public Rotation2d aimAtHub(double timeForBallToReachHub) {
     Pose2d robotpose = getPose();
-    double hubX = Constants.RedHubX;
-    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-        hubX = Constants.BlueHubX;
-    }
-    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), hubX-robotpose.getX()) + Math.PI);
+    Pose2d fakeHub = MakeFakeHub(timeForBallToReachHub);
+    return new Rotation2d(Math.atan2(
+        fakeHub.getY() - robotPose.getY(), 
+        fakeHub.getX() - robotPose.getX()
+    ));  
+  }
+  public Pose2d MakeFakeHub(double timeForBallToReachHub) {
+    ChassisSpeeds fieldVelocity = swerveDrive.getFieldVelocity(); //get velocity 
+
+    // 2. Calculate the offset (how far the robot moves during the ball flight)
+    double offsetX = -fieldVelocity.vxMetersPerSecond * timeForBallToReachHub;
+    double offsetY = -fieldVelocity.vyMetersPerSecond * timeForBallToReachHub;
+
+    // 3. Create the new "Fake" Hub Pose by shifting the real Hub constants
+    // Note: This assumes Constants.RedHubX and HubY are the static coordinates of the goal
+    return new Pose2d(
+        Constants.RedHubX - offsetX, 
+        Constants.HubY - offsetY, 
+        new Rotation2d() // Rotation doesn't matter much for a point target, but we'll provide a default
+    );
   }
 
-  public double getHubAngleErrorRadians() {
-    Rotation2d target = aimAtHub();
-    Rotation2d current = getHeading();
-    return target.minus(current).getRadians();
+  public double getHubAngleErrorRadians(double timeForBallToReachHub) {
+  Rotation2d target = aimAtHub(timeForBallToReachHub);;
+  Rotation2d current = getHeading();
+  return target.minus(current).getRadians();
   }
 
 
@@ -540,6 +555,48 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return swerveDrive.kinematics;
   }
+public Command driveAndAimCommandFieldOriented(DoubleSupplier vX, DoubleSupplier vY) {
+    return run(() -> {
+        // 1. Calculate flight time dynamically based on distance
+        double distance = getPose().getTranslation().getDistance(
+            new Translation2d(Constants.RedHubX, Constants.HubY));
+        
+        double shotTime = 10 //(Erase "10" and Insert formula or code to get shot time here)
+
+        // 2. Get the angle to the moving target (the Fake Hub)
+        Rotation2d targetAngle = aimAtHub(shotTime);
+
+        // 3. Drive using your joystick inputs for X/Y, but the calculated angle for Rotation
+        driveFieldOriented(getTargetSpeeds(
+            vX.getAsDouble(), 
+            vY.getAsDouble(), 
+            targetAngle
+        ));
+    });
+}
+public Command driveAndAimCommandRobotOriented(DoubleSupplier vX, DoubleSupplier vY) {
+    return run(() -> {
+        // 1. Logic for flight time
+        double shotTime = /* Your Formula */;
+
+        // 2. Calculate the target angle
+        Rotation2d targetAngle = aimAtHub(shotTime);
+        
+        // 3. Calculate how fast we need to spin (The PID controller)
+        // This calculates the "omega" (radians per second) needed to hit targetAngle
+        double rotationVelocity = calculateRotationVelocity(targetAngle);
+
+        // 4. Generate speeds and drive
+        ChassisSpeeds desiredSpeeds = new ChassisSpeeds(
+            vX.getAsDouble(), 
+            vY.getAsDouble(), 
+            rotationVelocity
+        );
+
+        drive(desiredSpeeds);
+    }); 
+}
+  
 
   /**
    * Resets odometry to the given pose. Gyro angle and module positions do not need to be reset when calling this
