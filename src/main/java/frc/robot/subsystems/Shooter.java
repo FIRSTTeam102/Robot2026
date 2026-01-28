@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import java.awt.Desktop;
 import java.util.ArrayList;
@@ -45,14 +47,24 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 
 
 public class Shooter {
-    
-    public void findShooterSpeed(double distance_from_hub){
 
-        double velocity = (distance_from_hub)/
+    private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_ID, MotorType.kBrushless);
+    
+    public void setShooterSpeed(double distance_from_hub){
+
+        double velocity_inches = (distance_from_hub)/
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.Y_FINAL-ShooterConstants.Y_INITIAL- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
-        // need to return velocity;
+        double velocity_rpm = velocity_inches * (120/(4*Math.PI));
 
+        if (velocity_rpm < 6784 && velocity_rpm > 970) {
+            double shooter_percantage = (velocity_rpm/6784) ; 
+
+            shooterMotor.set(shooter_percantage);
+        } else {
+            shooterMotor.set(1.0);
+        }
+        
     }
 
 }
