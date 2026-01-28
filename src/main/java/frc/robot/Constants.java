@@ -37,7 +37,7 @@ public final class Constants
     public static final double Y_INITIAL = 21.0; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final int SHOOTER_ANGLE = 85; //in degrees might need to convert 
-    public static final int SHOOTER_ID = 12;// TODO must change based on robot
+    public static final int SHOOTER_ID = 67;// TODO must change based on robot
   
 }
 
