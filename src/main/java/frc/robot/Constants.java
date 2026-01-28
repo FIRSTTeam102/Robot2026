@@ -38,6 +38,15 @@ public final class Constants
 //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
 //  }
 
+  public static final class ShooterConstants {
+    public static final double Y_FINAL = 56.4; //in inches- might change based on air resistance 
+    public static final double Y_INITIAL = 21.0; //TODO change based on final CAD model 
+    public static final double GRAVITY = -386.4; //inches per seconds squared
+    public static final int SHOOTER_ANGLE = 85; //in degrees might need to convert 
+    public static final int SHOOTER_ID = 67;// TODO must change based on robot
+  
+}
+
   public static final class DrivebaseConstants
   {
 
