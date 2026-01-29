@@ -27,6 +27,9 @@ import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
 import frc.robot.commands.AimWhileMoving;
+import frc.robot.commands.IntakeFuel;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -39,7 +42,9 @@ public class RobotContainer {
 
   private final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
-
+                                                                          
+  private final Intake intake = new Intake();
+                                                                                
   private final SendableChooser<Command> autoChooser;
   
                                                                                 /**
@@ -154,6 +159,8 @@ public class RobotContainer {
         );
 
         driverXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
+
+        operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
         
     if (RobotBase.isSimulation())
     {

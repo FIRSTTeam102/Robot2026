@@ -46,6 +46,10 @@ public final class Constants
     public static final int SHOOTER_ID = 67;// TODO must change based on robot
   
 }
+  public static final class IntakeConstants {
+    public static final int INTAKE_MOTOR_ID = 41; //TODO change to correct ID
+    public static final double INTAKE_SPEED = 0.67; //TODO tune
+}
 
   public static final class DrivebaseConstants
   {
