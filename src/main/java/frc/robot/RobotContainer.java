@@ -160,7 +160,7 @@ public class RobotContainer {
 
         driverXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
 
-        operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
+        operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Robot.intakeSpeed));
         
     if (RobotBase.isSimulation())
     {

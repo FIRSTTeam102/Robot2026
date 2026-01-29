@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends LoggedRobot {
   private NetworkTableEntry PIDinputentry;
+  public NetworkTableEntry IntakeSpeedentry;
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
@@ -26,6 +27,7 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
+  public static double intakeSpeed;
 
 
   
@@ -65,11 +67,14 @@ public class Robot extends LoggedRobot {
         // Get the "SmartDashboard" table
         NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
 
-        // Create an entry for shooter speed
+        // Create an entry for p value of pid
         PIDinputentry = table.getEntry("P value for PID");
-
-        // Set a default value
         PIDinputentry.setDouble(0);
+
+        // Create an entry for shooter speed
+        IntakeSpeedentry = table.getEntry("Intake Speed");
+        IntakeSpeedentry.setDouble(0.41);
+
     }
 
   @Override
@@ -88,6 +93,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
      double pvalue = PIDinputentry.getDouble(0);
+     double intakeSpeed = IntakeSpeedentry.getDouble(0);
+
 
         
         //System.out.println("Shooter Speed: " + pvalue);

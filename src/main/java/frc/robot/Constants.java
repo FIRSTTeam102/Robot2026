@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LoggedRobot;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
  * class should not be used for any other purpose. All constants should be declared globally (i.e. public static). Do
@@ -48,8 +52,7 @@ public final class Constants
 }
   public static final class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 41; //TODO change to correct ID
-    public static final double INTAKE_SPEED = 0.67; //TODO tune
-}
+  }
 
   public static final class DrivebaseConstants
   {
