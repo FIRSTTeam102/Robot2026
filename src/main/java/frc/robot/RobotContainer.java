@@ -32,6 +32,9 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+
+import org.littletonrobotics.junction.LoggedRobot;
+
 import swervelib.SwerveInputStream;
 
 public class RobotContainer {
@@ -159,9 +162,9 @@ public class RobotContainer {
         );
 
         driverXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
-
-        operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Robot.intakeSpeed));
         
+        operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeedentry.getDouble(0.41)));
+
     if (RobotBase.isSimulation())
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
