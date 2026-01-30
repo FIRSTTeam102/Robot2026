@@ -50,6 +50,10 @@ public final class Constants
     public static final int SHOOTER_ID = 67;// TODO must change based on robot
   
 }
+  public static final class ElasticDefaults {
+    public static final double INTAKE_DEFAULT_SPEED = 0.67;
+  }
+
   public static final class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 41; //TODO change to correct ID
   }
