@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -62,7 +64,9 @@ public class Shooter extends SubsystemBase {
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
+            System.out.println("speed" + velocity_rpm);
 
+        
         if (velocity_rpm < 6784 && velocity_rpm > 970) {
             double shooter_percentage = (velocity_rpm/6784) ; 
 
@@ -78,14 +82,18 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setShooterangle(double shooterAngle){
-       double actuatorPosition = ((85.786-shooterAngle)/6.88) * 5.512;
-       actuatorMotor.setPosition(actuatorPosition);
+       double actuatorPosition = ((85.786-shooterAngle)/6.88) / 5.512;
+        System.out.println("actuator position" + actuatorPosition);
+    
+
+       if (actuatorPosition > 0.0 && actuatorPosition < 1.0 ){
+       actuatorMotor.setPosition(actuatorPosition); }
+
+       else {
+        System.out.println("angle out of range");
+       }
     }
 
-    public void stopShooterAngle(){
-        actuatorMotor.setSpeed(0);
-    }
-
-
+    
 }
  

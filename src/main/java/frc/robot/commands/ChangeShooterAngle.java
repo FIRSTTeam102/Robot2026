@@ -24,18 +24,19 @@ public class ChangeShooterAngle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setShooterangle(angle);
+    System.out.println("command is running");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+        shooter.setShooterangle(angle);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    shooter.stopShooterAngle();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
