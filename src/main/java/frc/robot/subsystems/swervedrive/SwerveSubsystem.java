@@ -257,7 +257,7 @@ public class SwerveSubsystem extends SubsystemBase
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
         hubX = Constants.BlueHubX;
     }
-    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), hubX-robotpose.getX()) + Math.PI);
+    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), hubX-robotpose.getX()));
   }
 
   public double getHubAngleErrorRadians() {
