@@ -20,12 +20,16 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+
 
 import java.awt.Desktop;
 import java.util.ArrayList;
@@ -49,7 +53,8 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 public class Shooter {
 
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
-    
+    private Servo actuatorMotor = new Servo(ShooterConstants.SHOOTER_ANGLE_CAN_ID);
+
     public void setShooterSpeed(double distance_from_hub){
 
         double velocity_inches = (distance_from_hub)/
@@ -58,14 +63,24 @@ public class Shooter {
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
 
         if (velocity_rpm < 6784 && velocity_rpm > 970) {
-            double shooter_percantage = (velocity_rpm/6784) ; 
+            double shooter_percentage = (velocity_rpm/6784) ; 
 
-            shooterMotor.set(shooter_percantage);
+            shooterMotor.set(shooter_percentage);
         } else {
             shooterMotor.set(1.0);
         }
         
     }
+
+    public void setShooterangle(double shooterAngle){
+       double actuatorPosition = ((85.786-shooterAngle)/6.88) * 5.512;
+       actuatorMotor.setPosition(actuatorPosition);
+    }
+
+    public void stopShooterAngle(){
+        actuatorMotor.stopMotor();
+    }
+
 
 }
  
