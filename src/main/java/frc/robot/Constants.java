@@ -49,7 +49,9 @@ public final class Constants
     public static final double SHOOTER_ANGLE = 85; //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 67;// TODO must change based on robot
     public static final int SHOOTER_ANGLE_CAN_ID = 50; //TODO must change based on robot 
-    
+    public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
+    public static final double PASSING_ANGLE = 55.0;
+
   
 }
   public static final class ElasticDefaults {

@@ -20,9 +20,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
+import frc.robot.commands.ChangeShooterAngle;
 
 public class RobotContainer {
 
@@ -32,7 +35,7 @@ public class RobotContainer {
 
   private final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
-
+  private final Shooter shooter = new Shooter();
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
@@ -133,6 +136,9 @@ public class RobotContainer {
                         ));
         driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
+
+        operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
+        operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
         
     if (RobotBase.isSimulation())
     {

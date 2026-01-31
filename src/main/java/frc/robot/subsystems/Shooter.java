@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 import com.revrobotics.spark.SparkFlex;
@@ -48,15 +49,15 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import swervelib.SwerveDrive;
 import swervelib.telemetry.SwerveDriveTelemetry;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
-
-public class Shooter {
+public class Shooter extends SubsystemBase {
 
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     private Servo actuatorMotor = new Servo(ShooterConstants.SHOOTER_ANGLE_CAN_ID);
 
     public void setShooterSpeed(double distance_from_hub){
-
+        
         double velocity_inches = (distance_from_hub)/
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
@@ -72,13 +73,17 @@ public class Shooter {
         
     }
 
+    public void stopShooting(){
+        shooterMotor.stopMotor();
+    }
+
     public void setShooterangle(double shooterAngle){
        double actuatorPosition = ((85.786-shooterAngle)/6.88) * 5.512;
        actuatorMotor.setPosition(actuatorPosition);
     }
 
     public void stopShooterAngle(){
-        actuatorMotor.stopMotor();
+        actuatorMotor.setSpeed(0);
     }
 
 
