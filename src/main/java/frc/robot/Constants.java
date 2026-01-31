@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LoggedRobot;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
  * class should not be used for any other purpose. All constants should be declared globally (i.e. public static). Do
@@ -25,6 +29,12 @@ public final class Constants
   public static final double MAX_SPEED  = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
+  public static final double BlueHubX = 4.597;
+  public static final double RedHubX = 11.938;
+  public static final double HubY = 4.035;
+
+  public static final double AlignTolerance = 1.0; //deg
+
 //  public static final class AutonConstants
 //  {
 //
@@ -33,13 +43,20 @@ public final class Constants
 //  }
 
   public static final class ShooterConstants {
-    public static final double Y_FINAL = 56.4; //in inches- might change based on air resistance 
-    public static final double Y_INITIAL = 21.0; //TODO change based on final CAD model 
+    public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
+    public static final double STARTING_HEIGHT = 21.0; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final int SHOOTER_ANGLE = 85; //in degrees might need to convert 
-    public static final int SHOOTER_ID = 67;// TODO must change based on robot
+    public static final int SHOOTER_CAN_ID = 67;// TODO must change based on robot
   
 }
+  public static final class ElasticDefaults {
+    public static final double INTAKE_DEFAULT_SPEED = 0.67;
+  }
+
+  public static final class IntakeConstants {
+    public static final int INTAKE_MOTOR_ID = 41; //TODO change to correct ID
+  }
 
   public static final class DrivebaseConstants
   {

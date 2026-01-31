@@ -48,12 +48,12 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 
 public class Shooter {
 
-    private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_ID, MotorType.kBrushless);
+    private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     
     public void setShooterSpeed(double distance_from_hub){
 
         double velocity_inches = (distance_from_hub)/
-        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.Y_FINAL-ShooterConstants.Y_INITIAL- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
+        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
 
