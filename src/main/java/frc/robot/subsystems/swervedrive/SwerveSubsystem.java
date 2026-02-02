@@ -253,11 +253,18 @@ public class SwerveSubsystem extends SubsystemBase
 
   public Rotation2d aimAtHub() {
     Pose2d robotpose = getPose();
+    ChassisSpeeds speeds = getFieldVelocity();
+    Translation2d robotvelocity = new Translation2d(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond);
+
+    double leadX = robotpose.getX()+robotvelocity.getX();
+    double leadY = robotpose.getY()+robotvelocity.getY();
+
     double hubX = Constants.RedHubX;
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
         hubX = Constants.BlueHubX;
     }
-    return new Rotation2d(Math.atan2(Constants.HubY-robotpose.getY(), hubX-robotpose.getX()));
+
+    return new Rotation2d(Math.atan2(Constants.HubY-leadY, hubX-leadX));
   }
 
   public double getHubAngleErrorRadians() {
