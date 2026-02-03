@@ -55,6 +55,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class Shooter extends SubsystemBase {
 
+    private SparkFlex feederMotor = new SparkFlex(ShooterConstants.FEEDER_CAN_ID, MotorType.kBrushless);
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     private Servo actuatorMotor = new Servo(ShooterConstants.SHOOTER_ANGLE_CAN_ID);
 
@@ -77,6 +78,10 @@ public class Shooter extends SubsystemBase {
             shooterMotor.set(1.0);
         }
         
+    }
+
+    public void setFeederSpeed(){
+        feederMotor.set(ShooterConstants.FEEDER_VELOCITY);
     }
 
     public void stopShooting(){

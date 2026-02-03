@@ -51,6 +51,8 @@ public final class Constants
     public static final int SHOOTER_ANGLE_CAN_ID = 3; //TODO must change based on robot 
     public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 55.0;
+    public static final int FEEDER_CAN_ID = 42; //TODO change based on robot 
+    public static final double FEEDER_VELOCITY = 0.5; //TODO chnage based on robot 
 
   
 }
