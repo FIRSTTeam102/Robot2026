@@ -65,9 +65,11 @@ public class Shooter extends SubsystemBase {
 
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
             System.out.println("speed" + velocity_rpm);
+        
+        double max_height = ShooterConstants.STARTING_HEIGHT - (Math.pow(velocity_inches * Math.sin(ShooterConstants.HIGH_SHOOTER_ANGLE), 2))/(2*ShooterConstants.GRAVITY);
 
         
-        if (velocity_rpm < 6784 && velocity_rpm > 970) {
+        if (velocity_rpm < 6784 && velocity_rpm > 970 && max_height > 77) {
             double shooter_percentage = (velocity_rpm/6784) ; 
 
             shooterMotor.set(shooter_percentage);
