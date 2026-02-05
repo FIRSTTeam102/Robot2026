@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static NetworkTableEntry IntakeSpeedentry;
+  public static NetworkTableEntry IndexerSpeedentry;
 
   private final RobotContainer m_robotContainer;
 
@@ -24,8 +24,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
       NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-      IntakeSpeedentry = table.getEntry("Intake Speed");
-      IntakeSpeedentry.setDouble(0.41);
+      IndexerSpeedentry = table.getEntry("Indexer Speed");
+      IndexerSpeedentry.setDouble(0.41);
   }
   
   @Override

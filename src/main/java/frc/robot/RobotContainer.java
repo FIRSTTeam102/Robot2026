@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.IntakeFuel;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.RunIndexer;
+import frc.robot.subsystems.Indexer;
 import frc.robot.Robot;
 import frc.robot.Constants;
 
@@ -16,13 +16,13 @@ public class RobotContainer {
   final CommandXboxController driverXbox = new CommandXboxController(0);
   final CommandXboxController operatorXbox = new CommandXboxController(1);
 
-  private final Intake intake = new Intake();
+  private final Indexer indexer = new Indexer();
   public RobotContainer() {
     configureBindings();
   }
 
   private void configureBindings() {
-    driverXbox.leftTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeedentry.getDouble(Constants.INTAKE_DEFAULT_SPEED)));
+    driverXbox.leftTrigger().whileTrue(new RunIndexer(indexer, () -> Robot.IndexerSpeedentry.getDouble(Constants.INDEXER_MOTOR_ID)));
   }
 
   public Command getAutonomousCommand() {

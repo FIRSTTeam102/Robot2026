@@ -7,24 +7,24 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;;
+import frc.robot.subsystems.Indexer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeFuel extends Command {
-  Intake intake;    
+public class RunIndexer extends Command {
+  Indexer indexer;    
   DoubleSupplier speedSupplier;
     /** Creates a new IntakeFuel. */
-    public IntakeFuel(Intake intake, DoubleSupplier speedSupplier) {
-      this.intake =intake;
+    public RunIndexer(Indexer indexer, DoubleSupplier speedSupplier) {
+      this.indexer =indexer;
       this.speedSupplier =speedSupplier;
-    addRequirements(intake);
+    addRequirements(indexer);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.IntakeTheFuel(speedSupplier.getAsDouble());
+    indexer.RunIndexer(speedSupplier.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +34,7 @@ public class IntakeFuel extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.IntakeTheFuel(0);
+    indexer.RunIndexer(0);
   }
 
   // Returns true when the command should end.

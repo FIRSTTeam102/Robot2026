@@ -49,11 +49,11 @@ public final class Constants
   
 }
   public static final class ElasticDefaults {
-    public static final double INTAKE_DEFAULT_SPEED = 0.67;
+    public static final double INDEXER_DEFAULT_SPEED = 0.67;
   }
 
-  public static final class IntakeConstants {
-    public static final int INTAKE_MOTOR_ID = 33; //TODO change to correct ID
+  public static final class IndexerConstants {
+    public static final int INDEXER_MOTOR_ID = 676767; //TODO change to correct ID
   }
 
   public static final class DrivebaseConstants
@@ -76,4 +76,5 @@ public final class Constants
   }
 
   public static double INTAKE_DEFAULT_SPEED;
+  public static double INDEXER_MOTOR_ID;
 }

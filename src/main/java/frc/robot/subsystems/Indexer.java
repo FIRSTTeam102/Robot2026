@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -52,13 +52,13 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
+public class Indexer extends SubsystemBase {
   /** Creates a new Intake. */
-  public Intake() {}
-        private SparkFlex spinnyMotor = new SparkFlex(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+  public Indexer() {}
+        private SparkFlex indexerMotor = new SparkFlex(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
         
-        public void IntakeTheFuel(double speed){
-          spinnyMotor.set(speed);
+        public void RunIndexer(double speed){
+          indexerMotor.set(speed);
         }
   @Override
   public void periodic() {
