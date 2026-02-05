@@ -4,12 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  public static NetworkTableEntry IntakeSpeedentry;
 
   private final RobotContainer m_robotContainer;
 
@@ -17,6 +21,13 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
   }
 
+  @Override
+  public void robotInit() {
+      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
+      IntakeSpeedentry = table.getEntry("Intake Speed");
+      IntakeSpeedentry.setDouble(0.41);
+  }
+  
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
