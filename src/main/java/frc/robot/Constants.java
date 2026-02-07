@@ -55,15 +55,11 @@ public final class Constants
     public static final double ACTUATOR_EXTENSION = 0.80;
   
 }
-}
-    public static final int SHOOTER_CAN_ID = 67;// TODO must change based on robot
-    public static final int ACTUATOR_CAN_ID = 3; //TODO must change based on robot 
-    public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
-    public static final double PASSING_ANGLE = 55.0;
+
   
 
   
-}
+
   public static final class ElasticDefaults {
     public static final double INTAKE_DEFAULT_SPEED = 0.67;
   }

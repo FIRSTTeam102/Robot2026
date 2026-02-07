@@ -20,17 +20,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
 
   private static Robot   instance;
-  private        Command m_autonomousCommand;
 
-  @Override
-  public void robotInit(){
-     NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-        actuatorPositionEntry = table.getEntry("Position of actuator");
-        actuatorPositionEntry.setDouble(0.0);
-  }
+  
 
   public Robot() {
     m_robotContainer = new RobotContainer();
@@ -61,18 +56,15 @@ public class Robot extends TimedRobot {
 
    @Override
     public void robotInit() {
+      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
+        actuatorPositionEntry = table.getEntry("Position of actuator");
+        actuatorPositionEntry.setDouble(0.0);
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
-        // Get the "SmartDashboard" table
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-
-        // Create an entry for shooter speed
-        PIDinputentry = table.getEntry("P value for PID");
-
-        // Set a default value
-        PIDinputentry.setDouble(0);
+        
+      
     }
 
   @Override

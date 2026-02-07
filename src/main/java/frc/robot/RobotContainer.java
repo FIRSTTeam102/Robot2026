@@ -121,7 +121,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
+    //operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
     operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
