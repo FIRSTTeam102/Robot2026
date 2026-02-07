@@ -59,10 +59,13 @@ public class Indexer extends SubsystemBase {
     private SparkFlex feederMotor = new SparkFlex(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
   
   
-  public void RunIndexer(double speed){
-      indexerMotor.set(speed);
+  public void RunIndexer(){
+      indexerMotor.set(IndexerConstants.INDEXER_SPEED);
   }
 
+  public void runFeeder(){
+    feederMotor.set(IndexerConstants.FEEDER_SPEED);
+  }
 
 
   @Override

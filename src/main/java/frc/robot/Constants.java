@@ -48,14 +48,13 @@ public final class Constants
     public static final int SHOOTER_ID = 67;// TODO must change based on robot
   
 }
-  public static final class ElasticDefaults {
-    public static final double INDEXER_DEFAULT_SPEED = 0.67;
-  }
+ 
 
   public static final class IndexerConstants {
     public static final int INDEXER_MOTOR_ID = 10; 
     public static final int FEEDER_CAN_ID = 21; 
-    public static final double FEEDER_VELOCITY = 0.5; //TODO chnage based on robot 
+    public static final double FEEDER_SPEED = 0.5; //TODO chnage based on robot 
+    public static final double INDEXER_SPEED = 0.5; //TODO chnage based on robot 
   }
 
   public static final class DrivebaseConstants

@@ -22,7 +22,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driverXbox.leftTrigger().whileTrue(new RunIndexer(indexer, () -> Robot.IndexerSpeedentry.getDouble(Constants.INDEXER_MOTOR_ID)));
+    driverXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
   }
 
   public Command getAutonomousCommand() {

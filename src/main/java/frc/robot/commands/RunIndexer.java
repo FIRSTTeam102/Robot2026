@@ -14,9 +14,8 @@ public class RunIndexer extends Command {
   Indexer indexer;    
   DoubleSupplier speedSupplier;
     /** Creates a new IntakeFuel. */
-    public RunIndexer(Indexer indexer, DoubleSupplier speedSupplier) {
+    public RunIndexer(Indexer indexer) {
       this.indexer =indexer;
-      this.speedSupplier =speedSupplier;
     addRequirements(indexer);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,7 +23,7 @@ public class RunIndexer extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    indexer.RunIndexer(speedSupplier.getAsDouble());
+    indexer.RunIndexer();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +33,7 @@ public class RunIndexer extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexer.RunIndexer(0);
+    
   }
 
   // Returns true when the command should end.
