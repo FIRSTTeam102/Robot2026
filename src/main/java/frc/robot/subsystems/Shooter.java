@@ -49,9 +49,6 @@ import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import swervelib.SwerveDrive;
-import swervelib.telemetry.SwerveDriveTelemetry;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class Shooter extends SubsystemBase {
 
@@ -62,7 +59,7 @@ public class Shooter extends SubsystemBase {
     public void setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
-        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.HIGH_SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.HIGH_SHOOTER_ANGLE));
+        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
             System.out.println("speed" + velocity_rpm);
@@ -80,6 +77,10 @@ public class Shooter extends SubsystemBase {
         
     }
 
+    public void startShooting(){
+        shooterMotor.set(0.55);
+    }
+
    
     
 
@@ -88,11 +89,11 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setShooterangle(double shooterAngle){
-       double actuatorPosition = ((85.94-shooterAngle)/6.88) / 5.512;
+       double actuatorPosition = (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
         System.out.println("actuator position" + actuatorPosition);
     
 
-       if (actuatorPosition >= 0.2 && actuatorPosition <= 0.83 ){
+       if (actuatorPosition >= 0.0 && actuatorPosition <= 1.0 ){
        actuatorMotor.setPosition(actuatorPosition); }
 
        else {
@@ -100,6 +101,9 @@ public class Shooter extends SubsystemBase {
        }
     }
 
+    public void setActuatorExtension(double distance) {
+      actuatorMotor.setPosition((distance+0.296875)/1.5625);
+    }
     
 }
  

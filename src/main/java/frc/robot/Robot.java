@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.util.Spliterators.AbstractDoubleSpliterator;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -17,18 +18,20 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Robot extends LoggedRobot {
-  private NetworkTableEntry PIDinputentry;
+public class Robot extends TimedRobot {
+  private Command m_autonomousCommand;
+  public static NetworkTableEntry actuatorPositionEntry; 
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  @Override
+  public void robotInit(){
+     NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
+        actuatorPositionEntry = table.getEntry("Position of actuator");
+        actuatorPositionEntry.setDouble(0.0);
+  }
 
-  private Timer disabledTimer;
-
-
-  
   public Robot() {
     m_robotContainer = new RobotContainer();
   }
@@ -87,10 +90,9 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopPeriodic() {
-     double pvalue = PIDinputentry.getDouble(0);
+     double actuatorPosition = actuatorPositionEntry.getDouble(0);
 
         
-        //System.out.println("Shooter Speed: " + pvalue);
   }
 
   @Override
