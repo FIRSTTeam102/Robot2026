@@ -5,8 +5,8 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -18,10 +18,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class RunShooter extends Command {
+  SwerveSubsystem swerve;
   Shooter shooter; 
+  DoubleSupplier distanceSupplier;
   /** Creates a new RunShooter. */
-  public RunShooter(Shooter shooter) {
+  public RunShooter(Shooter shooter, DoubleSupplier distanceSupplier, SwerveSubsystem swerve) {
     this.shooter = shooter;
+    this.distanceSupplier = distanceSupplier;
+    this.swerve = swerve;
     addRequirements(shooter);
   }
 
@@ -30,13 +34,13 @@ public class RunShooter extends Command {
 
   @Override
   public void execute() {
-    /*Pose2d robotpose = swerve.getPose();
+    Pose2d robotpose = swerve.getPose();
     double hubX = Constants.RedHubX;
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
       hubX = Constants.BlueHubX;
     }
-    double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2))); */
-    shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE); //test distance without swerve pose
+    double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));
+    shooter.setShooterSpeed(distance);
   }
 
   @Override
