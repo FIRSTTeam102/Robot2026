@@ -55,13 +55,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
-        private SparkFlex spinnyMotor = new SparkFlex(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+        private SparkFlex intakeMotor = new SparkFlex(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
         
         public void IntakeTheFuel(double speed){
-          spinnyMotor.set(speed);
+          intakeMotor.set(speed);
         }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

@@ -28,7 +28,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.IntakeFuel;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
