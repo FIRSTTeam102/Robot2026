@@ -89,7 +89,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setShooterangle(double shooterAngle){
-       double actuatorPosition = ((85.786-shooterAngle)/6.88) / 5.512;
+       double actuatorPosition = (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
         System.out.println("actuator position" + actuatorPosition);
     
 
@@ -101,8 +101,8 @@ public class Shooter extends SubsystemBase {
        }
     }
 
-    public void setActuatorExtension() {
-      actuatorMotor.setPosition(ShooterConstants.ACTUATOR_EXTENSION);
+    public void setActuatorExtension(double distance) {
+      actuatorMotor.setPosition((distance+0.296875)/1.5625);
     }
     
 }

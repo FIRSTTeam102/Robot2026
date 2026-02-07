@@ -4,15 +4,20 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ExtendActuator extends Command {
   Shooter shooter;
+  DoubleSupplier extension;
+
   /** Creates a new ExtendActuator. */
-  public ExtendActuator(Shooter shooter) {
+  public ExtendActuator(Shooter shooter, DoubleSupplier extension) {
     this.shooter = shooter;
+    this.extension = extension;
     addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -20,7 +25,7 @@ public class ExtendActuator extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setActuatorExtension();
+    shooter.setActuatorExtension(extension.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
