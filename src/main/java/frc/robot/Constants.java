@@ -55,11 +55,6 @@ public final class Constants
     public static final double ACTUATOR_EXTENSION = 0.80;
   
 }
-
-  
-
-  
-
   public static final class ElasticDefaults {
     public static final double INTAKE_DEFAULT_SPEED = 0.67;
   }

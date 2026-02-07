@@ -154,9 +154,6 @@ public class RobotContainer {
                         ));
         driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
-
-        operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
-        operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
         
     if (RobotBase.isSimulation())
     {
