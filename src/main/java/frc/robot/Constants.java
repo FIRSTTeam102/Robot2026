@@ -32,6 +32,5 @@ public final class Constants
     public static final double PASSING_ANGLE = 48.0;
     public static final double TESTING_DISTANCE = 5.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
-  
     }
 }
