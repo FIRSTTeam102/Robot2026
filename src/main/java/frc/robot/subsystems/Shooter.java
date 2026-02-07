@@ -77,6 +77,10 @@ public class Shooter extends SubsystemBase {
         
     }
 
+    public void startShooting(){
+        shooterMotor.set(0.55);
+    }
+
    
     
 

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunShooter;
 
@@ -28,6 +29,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
+    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
   }
