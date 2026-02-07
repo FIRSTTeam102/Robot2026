@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
+  public static NetworkTableEntry IndexerSpeedentry;
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
 
@@ -31,6 +32,13 @@ public class Robot extends LoggedRobot {
     m_robotContainer = new RobotContainer();
   }
 
+  @Override
+  public void robotInit() {
+      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
+      IndexerSpeedentry = table.getEntry("Indexer Speed");
+      IndexerSpeedentry.setDouble(0.41);
+  }
+  
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();

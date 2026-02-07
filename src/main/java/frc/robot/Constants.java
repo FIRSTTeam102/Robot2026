@@ -33,4 +33,11 @@ public final class Constants
     public static final double TESTING_DISTANCE = 5.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
     }
+  
+  public static final class IndexerConstants {
+    public static final int INDEXER_MOTOR_ID = 33; 
+    public static final int FEEDER_CAN_ID = 23; 
+    public static final double FEEDER_SPEED = 0.5; //TODO chnage based on robot 
+    public static final double INDEXER_SPEED = -0.5; //TODO chnage based on robot 
+  }
 }
