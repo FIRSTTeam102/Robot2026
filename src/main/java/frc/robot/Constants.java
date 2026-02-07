@@ -47,7 +47,7 @@ public final class Constants
   
 }
   public static final class IntakeConstants {
-    public static final int INTAKE_MOTOR_ID = 41; //TODO change to correct ID
+    public static final int INTAKE_MOTOR_ID = 11; //TODO change to correct ID
     public static final double INTAKE_SPEED = 0.67; //TODO tune
 }
 
