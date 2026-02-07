@@ -55,11 +55,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Indexer extends SubsystemBase {
   /** Creates a new Intake. */
   public Indexer() {}
-        private SparkFlex indexerMotor = new SparkFlex(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
-        
-        public void RunIndexer(double speed){
-          indexerMotor.set(speed);
-        }
+    private SparkFlex indexerMotor = new SparkFlex(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
+    private SparkFlex feederMotor = new SparkFlex(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
+  
+  
+  public void RunIndexer(double speed){
+      indexerMotor.set(speed);
+  }
+
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
