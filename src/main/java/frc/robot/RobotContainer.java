@@ -39,6 +39,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 import java.io.File;
 import frc.robot.commands.ChangeShooterAngle;
+import frc.robot.commands.RunFeeder;
 
 public class RobotContainer {
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -52,7 +53,8 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driverXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
+    operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
+    operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     //operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
     operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));

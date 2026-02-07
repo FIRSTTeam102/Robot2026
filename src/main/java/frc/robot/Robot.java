@@ -32,12 +32,6 @@ public class Robot extends LoggedRobot {
     m_robotContainer = new RobotContainer();
   }
 
-  @Override
-  public void robotInit() {
-      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-      IndexerSpeedentry = table.getEntry("Indexer Speed");
-      IndexerSpeedentry.setDouble(0.41);
-  }
   
   @Override
   public void robotPeriodic() {
@@ -67,6 +61,9 @@ public class Robot extends LoggedRobot {
       NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
         actuatorPositionEntry = table.getEntry("Position of actuator");
         actuatorPositionEntry.setDouble(0.0);
+
+        IndexerSpeedentry = table.getEntry("Indexer Speed");
+        IndexerSpeedentry.setDouble(0.41);
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables

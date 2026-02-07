@@ -72,6 +72,10 @@ public class Indexer extends SubsystemBase {
     feederMotor.set(IndexerConstants.FEEDER_SPEED);
   }
 
+  public void stopFeeder() {
+    feederMotor.stopMotor();
+  }
+
 
   @Override
   public void periodic() {
