@@ -61,6 +61,11 @@ public class Indexer extends SubsystemBase {
   
   public void RunIndexer(){
       indexerMotor.set(IndexerConstants.INDEXER_SPEED);
+
+  }
+
+  public void stopIndexer(){
+    indexerMotor.stopMotor();
   }
 
   public void runFeeder(){
