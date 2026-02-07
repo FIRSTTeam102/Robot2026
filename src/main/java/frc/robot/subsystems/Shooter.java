@@ -93,7 +93,7 @@ public class Shooter extends SubsystemBase {
         System.out.println("actuator position" + actuatorPosition);
     
 
-       if (actuatorPosition > 0.0 && actuatorPosition < 1.0 ){
+       if (actuatorPosition >= 0.0 && actuatorPosition <= 1.0 ){
        actuatorMotor.setPosition(actuatorPosition); }
 
        else {
@@ -101,6 +101,9 @@ public class Shooter extends SubsystemBase {
        }
     }
 
+    public void setActuatorExtension() {
+      actuatorMotor.setPosition(ShooterConstants.ACTUATOR_EXTENSION);
+    }
     
 }
  
