@@ -11,10 +11,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.ExtendActuator;
+import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.RunShooter;
 import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -40,6 +42,7 @@ import frc.robot.subsystems.Shooter;
 import java.io.File;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
+import frc.robot.commands.IntakeFuel;
 
 public class RobotContainer {
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -47,6 +50,7 @@ public class RobotContainer {
 
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
+  private final Intake intake = new Intake();
 
   public RobotContainer() {
     configureBindings();
@@ -60,6 +64,8 @@ public class RobotContainer {
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
+
+    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
   }
 
   public Command getAutonomousCommand() {

@@ -40,4 +40,9 @@ public final class Constants
     public static final double FEEDER_SPEED = -0.5; //TODO chnage based on robot 
     public static final double INDEXER_SPEED = -0.5; //TODO chnage based on robot 
   }
+
+  public static final class IntakeConstants {
+    public static final int INTAKE_MOTOR_ID = 30;
+    public static final double INTAKE_SPEED = 0.8; //change based on robot
+  }
 }
