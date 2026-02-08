@@ -16,6 +16,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.ExtendActuator;
+import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.RunShooter;
 import frc.robot.Robot;
@@ -64,7 +65,7 @@ public class RobotContainer {
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
-
+    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
   }
 
