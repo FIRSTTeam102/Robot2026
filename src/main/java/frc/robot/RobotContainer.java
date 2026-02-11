@@ -9,6 +9,7 @@ import java.io.File;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.Constants.ShooterConstants;
@@ -121,11 +122,24 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    //operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
-    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
+    operatorXbox.rightBumper().whileTrue(new RunShooter(shooter, drivebase));
+    operatorXbox.leftBumper().whileTrue(new BasicShooter(shooter));
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
+    operatorXbox.leftTrigger().whileTrue(new SequentialCommandGroup(
+                                        new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE),
+                                        new RunShooter(shooter, drivebase)));
+    operatorXbox.rightTrigger().whileTrue(new SequentialCommandGroup(
+                                          new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE),
+                                          new BasicShooter(shooter)));
+    
+
+
+
+
+
+
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);

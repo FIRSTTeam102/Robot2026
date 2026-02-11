@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RunShooter extends Command {
   SwerveSubsystem swerve;
   Shooter shooter; 
-  DoubleSupplier distanceSupplier;
+ // DoubleSupplier distanceSupplier;
   /** Creates a new RunShooter. */
-  public RunShooter(Shooter shooter, DoubleSupplier distanceSupplier, SwerveSubsystem swerve) {
+  public RunShooter(Shooter shooter, SwerveSubsystem swerve) {
     this.shooter = shooter;
-    this.distanceSupplier = distanceSupplier;
+   // this.distanceSupplier = distanceSupplier;
     this.swerve = swerve;
     addRequirements(shooter);
   }
