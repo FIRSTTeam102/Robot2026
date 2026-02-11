@@ -23,7 +23,7 @@ public final class Constants
 {
   public static final class ShooterConstants {
     public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
-    public static final double STARTING_HEIGHT = 21.0; //TODO change based on final CAD model 
+    public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final double SHOOTER_ANGLE = 85; //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 20;

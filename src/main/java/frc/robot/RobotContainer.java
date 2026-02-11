@@ -9,9 +9,11 @@ import java.io.File;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
@@ -67,6 +69,14 @@ public class RobotContainer {
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
     operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
+    operatorXbox.back().whileTrue(new SequentialCommandGroup(
+                        new IntakeFuel(intake, IntakeConstants.INTAKE_SPEED),
+                        new RunIndexer(indexer)));
+
+    operatorXbox.start().whileTrue(new SequentialCommandGroup(
+      new RunFeeder(indexer),
+      new BasicShooter(shooter)));
+  
   }
 
   public Command getAutonomousCommand() {
