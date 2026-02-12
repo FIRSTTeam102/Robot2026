@@ -26,7 +26,7 @@ public final class Constants
     public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final double SHOOTER_ANGLE = 85; //in degrees might need to convert 
-    public static final int SHOOTER_CAN_ID = 20;
+    public static final int SHOOTER_CAN_ID = 40;
     public static final int ACTUATOR_CAN_ID = 9; //TODO must change based on robot (not actually a can id probably)
     public static final double HIGH_SHOOTER_ANGLE = 75.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 55.0;
@@ -35,8 +35,8 @@ public final class Constants
     }
   
   public static final class IndexerConstants {
-    public static final int INDEXER_MOTOR_ID = 23; 
-    public static final int FEEDER_CAN_ID = 33; 
+    public static final int INDEXER_MOTOR_ID = 50; 
+    public static final int FEEDER_CAN_ID = 51; 
     public static final double FEEDER_SPEED = -0.5; //TODO chnage based on robot 
     public static final double INDEXER_SPEED = -0.5; //TODO chnage based on robot 
   }
