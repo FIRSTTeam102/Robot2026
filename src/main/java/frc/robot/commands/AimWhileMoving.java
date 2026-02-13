@@ -5,8 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -53,7 +55,12 @@ public class AimWhileMoving extends Command {
           ySupplier.getAsDouble()
     );
 
+    Pose2d robotpose = swerve.getPose();
+
     Rotation2d targetAngle = swerve.aimAtHub();
+    if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
+      targetAngle = swerve.aimAtCorner();
+    }
 
     double omega = rotationPID.calculate (
       swerve.getPose().getRotation().getRadians(),

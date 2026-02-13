@@ -33,6 +33,11 @@ public final class Constants
   public static final double RedHubX = 11.938;
   public static final double HubY = 4.035;
 
+  public static final double TOPCORNERY = 7.55; //top in choreo with blue on left
+  public static final double BOTTOMCORNERY = 0.5;
+  public static final double BLUECORNERX = 0.5;
+  public static final double REDCORNERX = 16.1;
+
   public static final double AlignTolerance = 1.0; //deg
 
 //  public static final class AutonConstants
