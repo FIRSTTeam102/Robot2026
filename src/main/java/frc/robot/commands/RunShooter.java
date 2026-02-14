@@ -32,13 +32,13 @@ public class RunShooter extends Command {
 
   @Override
   public void execute() {
-    /*Pose2d robotpose = swerve.getPose();
-    double hubX = Constants.RedHubX;
-    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-      hubX = Constants.BlueHubX;
-    }
-    double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));*/
-    shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
+    // Pose2d robotpose = swerve.getPose();
+    // double hubX = Constants.RedHubX;
+    // if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
+    //   hubX = Constants.BlueHubX;
+    // }
+    // double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));
+    // shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
   }
 
   @Override
