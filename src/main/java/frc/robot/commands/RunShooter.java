@@ -19,11 +19,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class RunShooter extends Command {
   Shooter shooter; 
-  DoubleSupplier distanceSupplier;
   /** Creates a new RunShooter. */
-  public RunShooter(Shooter shooter, DoubleSupplier distanceSupplier) {
+  public RunShooter(Shooter shooter) {
     this.shooter = shooter;
-    this.distanceSupplier = distanceSupplier;
     addRequirements(shooter);
   }
 

@@ -56,6 +56,7 @@ public class Robot extends LoggedRobot {
 
    @Override
     public void robotInit() {
+      //adds acutatuor positon as a chnagabel  value on elastic  
       NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
         actuatorPositionEntry = table.getEntry("Position of actuator");
         actuatorPositionEntry.setDouble(0.0);
@@ -63,6 +64,8 @@ public class Robot extends LoggedRobot {
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
+
+      
         
       
     }

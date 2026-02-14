@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase {
 
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
-    private Servo actuatorMotor = new Servo(ShooterConstants.ACTUATOR_CAN_ID);
+    private Servo actuatorMotor = new Servo(ShooterConstants.ACTUATOR_ID);
 
     public void setShooterSpeed(double distance_from_hub){
         
