@@ -51,8 +51,8 @@ public final class Constants
     public static final int SHOOTER_CAN_ID = 20;
     public static final double HIGH_SHOOTER_ANGLE = 78.0; //TODO find good angles for all constants
 
-    public static final double PASSING_ANGLE = 67.0;
-   // public static final double PASSING_VELOCITY = 300.766; //inches
+    public static final double PASSING_ANGLE = 45.0;
+   public static final double PASSING_VELOCITY = 0.5744; //percentage
 
     public static final int ACTUATOR_CAN_ID = 9; //TODO must change based on robot (not actually a can id probably)
     public static final double TESTING_DISTANCE = 5.0; //distance instead of pose to test shooter

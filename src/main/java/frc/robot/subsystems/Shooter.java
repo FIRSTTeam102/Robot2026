@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase {
 
         
         if (velocity_rpm < 6784 && velocity_rpm > 970 && max_height > 77) {
-            double shooter_percentage = (velocity_rpm/6784) * -1 ; 
+            double shooter_percentage = (velocity_rpm/6784) ; 
 
             shooterMotor.set(shooter_percentage);
         } else {
@@ -77,8 +77,8 @@ public class Shooter extends SubsystemBase {
         
     }
 
-    public void startShooting(){
-        shooterMotor.set(0.55);
+    public void startPassing(){
+        shooterMotor.set(ShooterConstants.PASSING_VELOCITY);
     }
 
    
