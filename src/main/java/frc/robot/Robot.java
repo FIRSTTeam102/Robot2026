@@ -4,8 +4,7 @@
 
 package frc.robot;
 
-import java.util.Spliterators.AbstractDoubleSpliterator;
-import org.littletonrobotics.junction.AutoLogOutput;
+//import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -13,8 +12,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,9 +30,27 @@ public class Robot extends LoggedRobot {
     m_robotContainer = new RobotContainer();
   }
 
-  
+  @Override
+    public void robotInit() {
+      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
+        actuatorPositionEntry = table.getEntry("Position of actuator");
+        actuatorPositionEntry.setDouble(0.0);
+                
+        IndexerSpeedentry = table.getEntry("Indexer Speed");
+        IndexerSpeedentry.setDouble(0.41);
+
+
+      Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+      Logger.start();
+        
+      
+    }
+
   @Override
   public void robotPeriodic() {
+    
+
     CommandScheduler.getInstance().run();
   }
 
@@ -56,21 +72,6 @@ public class Robot extends LoggedRobot {
     }
   }
 
-   @Override
-    public void robotInit() {
-      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-        actuatorPositionEntry = table.getEntry("Position of actuator");
-        actuatorPositionEntry.setDouble(0.0);
-
-        IndexerSpeedentry = table.getEntry("Indexer Speed");
-        IndexerSpeedentry.setDouble(0.41);
-
-      Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
-      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-      Logger.start();
-        
-      
-    }
 
   @Override
   public void autonomousPeriodic() {}
@@ -87,7 +88,8 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopPeriodic() {
-     double actuatorPosition = actuatorPositionEntry.getDouble(0);
+    //taking out bc we just used actuatorPositionEntry.getDouble instead of using variable
+    // double actuatorPosition = actuatorPositionEntry.getDouble(0);
 
         
   }
