@@ -282,7 +282,7 @@ public class SwerveSubsystem extends SubsystemBase
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
         cornerX = Constants.BLUECORNERX;
     }
-    if (robotpose.getX()<=4.034663) { //number is half width of field
+    if (robotpose.getY()<=4.034663) { //number is half width of field
       cornerY = Constants.BOTTOMCORNERY;
     }
     

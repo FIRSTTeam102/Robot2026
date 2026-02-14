@@ -52,7 +52,7 @@ public final class Constants
     public static final double Y_INITIAL = 21.0; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final int SHOOTER_ANGLE = 85; //in degrees might need to convert 
-    public static final int SHOOTER_ID = 20;// final
+    public static final int SHOOTER_ID = 40;// final
   
 }
   public static final class ElasticDefaults {
@@ -60,7 +60,7 @@ public final class Constants
   }
 
   public static final class IntakeConstants {
-    public static final int INTAKE_MOTOR_ID = 11; //final
+    public static final int INTAKE_MOTOR_ID = 30; //final
   }
 
   public static final class DrivebaseConstants
