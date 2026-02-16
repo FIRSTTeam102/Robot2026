@@ -46,4 +46,11 @@ public final class Constants
     public static final int INTAKE_MOTOR_ID = 30;
     public static final double INTAKE_SPEED = 0.8; //change based on robot
   }
+
+  public static final class ClimberConstants {
+    public static final int CLIMBER_MOTOR_ID = 60; //final
+    public static final double CLIMBER_MOTOR_SPEED = 0.5; //TODO needs to be tuned
+    public static final double CLIMBER_ENCODER_EXTENSION = 2000; //TODO find max revolutions on rev
+    public static final double CLIMBER_ENCODER_TOLERANCE = 10; //TODO find actual tolerance that is good
+  }
 }

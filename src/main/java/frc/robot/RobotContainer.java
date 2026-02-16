@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.RunIndexer;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
 import frc.robot.Robot;
 import frc.robot.Constants;
@@ -45,7 +46,7 @@ import frc.robot.subsystems.Shooter;
 import java.io.File;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
-import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.RunClimber;
 
 public class RobotContainer {
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -54,6 +55,7 @@ public class RobotContainer {
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
+  private final Climber climber = new Climber();
 
   public RobotContainer() {
     configureBindings();
@@ -76,7 +78,7 @@ public class RobotContainer {
     operatorXbox.start().whileTrue(new SequentialCommandGroup(
       new RunFeeder(indexer),
       new BasicShooter(shooter)));
-  
+    operatorXbox.a().onTrue(new RunClimber(climber));
   }
 
   public Command getAutonomousCommand() {

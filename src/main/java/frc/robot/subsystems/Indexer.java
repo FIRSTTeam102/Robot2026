@@ -30,6 +30,7 @@ import frc.robot.Robot;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import java.awt.Desktop;
@@ -55,8 +56,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Indexer extends SubsystemBase {
   /** Creates a new Intake. */
   public Indexer() {}
-    private SparkFlex indexerMotor = new SparkFlex(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
-    private SparkFlex feederMotor = new SparkFlex(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
+    private SparkMax indexerMotor = new SparkMax(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
+    private SparkMax feederMotor = new SparkMax(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
   
   
   public void RunIndexer(){
