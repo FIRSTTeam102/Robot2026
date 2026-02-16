@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
+
+import com.google.flatbuffers.Constants;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -61,7 +63,7 @@ public class Indexer extends SubsystemBase {
   
   
   public void RunIndexer(){
-      indexerMotor.set(IndexerConstants.INDEXER_DEFAULT_SPEED);
+      indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
 
   }
 
@@ -70,7 +72,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void runFeeder(){
-    feederMotor.set(IndexerConstants.FEEDER_DEFAULT_SPEED);
+    feederMotor.set(Robot.FeederSpeed.getDouble(IndexerConstants.FEEDER_DEFAULT_SPEED));
   }
 
   public void stopFeeder() {

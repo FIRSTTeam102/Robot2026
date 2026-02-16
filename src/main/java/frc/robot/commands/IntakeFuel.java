@@ -4,25 +4,28 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeFuel extends Command {
   Intake intake;    
-  double speed;
+  DoubleSupplier speed;
   /** Creates a new IntakeFuel. */
-  public IntakeFuel(Intake intake, double speed) {
+  public IntakeFuel(Intake intake, DoubleSupplier speed) {
     this.intake =intake;
-    this.speed =speed;
+    this.speed = speed;
     addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.IntakeTheFuel(speed);
+    intake.IntakeTheFuel(speed.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

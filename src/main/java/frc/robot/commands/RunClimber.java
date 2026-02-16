@@ -4,6 +4,10 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
+
+import com.google.flatbuffers.Constants;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
@@ -24,10 +28,10 @@ public class RunClimber extends Command {
   @Override
   public void initialize() {
     if ((climber.getEncoderPosition())>(ClimberConstants.CLIMBER_ENCODER_EXTENSION/2)) { //already extended
-      climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
+      climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));
     }
     else {
-      climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
+      climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));
       target = ClimberConstants.CLIMBER_ENCODER_EXTENSION;
     }
   }

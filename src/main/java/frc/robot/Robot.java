@@ -47,7 +47,7 @@ public class Robot extends LoggedRobot {
         actuatorPositionEntry.setDouble(0.0);
                 
         IndexerSpeed = table.getEntry("Indexer Speed");
-        ShooterSpeed = table.getEntry("Shooter Speed");
+        ShooterSpeed = table.getEntry("Shooter Basic Velocity");
         IntakeSpeed = table.getEntry("Intake Speed");
         ClimberSpeed = table.getEntry("Climber Speed");
         FeederSpeed = table.getEntry("Feeder Speed");
@@ -56,7 +56,7 @@ public class Robot extends LoggedRobot {
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
         IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
-        ShooterSpeed.setDouble(0.41);
+        ShooterSpeed.setDouble(Constants.ShooterConstants.SHOOTINGVELOCITY_DEFAULT);
         ClimberSpeed.setDouble(Constants.ClimberConstants.CLIMBER_DEFAULT_SPEED);
         FeederSpeed.setDouble(Constants.IndexerConstants.FEEDER_DEFAULT_SPEED);
         Distance.setDouble(67);

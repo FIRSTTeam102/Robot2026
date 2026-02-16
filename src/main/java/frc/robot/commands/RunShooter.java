@@ -7,6 +7,8 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
+
+import frc.robot.Robot;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -41,7 +43,7 @@ public class RunShooter extends Command {
       hubX = Constants.BlueHubX;
     }
     double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));*/
-    shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
+    shooter.setShooterSpeed(Robot.Distance.getDouble(ShooterConstants.TESTING_DISTANCE_DEFAULT));
     //TODO  uncomment the distance calc code in runshooter for comp
 
   }

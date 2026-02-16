@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
 import java.util.function.DoubleSupplier;
+
+import com.google.flatbuffers.Constants;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
@@ -33,10 +36,10 @@ public class FullFuelCycle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
+    shooter.setShooterSpeed(Robot.Distance.getDouble(ShooterConstants.TESTING_DISTANCE_DEFAULT));
     indexer.RunIndexer();
     indexer.runFeeder();
-    intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+    intake.IntakeTheFuel(Robot.IntakeSpeed.getDouble(IntakeConstants.INTAKE_DEFAULT_SPEED));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
