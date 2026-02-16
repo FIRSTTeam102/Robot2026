@@ -26,6 +26,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
+
+import com.revrobotics.servohub.ServoChannel;
+import com.revrobotics.servohub.ServoHub;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -54,12 +57,12 @@ public class Shooter extends SubsystemBase {
 
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
-    private Servo actuatorMotor = new Servo(ShooterConstants.ACTUATOR_CAN_ID);
+    private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
 
     public void setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
-        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.END_HEIGHT-ShooterConstants.STARTING_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
+        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.STARTING_HEIGHT-ShooterConstants.END_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
             System.out.println("speed" + velocity_rpm);
@@ -67,18 +70,23 @@ public class Shooter extends SubsystemBase {
         double max_height = ShooterConstants.STARTING_HEIGHT - (Math.pow(velocity_inches * Math.sin(ShooterConstants.HIGH_SHOOTER_ANGLE), 2))/(2*ShooterConstants.GRAVITY);
 
         
-        if (velocity_rpm < 6784 && velocity_rpm > 970 && max_height > 77) {
-            double shooter_percentage = (velocity_rpm/6784) ; 
+        if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
+            double shooter_percentage = (velocity_rpm/6784); 
+                        System.out.println("speed" + shooter_percentage);
 
-            shooterMotor.set(shooter_percentage);
+            shooterMotor.set(-shooter_percentage);
         } else {
-            shooterMotor.set(1.0);
+            shooterMotor.set(-1.0);
         }
         
     }
 
+    // public double shooterRPM() {
+    //     return shooterMotor.get
+    // }
+
     public void startShooting(){
-        shooterMotor.set(-0.40);
+        shooterMotor.set(ShooterConstants.SHOOTINGVELOCITY);
     }
 
    

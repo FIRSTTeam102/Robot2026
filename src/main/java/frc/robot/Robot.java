@@ -9,16 +9,26 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
+import frc.robot.Constants;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
-  public static NetworkTableEntry IndexerSpeedentry;
+  public static NetworkTableEntry IndexerSpeed;
+  public static NetworkTableEntry ShooterSpeed;
+  public static NetworkTableEntry IntakeSpeed;
+  public static NetworkTableEntry ClimberSpeed;
+  public static NetworkTableEntry FeederSpeed;
+  public static NetworkTableEntry Distance;
+  
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
 
@@ -36,8 +46,20 @@ public class Robot extends LoggedRobot {
         actuatorPositionEntry = table.getEntry("Position of actuator");
         actuatorPositionEntry.setDouble(0.0);
                 
-        IndexerSpeedentry = table.getEntry("Indexer Speed");
-        IndexerSpeedentry.setDouble(0.41);
+        IndexerSpeed = table.getEntry("Indexer Speed");
+        ShooterSpeed = table.getEntry("Shooter Speed");
+        IntakeSpeed = table.getEntry("Intake Speed");
+        ClimberSpeed = table.getEntry("Climber Speed");
+        FeederSpeed = table.getEntry("Feeder Speed");
+        Distance = table.getEntry("Manual Distance From Hub");
+
+
+        IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
+        IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
+        ShooterSpeed.setDouble(0.41);
+        ClimberSpeed.setDouble(Constants.ClimberConstants.CLIMBER_DEFAULT_SPEED);
+        FeederSpeed.setDouble(Constants.IndexerConstants.FEEDER_DEFAULT_SPEED);
+        Distance.setDouble(67);
 
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value

@@ -24,10 +24,10 @@ public class RunClimber extends Command {
   @Override
   public void initialize() {
     if ((climber.getEncoderPosition())>(ClimberConstants.CLIMBER_ENCODER_EXTENSION/2)) { //already extended
-      climber.SetClimberSpeed(-ClimberConstants.CLIMBER_MOTOR_SPEED);
+      climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
     }
     else {
-      climber.SetClimberSpeed(ClimberConstants.CLIMBER_MOTOR_SPEED);
+      climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
       target = ClimberConstants.CLIMBER_ENCODER_EXTENSION;
     }
   }

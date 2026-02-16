@@ -64,21 +64,21 @@ public class RobotContainer {
   private void configureBindings() {
     operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
-    operatorXbox.rightTrigger().whileTrue(new RunShooter(shooter));
+    operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
     operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
-    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer));
-    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_SPEED));
+    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
+    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, Constants.IntakeConstants.INTAKE_DEFAULT_SPEED));
     operatorXbox.back().whileTrue(new SequentialCommandGroup(
-                        new IntakeFuel(intake, IntakeConstants.INTAKE_SPEED),
+                        new IntakeFuel(intake, IntakeConstants.INTAKE_DEFAULT_SPEED),
                         new RunIndexer(indexer)));
 
     operatorXbox.start().whileTrue(new SequentialCommandGroup(
       new RunFeeder(indexer),
-      new BasicShooter(shooter)));
-    operatorXbox.a().onTrue(new RunClimber(climber));
+      new RunShooter(shooter)));
+    operatorXbox.povDown().onTrue(new RunClimber(climber));
   }
 
   public Command getAutonomousCommand() {

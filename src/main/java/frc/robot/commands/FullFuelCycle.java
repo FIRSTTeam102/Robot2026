@@ -7,7 +7,8 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -17,22 +18,25 @@ import frc.robot.subsystems.Shooter;
 public class FullFuelCycle extends Command {
   Shooter shooter;
   Indexer indexer; 
+  Intake intake;
 
   /** Creates a new FullFuelCycle. */
-  public FullFuelCycle(Shooter shooter, Indexer indexer) {
+  public FullFuelCycle(Shooter shooter, Indexer indexer, Intake intake) {
     this.shooter = shooter;
     this.indexer = indexer; 
+    this.intake = intake;
 
-    addRequirements(shooter, indexer);
+    addRequirements(shooter, indexer, intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.startShooting();
+    shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
     indexer.RunIndexer();
     indexer.runFeeder();
+    intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,6 +49,7 @@ public class FullFuelCycle extends Command {
     shooter.stopShooting();
     indexer.stopIndexer();
     indexer.stopFeeder();
+    intake.IntakeTheFuel(0);
   }
 
   // Returns true when the command should end.

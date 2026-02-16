@@ -25,32 +25,36 @@ public final class Constants
     public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
     public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
-    public static final double SHOOTER_ANGLE = 85; //in degrees might need to convert 
+    public static final double SHOOTER_ANGLE = 85 * (Math.PI/180); //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 40;
-    public static final int ACTUATOR_CAN_ID = 41; //TODO must change based on robot (not actually a can id probably)
+    public static final int SERVO_CHANNEL = 2;
+    public static final int SERVO_CAN_ID = 41; //TODO must change based on robot (not actually a can id probably)
     public static final double HIGH_SHOOTER_ANGLE = 75.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 45.0;
     public static final double PASSING_VELOCITY = 0.5744;
-    public static final double TESTING_DISTANCE = 5.0; //distance instead of pose to test shooter
+    public static final double TESTING_DISTANCE = 91.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
+    public static final double SHOOTINGVELOCITY = -1.0;
     }
   
   public static final class IndexerConstants {
     public static final int INDEXER_MOTOR_ID = 50; 
     public static final int FEEDER_CAN_ID = 51; 
-    public static final double FEEDER_SPEED = -0.5; //TODO chnage based on robot 
-    public static final double INDEXER_SPEED = -0.5; //TODO chnage based on robot 
+    public static final double FEEDER_DEFAULT_SPEED = 0.8; //TODO chnage based on robot 
+    public static final double INDEXER_DEFAULT_SPEED = -0.8; //TODO chnage based on robot 
   }
 
   public static final class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 30;
-    public static final double INTAKE_SPEED = 0.8; //change based on robot
+    public static final double INTAKE_DEFAULT_SPEED = 1.0; //change based on robot
   }
 
   public static final class ClimberConstants {
     public static final int CLIMBER_MOTOR_ID = 60; //final
-    public static final double CLIMBER_MOTOR_SPEED = 0.5; //TODO needs to be tuned
+    public static final double CLIMBER_DEFAULT_SPEED = 0.5; //TODO needs to be tuned
     public static final double CLIMBER_ENCODER_EXTENSION = 2000; //TODO find max revolutions on rev
     public static final double CLIMBER_ENCODER_TOLERANCE = 10; //TODO find actual tolerance that is good
   }
+
+  
 }

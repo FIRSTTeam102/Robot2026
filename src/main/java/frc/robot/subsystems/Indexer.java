@@ -61,7 +61,7 @@ public class Indexer extends SubsystemBase {
   
   
   public void RunIndexer(){
-      indexerMotor.set(IndexerConstants.INDEXER_SPEED);
+      indexerMotor.set(IndexerConstants.INDEXER_DEFAULT_SPEED);
 
   }
 
@@ -70,7 +70,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void runFeeder(){
-    feederMotor.set(IndexerConstants.FEEDER_SPEED);
+    feederMotor.set(IndexerConstants.FEEDER_DEFAULT_SPEED);
   }
 
   public void stopFeeder() {
