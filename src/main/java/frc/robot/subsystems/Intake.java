@@ -24,6 +24,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
@@ -57,9 +59,21 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
         private SparkMax intakeMotor = new SparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+        private Solenoid piston =  new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
+        
         public void IntakeTheFuel(double speed){
           intakeMotor.set(speed);
         }
+
+        public void pistonFoward(){
+          pistonFoward();
+        }
+
+         public void pistonReverse(){
+          pistonReverse();
+        }
+
+
   @Override
   public void periodic() {
   }

@@ -54,6 +54,7 @@ public final class Constants
   public static final class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 30;
     public static final double INTAKE_DEFAULT_SPEED = 1.0; //change based on robot
+    public static final int PISTON_ID = 2 ;
   }
 
   public static final class ClimberConstants {

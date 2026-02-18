@@ -14,7 +14,8 @@ import frc.robot.Constants;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climber;
@@ -33,7 +34,7 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry actuatorPositionEntry; 
 
   private static Robot   instance;
-
+  Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
   
 
   public Robot() {
@@ -92,6 +93,8 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
+
+    
   }
 
 
@@ -106,6 +109,8 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    compressor.enableDigital();
   }
 
   @Override

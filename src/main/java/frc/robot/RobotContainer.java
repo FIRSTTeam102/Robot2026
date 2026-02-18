@@ -61,6 +61,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    intake.pistonFoward();
   }
 
   private void configureBindings() {
