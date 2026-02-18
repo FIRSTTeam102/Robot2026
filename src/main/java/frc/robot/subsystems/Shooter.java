@@ -71,7 +71,7 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
 
-    private final PIDController shooterPID = new PIDController(0.00025, 0, 0.0);
+    private final PIDController shooterPID = new PIDController(0.029166, 0, 0.0); //found with sysid
 
     public void setShooterSpeed(double distance_from_hub){
         
