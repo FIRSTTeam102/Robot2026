@@ -81,8 +81,9 @@ public class Shooter extends SubsystemBase {
         double velocity_rpm = velocity_inches * (120/(4*Math.PI));
             System.out.println("speed" + velocity_rpm);
         
-        MathUtil.clamp(velocity_rpm, 970, 6784);
+        velocity_rpm = MathUtil.clamp(velocity_rpm, 970, 6784);
 
+        shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
         double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
 
         double feedforward = ShooterConstants.kS*Math.signum(velocity_rpm)+ShooterConstants.kV*velocity_rpm;
@@ -114,6 +115,7 @@ public class Shooter extends SubsystemBase {
 
     public void stopShooting(){
         shooterMotor.stopMotor();
+        shooterPID.reset();
     }
 
     public void setShooterangle(double shooterAngle){

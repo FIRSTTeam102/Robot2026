@@ -28,7 +28,7 @@ public final class Constants
     public static final double SHOOTER_ANGLE = 85 * (Math.PI/180); //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 40;
     public static final int SERVO_CHANNEL = 2;
-    public static final double HIGH_SHOOTER_ANGLE = 75.0; //TODO find good angles for all constants
+    public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 45.0;
     public static final double PASSING_VELOCITY = 0.5744;
     public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
@@ -41,6 +41,8 @@ public final class Constants
     
     public static final double kS = 0.079571; //found with sysid
     public static final double kV = 0.11073;
+
+    public static final double PIDRPMTOLERANCE = 50; //may need to be changed
 
     }
   
