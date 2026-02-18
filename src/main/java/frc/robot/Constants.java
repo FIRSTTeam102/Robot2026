@@ -48,9 +48,7 @@ public final class Constants
 //  }
 
   
-  public static final class ElasticDefaults {
-    public static final double INTAKE_DEFAULT_SPEED = 0.67;
-  }
+ 
 
 
   public static final class DrivebaseConstants
@@ -71,4 +69,50 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.3;
     public static final double TURN_CONSTANT    = 6;
   }
+  public static final class ShooterConstants {
+    public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
+    public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
+    public static final double GRAVITY = -386.4; //inches per seconds squared
+    public static final double SHOOTER_ANGLE = 85 * (Math.PI/180); //in degrees might need to convert 
+    public static final int SHOOTER_CAN_ID = 40;
+    public static final int SERVO_CHANNEL = 2;
+    public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
+    public static final double PASSING_ANGLE = 45.0;
+    public static final double PASSING_VELOCITY = 0.5744;
+    public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
+    public static final double ACTUATOR_EXTENSION = 0.80;
+    public static final double SHOOTINGVELOCITY_DEFAULT = -1.0;
+
+    //testing diatnces 
+    public static final double FRONT_TRENCH = 0.777;
+    public static final double FRONT_TOWER = 0.7184;
+    
+    public static final double kS = 0.079571; //found with sysid
+    public static final double kV = 0.11073;
+
+    public static final double PIDRPMTOLERANCE = 50; //may need to be changed
+
+    }
+  
+  public static final class IndexerConstants {
+    public static final int INDEXER_MOTOR_ID = 50; 
+    public static final int FEEDER_CAN_ID = 51; 
+    public static final double FEEDER_DEFAULT_SPEED = 0.8; //TODO chnage based on robot 
+    public static final double INDEXER_DEFAULT_SPEED = -0.8; //TODO chnage based on robot 
+  }
+
+  public static final class IntakeConstants {
+    public static final int INTAKE_MOTOR_ID = 30;
+    public static final double INTAKE_DEFAULT_SPEED = 1.0; //change based on robot
+    public static final int PISTON_ID = 2 ;
+  }
+
+  public static final class ClimberConstants {
+    public static final int CLIMBER_MOTOR_ID = 60; //final
+    public static final double CLIMBER_DEFAULT_SPEED = 0.5; //TODO needs to be tuned
+    public static final double CLIMBER_ENCODER_EXTENSION = 2000; //TODO find max revolutions on rev
+    public static final double CLIMBER_ENCODER_TOLERANCE = 10; //TODO find actual tolerance that is good
+  }
+
+  
 }
