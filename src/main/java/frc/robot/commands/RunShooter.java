@@ -7,6 +7,8 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
+
+import frc.robot.Robot;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,6 +19,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+/**
+ * 1) get pose from vision 
+ * 2) calculate distance in inches 
+ * 3) sends distance to Shooter 
+ */
 public class RunShooter extends Command {
   Shooter shooter; 
   /** Creates a new RunShooter. */
@@ -30,13 +37,15 @@ public class RunShooter extends Command {
 
   @Override
   public void execute() {
-    // Pose2d robotpose = swerve.getPose();
-    // double hubX = Constants.RedHubX;
-    // if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-    //   hubX = Constants.BlueHubX;
-    // }
-    // double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));
-    // shooter.setShooterSpeed(ShooterConstants.TESTING_DISTANCE);
+    /*Pose2d robotpose = swerve.getPose();
+    double hubX = Constants.RedHubX;
+    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
+      hubX = Constants.BlueHubX;
+    }
+    double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));*/
+    shooter.setShooterSpeed(Robot.Distance.getDouble(ShooterConstants.TESTING_DISTANCE_DEFAULT));
+    //TODO  uncomment the distance calc code in runshooter for comp
+
   }
 
   @Override
