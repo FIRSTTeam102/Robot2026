@@ -66,6 +66,16 @@ public class Robot extends LoggedRobot {
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
+
+      //adds acutatuor positon as a chnagabel  value on elastic  
+        actuatorPositionEntry = table.getEntry("Position of actuator");
+        actuatorPositionEntry.setDouble(0.0);
+
+      Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+      Logger.start();
+
+      
         
       
     }
@@ -93,22 +103,9 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
+  }
 
-   @Override
-    public void robotInit() {
-      //adds acutatuor positon as a chnagabel  value on elastic  
-      NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-        actuatorPositionEntry = table.getEntry("Position of actuator");
-        actuatorPositionEntry.setDouble(0.0);
-
-      Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
-      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-      Logger.start();
-
-      
-        
-      
-    }
+   
 
   @Override
   public void autonomousPeriodic() {}
