@@ -39,6 +39,9 @@ public final class Constants
     public static final double FRONT_TRENCH = 0.777;
     public static final double FRONT_TOWER = 0.7184;
     
+    public static final double kS = 0; //find with sysid
+    public static final double kV = 0;
+
     }
   
   public static final class IndexerConstants {
