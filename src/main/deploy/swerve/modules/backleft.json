@@ -6,7 +6,7 @@
   "absoluteEncoderOffset": 285.644531,
   "drive": {
     "type": "sparkflex_vortex",
-    "id": 20,
+    "id": 25,
     "canbus": null
   },
   "inverted": {
