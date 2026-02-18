@@ -41,6 +41,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.Robot;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 import java.io.File;
@@ -51,6 +52,7 @@ import frc.robot.commands.RunClimber;
 public class RobotContainer {
   final CommandXboxController driverXbox = new CommandXboxController(0);
   final CommandXboxController operatorXbox = new CommandXboxController(1);
+  final CommandXboxController testerXbox = new CommandXboxController(5);
 
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
@@ -86,6 +88,13 @@ public class RobotContainer {
       new RunFeeder(indexer),
       new RunShooter(shooter)));
     operatorXbox.povDown().onTrue(new RunClimber(climber));
+
+    testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    testerXbox.b().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    testerXbox.x().whileTrue(shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    testerXbox.y().whileTrue(shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
+
   }
 
   public Command getAutonomousCommand() {
