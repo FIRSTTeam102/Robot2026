@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends LoggedRobot {
   private NetworkTableEntry PIDinputentry;
-  public static NetworkTableEntry IntakeSpeedentry;
 
   private static Robot   instance;
   private        Command m_autonomousCommand;
@@ -27,7 +26,6 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
-  public static double intakeSpeed;
 
 
   
@@ -71,9 +69,6 @@ public class Robot extends LoggedRobot {
         PIDinputentry = table.getEntry("P value for PID");
         PIDinputentry.setDouble(0);
 
-        // Create an entry for intake speed
-        IntakeSpeedentry = table.getEntry("Intake Speed");
-        IntakeSpeedentry.setDouble(0.41);
 
     }
 
@@ -93,7 +88,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
      double pvalue = PIDinputentry.getDouble(0);
-     intakeSpeed = IntakeSpeedentry.getDouble(0.41);
 
         
      //System.out.println("Intake Speed: " + intakeSpeed);
