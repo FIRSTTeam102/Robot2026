@@ -62,13 +62,20 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    //running motors
     operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
-    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter));
+    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
+    operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+
+
+    //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
+   
+    //combined subsystem
     operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
     operatorXbox.back().whileTrue(new SequentialCommandGroup(

@@ -11,16 +11,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class BasicShooter extends Command {
   Shooter shooter;
+  double velocity;
 
-  public BasicShooter(Shooter shooter) {
+  public BasicShooter(Shooter shooter, double velocity) {
     this.shooter = shooter;
+    this.velocity = velocity;
     addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.startShooting();
+    shooter.startShooting(velocity);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
