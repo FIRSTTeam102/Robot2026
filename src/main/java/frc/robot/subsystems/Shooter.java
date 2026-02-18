@@ -106,7 +106,7 @@ public class Shooter extends SubsystemBase {
      }
 
     public void startShooting(double velocity){
-        shooterMotor.set(Robot.ShooterSpeed.getDouble(ShooterConstants.SHOOTINGVELOCITY_DEFAULT));
+        shooterMotor.set(velocity);
     }
 
    
