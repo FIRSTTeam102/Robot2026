@@ -35,6 +35,9 @@ public final class Constants
     public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
     public static final double SHOOTINGVELOCITY_DEFAULT = -1.0;
+    public static final double kS = 0; //find with sysid
+    public static final double kV = 0;
+
     }
   
   public static final class IndexerConstants {
