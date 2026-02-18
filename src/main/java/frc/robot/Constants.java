@@ -28,7 +28,6 @@ public final class Constants
     public static final double SHOOTER_ANGLE = 85 * (Math.PI/180); //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 40;
     public static final int SERVO_CHANNEL = 2;
-    public static final int SERVO_CAN_ID = 41; //TODO must change based on robot (not actually a can id probably)
     public static final double HIGH_SHOOTER_ANGLE = 75.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 45.0;
     public static final double PASSING_VELOCITY = 0.5744;
