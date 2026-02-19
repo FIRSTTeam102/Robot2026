@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-//import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -22,6 +22,9 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 
 public class Robot extends LoggedRobot {
+  private NetworkTableEntry PIDinputentry;
+
+  private        Command m_autonomousCommand;
   private Command m_autonomousCommand;
   public static NetworkTableEntry IndexerSpeed;
   public static NetworkTableEntry ShooterSpeed;
@@ -37,6 +40,12 @@ public class Robot extends LoggedRobot {
   Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
   
 
+  private RobotContainer m_robotContainer;
+
+  private Timer disabledTimer;
+
+
+  
   public Robot() {
     m_robotContainer = new RobotContainer();
   }
