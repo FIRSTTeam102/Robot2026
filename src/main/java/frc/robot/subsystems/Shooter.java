@@ -73,7 +73,7 @@ public class Shooter extends SubsystemBase {
 
     private final PIDController shooterPID = new PIDController(0.029166, 0, 0.0); //found with sysid
 
-    public void setShooterSpeed(double distance_from_hub){
+    public double setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.STARTING_HEIGHT-ShooterConstants.END_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
@@ -89,6 +89,8 @@ public class Shooter extends SubsystemBase {
         double feedforward = ShooterConstants.kS*Math.signum(velocity_rpm)+ShooterConstants.kV*velocity_rpm;
 
         shooterMotor.setVoltage(pidOutput+feedforward);
+
+        return velocity_rpm;
 
         /* 
         if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
