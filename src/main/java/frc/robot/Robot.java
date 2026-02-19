@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climber;
@@ -24,7 +25,6 @@ import frc.robot.subsystems.Intake;
 public class Robot extends LoggedRobot {
   private NetworkTableEntry PIDinputentry;
 
-  private        Command m_autonomousCommand;
   private Command m_autonomousCommand;
   public static NetworkTableEntry IndexerSpeed;
   public static NetworkTableEntry ShooterSpeed;
@@ -40,7 +40,6 @@ public class Robot extends LoggedRobot {
   Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
   
 
-  private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
 
