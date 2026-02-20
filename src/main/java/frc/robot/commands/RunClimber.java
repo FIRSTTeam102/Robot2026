@@ -29,6 +29,7 @@ public class RunClimber extends Command {
   public void initialize() {
     if ((climber.getEncoderPosition())>(ClimberConstants.CLIMBER_ENCODER_EXTENSION/2)) { //already extended
       climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));
+      target = ClimberConstants.CLIMBER_ENCODER_MIN_EXTENSION;
     }
     else {
       climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));

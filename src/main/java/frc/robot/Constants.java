@@ -111,6 +111,7 @@ public final class Constants
     public static final int CLIMBER_MOTOR_ID = 60; //final
     public static final double CLIMBER_DEFAULT_SPEED = 0.5; //TODO needs to be tuned
     public static final double CLIMBER_ENCODER_EXTENSION = 2000; //TODO find max revolutions on rev
+    public static final double CLIMBER_ENCODER_MIN_EXTENSION = 100; //find encoder value for 2 inches extended
     public static final double CLIMBER_ENCODER_TOLERANCE = 10; //TODO find actual tolerance that is good
   }
 
