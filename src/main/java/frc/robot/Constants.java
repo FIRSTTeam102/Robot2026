@@ -90,7 +90,7 @@ public final class Constants
     public static final double kS = 0.079571; //found with sysid
     public static final double kV = 0.11073;
 
-    public static final double PIDRPMTOLERANCE = 50; //may need to be changed
+    public static final double PIDRPMTOLERANCE = 25; //may need to be changed
 
     }
   

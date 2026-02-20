@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.Indexer;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import java.util.concurrent.TimeUnit;
@@ -26,26 +27,16 @@ public class AllianceCheck extends Command {
 
     Shooter shooter;
     SwerveSubsystem swerve;
-    DoubleSupplier xSupplier;
-    DoubleSupplier ySupplier;
-    PIDController rotationPID;
+    Indexer indexer;
 
-  
-
-  public AllianceCheck(Shooter shooter,SwerveSubsystem swerve, DoubleSupplier xSupplier, DoubleSupplier ySupplier) 
+  public AllianceCheck(Shooter shooter,SwerveSubsystem swerve, Indexer indexer) 
    {
     
     this.swerve = swerve;
     this.shooter = shooter;
-    this.xSupplier = xSupplier;
-    this.ySupplier = ySupplier;
+    this.indexer = indexer;
 
-    rotationPID = new PIDController(5.0, 0.0, 0.0);
-    rotationPID.enableContinuousInput(-Math.PI, Math.PI);
-    rotationPID.setTolerance(Math.toRadians(Constants.AlignTolerance));
-
-    addRequirements(swerve);
-    addRequirements(shooter);
+    addRequirements(shooter, indexer);
   }
 
   // Called when the command is initially scheduled.
@@ -55,18 +46,19 @@ public class AllianceCheck extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Translation2d translation = new Translation2d (
-          xSupplier.getAsDouble(),
-          ySupplier.getAsDouble()
-    );
 
     Pose2d robotpose = swerve.getPose();
 
-    Rotation2d targetAngle = swerve.aimAtHub();
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setShooterangle(ShooterConstants.PASSING_ANGLE);
          if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.PASSING_ANGLE), shooter.getShooterPosition(), .01)){
             shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
+            double expectedRPM = ShooterConstants.PASSING_VELOCITY*6784;
+            if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
+              indexer.RunIndexer();
+              indexer.runFeeder();
+            }
+
         }  
 
         }
@@ -74,27 +66,21 @@ public class AllianceCheck extends Command {
 
       shooter.setShooterangle(ShooterConstants.HIGH_SHOOTER_ANGLE);
         if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.HIGH_SHOOTER_ANGLE), shooter.getShooterPosition(), .01)){
-            shooter.setShooterSpeed(swerve.distanceToHub());
-        
+            double expectedRPM = shooter.setShooterSpeed(swerve.distanceToHub());
+            if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
+              indexer.RunIndexer();
+              indexer.runFeeder();
+            }
      }   
     }
-
-    double omega = rotationPID.calculate (
-      swerve.getPose().getRotation().getRadians(),
-      targetAngle.getRadians()
-    );
-
-    swerve.drive (
-      translation,
-      omega,
-      true
-    );   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerve.drive(new Translation2d(), 0.0, true);
+    indexer.stopIndexer();
+    indexer.stopFeeder();
+    shooter.stopShooting();
   }
 
   // Returns true when the command should end.
