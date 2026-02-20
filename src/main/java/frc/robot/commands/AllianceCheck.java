@@ -64,16 +64,18 @@ public class AllianceCheck extends Command {
 
     Rotation2d targetAngle = swerve.aimAtHub();
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
-        shooter.setShooterangle(ShooterConstants.HIGH_SHOOTER_ANGLE);
-        if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.HIGH_SHOOTER_ANGLE), shooter.getShooterPosition(), .01)){
-            shooter.setShooterSpeed(swerve.distanceToHub());
+      shooter.setShooterangle(ShooterConstants.PASSING_ANGLE);
+         if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.PASSING_ANGLE), shooter.getShooterPosition(), .01)){
+            shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
+        }  
 
         }
     else {
-        shooter.setShooterangle(ShooterConstants.PASSING_ANGLE);
-         if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.PASSING_ANGLE), shooter.getShooterPosition(), .01)){
-            shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
-        }
+
+      shooter.setShooterangle(ShooterConstants.HIGH_SHOOTER_ANGLE);
+        if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.HIGH_SHOOTER_ANGLE), shooter.getShooterPosition(), .01)){
+            shooter.setShooterSpeed(swerve.distanceToHub());
+        
      }   
     }
 
