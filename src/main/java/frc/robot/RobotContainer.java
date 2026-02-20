@@ -224,13 +224,7 @@ public class RobotContainer {
     //combined subsystem
     operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-    operatorXbox.back().whileTrue(new SequentialCommandGroup(
-                        new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)),
-                        new RunIndexer(indexer)));
-
-    operatorXbox.start().whileTrue(new SequentialCommandGroup(
-      new RunFeeder(indexer),
-      new RunShooter(shooter)));
+   
     operatorXbox.povDown().onTrue(new RunClimber(climber));
 
     testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
