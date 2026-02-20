@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,24 +12,31 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
+import java.util.concurrent.TimeUnit;
+
 import java.util.function.DoubleSupplier;
 
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AimWhileMoving extends Command {
-  /** Creates a new AimWhileMoving. */
+public class AllianceCheck extends Command {
 
-  SwerveSubsystem swerve;
-  PIDController rotationPID;
-  DoubleSupplier xSupplier;
-  DoubleSupplier ySupplier;
+    Shooter shooter;
+    SwerveSubsystem swerve;
+    DoubleSupplier xSupplier;
+    DoubleSupplier ySupplier;
+    PIDController rotationPID;
 
-  public AimWhileMoving(SwerveSubsystem swerve,DoubleSupplier xSupplier,DoubleSupplier ySupplier) 
+  
+
+  public AllianceCheck(Shooter shooter,SwerveSubsystem swerve, DoubleSupplier xSupplier, DoubleSupplier ySupplier) 
    {
     
     this.swerve = swerve;
+    this.shooter = shooter;
     this.xSupplier = xSupplier;
     this.ySupplier = ySupplier;
 
@@ -37,6 +45,7 @@ public class AimWhileMoving extends Command {
     rotationPID.setTolerance(Math.toRadians(Constants.AlignTolerance));
 
     addRequirements(swerve);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -55,7 +64,17 @@ public class AimWhileMoving extends Command {
 
     Rotation2d targetAngle = swerve.aimAtHub();
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
-      targetAngle = swerve.aimAtCorner();
+        shooter.setShooterangle(ShooterConstants.HIGH_SHOOTER_ANGLE);
+        if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.HIGH_SHOOTER_ANGLE), shooter.getShooterPosition(), .01)){
+            shooter.setShooterSpeed(swerve.distanceToHub());
+
+        }
+    else {
+        shooter.setShooterangle(ShooterConstants.PASSING_ANGLE);
+         if (MathUtil.isNear(shooter.targetShooterPosition(ShooterConstants.PASSING_ANGLE), shooter.getShooterPosition(), .01)){
+            shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
+        }
+     }   
     }
 
     double omega = rotationPID.calculate (

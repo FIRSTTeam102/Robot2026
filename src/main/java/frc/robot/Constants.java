@@ -73,7 +73,7 @@ public final class Constants
     public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
     public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
     public static final double GRAVITY = -386.4; //inches per seconds squared
-    public static final double SHOOTER_ANGLE = 85 * (Math.PI/180); //in degrees might need to convert 
+    public static final double SHOOTER_ANGLE = 85.0 * (Math.PI/180); //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 40;
     public static final int SERVO_CHANNEL = 2;
     public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants

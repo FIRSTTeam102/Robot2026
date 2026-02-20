@@ -289,6 +289,16 @@ public class SwerveSubsystem extends SubsystemBase
     return new Rotation2d(Math.atan2(cornerY-leadY, cornerX-leadX));
   }
 
+  public double distanceToHub(){
+    Pose2d robotpose = getPose();
+    Translation2d robotposition = new Translation2d(robotpose.getX(),robotpose.getY());
+    double hubX = Constants.RedHubX;
+    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
+      hubX = Constants.BlueHubX;
+    }
+    Translation2d hubposition = new Translation2d(hubX,Constants.HubY);
+    return(robotposition.getDistance(hubposition));
+  }
 
   /**
    * Get the path follower with events.

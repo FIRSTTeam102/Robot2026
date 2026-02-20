@@ -90,16 +90,7 @@ public class Shooter extends SubsystemBase {
 
         shooterMotor.setVoltage(pidOutput+feedforward);
 
-        /* 
-        if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
-            double shooter_percentage = (velocity_rpm/6784); 
-                        System.out.println("speed" + shooter_percentage);
-
-            shooterMotor.set(-shooter_percentage);
-        } else {
-            shooterMotor.set(-1.0); 
-        }
-        */
+       
     }
 
      public double shooterRPM() {
@@ -110,7 +101,13 @@ public class Shooter extends SubsystemBase {
         shooterMotor.set(velocity);
     }
 
-   
+   public double targetShooterPosition(double shooterAngle) {
+    return (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
+   }
+
+   public double getShooterPosition() {
+    return actuatorMotor.getPosition();
+   }
     
 
     public void stopShooting(){
