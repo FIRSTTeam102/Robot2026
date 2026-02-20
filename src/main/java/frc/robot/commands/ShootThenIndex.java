@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  * 1) get pose from vision 
  * 2) calculate distance in inches 
  * 3) sends distance to Shooter 
- * 4) takes 
+ * 4) turns on indexer and feeder when shooter reaches speed
  */
 public class ShootThenIndex extends Command {
   Shooter shooter; 
@@ -46,15 +46,7 @@ public class ShootThenIndex extends Command {
 
   @Override
   public void execute() {
-    Pose2d robotpose = swerve.getPose();
-    double hubX = Constants.RedHubX;
-    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-      hubX = Constants.BlueHubX;
-    }
-    double distance = Math.sqrt(Math.pow((hubX-robotpose.getX()),(2))+Math.pow((Constants.HubY-robotpose.getY()),(2)));
-    shooter.setShooterSpeed(Robot.Distance.getDouble(distance));
-
-    if (MathUtil.isNear(shooter.setShooterSpeed(Robot.Distance.getDouble(distance)), shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
+    if (MathUtil.isNear(shooter.setShooterSpeed(swerve.distanceToHub()), shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
       indexer.RunIndexer();
       indexer.runFeeder();
     }  
