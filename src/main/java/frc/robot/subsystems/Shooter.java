@@ -72,15 +72,14 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
 
-    private double convertToDouble(DoubleSupplier value) {
-        return value.getAsDouble();
-    }
+
+
 
     private final PIDController shooterPID = new PIDController(
-        convertToDouble(() -> Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT)), 
-        convertToDouble(() -> Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT)),
-        convertToDouble(() -> Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT))
-    ); //found with sysid
+        ShooterConstants.SHOOTER_P_DEFAULT,
+        ShooterConstants.SHOOTER_I_DEFAULT, 
+        ShooterConstants.SHOOTER_D_DEFAULT
+    );//found with sysid
 
     public double setShooterSpeed(double distance_from_hub){
         
@@ -185,6 +184,16 @@ public class Shooter extends SubsystemBase {
         return sysIdRoutine.dynamic(direction);
     }
 
+    @Override
+public void periodic() {
+    // Update PID gains from NetworkTables every loop
+    System.out.println(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
+    if (Robot.ShooterP != null) {
+        shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
+        shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
+        shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+    }
+}
 
 }
  
