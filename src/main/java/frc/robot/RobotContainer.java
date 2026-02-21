@@ -144,7 +144,7 @@ public class RobotContainer {
                                                                   .robotRelative(false)
                                                                   .withControllerRotationAxis(() -> driverXbox.getRightX() * -1)
                                                                   .deadband(OperatorConstants.DEADBAND)
-                                                                  .scaleTranslation(DrivebaseConstants.DriveFastScale)
+                                                                  .scaleTranslation(DrivebaseConstants.DRIVE_FAST_SCALE)
                                                                   .allianceRelativeControl(true);
   
   Command driveRobotOrientAngularVelocity = drivebase.driveRobotOriented(driveRobotOriented);
@@ -173,11 +173,11 @@ public class RobotContainer {
         driveDirectAngleKeyboard);
 
         driverXbox.leftTrigger().onTrue(Commands.runOnce(
-          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DrivePrecisionScale)
+          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_PRECISION_SCALE)
                                   .scaleRotation(0.3)
                                   ))
                       .onFalse(Commands.runOnce(
-          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DriveFastScale)
+          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_FAST_SCALE)
                                   .scaleRotation(0.5)));
                                   
         //Enable robotRelative driving if the right trigger is pressed.

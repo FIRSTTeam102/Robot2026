@@ -23,7 +23,7 @@ public class TurnToHub extends Command {
     addRequirements(swerve);
 
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
-    rotationPID.setTolerance(Math.toRadians(Constants.AlignTolerance));
+    rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
   }
 
   // Called when the command is initially scheduled.

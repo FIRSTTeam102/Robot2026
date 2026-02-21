@@ -259,19 +259,19 @@ public class SwerveSubsystem extends SubsystemBase
     double leadX = robotpose.getX()+robotvelocity.getX();
     double leadY = robotpose.getY()+robotvelocity.getY();
 
-    double hubX = Constants.RedHubX;
+    double hubX = Constants.RED_HUB_X;
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-        hubX = Constants.BlueHubX;
+        hubX = Constants.BLUE_HUB_X;
     }
 
-    return new Rotation2d(Math.atan2(Constants.HubY-leadY, hubX-leadX));
+    return new Rotation2d(Math.atan2(Constants.HUB_Y-leadY, hubX-leadX));
   }
 
   public Rotation2d aimAtCorner() {
     Pose2d robotpose = getPose();
 
-    double cornerX = Constants.REDCORNERX;
-    double cornerY = Constants.TOPCORNERY;
+    double cornerX = Constants.RED_CORNER_X;
+    double cornerY = Constants.TOP_CORNER_Y;
   
     ChassisSpeeds speeds = getFieldVelocity();
     Translation2d robotvelocity = new Translation2d(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond);
@@ -280,10 +280,10 @@ public class SwerveSubsystem extends SubsystemBase
     double leadY = robotpose.getY()+robotvelocity.getY();
 
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-        cornerX = Constants.BLUECORNERX;
+        cornerX = Constants.BLUE_CORNER_X;
     }
     if (robotpose.getY()<=4.034663) { //number is half width of field
-      cornerY = Constants.BOTTOMCORNERY;
+      cornerY = Constants.BOTTOM_CORNER_Y;
     }
     
     return new Rotation2d(Math.atan2(cornerY-leadY, cornerX-leadX));
@@ -292,11 +292,11 @@ public class SwerveSubsystem extends SubsystemBase
   public double distanceToHub(){
     Pose2d robotpose = getPose();
     Translation2d robotposition = new Translation2d(robotpose.getX(),robotpose.getY());
-    double hubX = Constants.RedHubX;
+    double hubX = Constants.RED_HUB_X;
     if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
-      hubX = Constants.BlueHubX;
+      hubX = Constants.BLUE_HUB_X;
     }
-    Translation2d hubposition = new Translation2d(hubX,Constants.HubY);
+    Translation2d hubposition = new Translation2d(hubX,Constants.HUB_Y);
     return(robotposition.getDistance(hubposition));
   }
 

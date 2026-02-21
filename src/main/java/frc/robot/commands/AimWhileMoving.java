@@ -34,7 +34,7 @@ public class AimWhileMoving extends Command {
 
     rotationPID = new PIDController(5.0, 0.0, 0.0);
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
-    rotationPID.setTolerance(Math.toRadians(Constants.AlignTolerance));
+    rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
     addRequirements(swerve);
   }

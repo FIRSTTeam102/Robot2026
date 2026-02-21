@@ -29,16 +29,16 @@ public final class Constants
   public static final double MAX_SPEED  = Units.feetToMeters(14.5);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
-  public static final double BlueHubX = 4.597;
-  public static final double RedHubX = 11.938;
-  public static final double HubY = 4.035;
+  public static final double BLUE_HUB_X = 4.597; //coordinates of hubs
+  public static final double RED_HUB_X = 11.938;
+  public static final double HUB_Y = 4.035;
 
-  public static final double TOPCORNERY = 7.55; //top in choreo with blue on left
-  public static final double BOTTOMCORNERY = 0.5;
-  public static final double BLUECORNERX = 0.5;
-  public static final double REDCORNERX = 16.1;
+  public static final double TOP_CORNER_Y = 7.55; //top in choreo with blue on left
+  public static final double BOTTOM_CORNER_Y = 0.5; //coordinates of each corner to aim at while passing
+  public static final double BLUE_CORNER_X = 0.5;
+  public static final double RED_CORNER_X = 16.1;
 
-  public static final double AlignTolerance = 1.0; //deg
+  public static final double ALIGN_TOLERANCE = 1.0; //degrees, tolerance for robot angle alignment
 
 //  public static final class AutonConstants
 //  {
@@ -56,15 +56,15 @@ public final class Constants
 
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
-    public static double DriveFastScale = 1;
-    public static double DrivePrecisionScale = 0.35;
+    public static final double DRIVE_FAST_SCALE = 1; //speed of robot
+    public static final double DRIVE_PRECISION_SCALE = 0.35; //percent of max speed in precise mode
   }
 
   public static class OperatorConstants
   {
 
     // Joystick Deadband
-    public static final double DEADBAND        = 0.1;
+    public static final double DEADBAND        = 0.1; //minimum input on the joystick that actually has an effect
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.3;
     public static final double TURN_CONSTANT    = 6;
