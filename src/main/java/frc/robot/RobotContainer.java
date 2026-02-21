@@ -20,6 +20,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.ExtendActuator;
+import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.RunShooter;
@@ -159,7 +160,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
-    intake.pistonFoward();
+    new FowardPiston(intake);
   }
 
   private void configureBindings() {
