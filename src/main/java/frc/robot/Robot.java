@@ -32,6 +32,9 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry ClimberSpeed;
   public static NetworkTableEntry FeederSpeed;
   public static NetworkTableEntry Distance;
+  public static NetworkTableEntry ShooterP;
+  public static NetworkTableEntry ShooterI;
+  public static NetworkTableEntry ShooterD;
   
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
@@ -61,6 +64,10 @@ public class Robot extends LoggedRobot {
         ClimberSpeed = table.getEntry("Climber Speed");
         FeederSpeed = table.getEntry("Feeder Speed");
         Distance = table.getEntry("Manual Distance From Hub");
+        ShooterP = table.getEntry("Shooter P Value");
+        ShooterI = table.getEntry("Shooter I Value");
+        ShooterD = table.getEntry("Shooter D Value");
+        
 
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);

@@ -213,8 +213,9 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
-    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
-    operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+    //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
+    //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+    operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(4000)));
 
 
     //chnaging acuator 
@@ -223,7 +224,7 @@ public class RobotContainer {
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
    
     //combined subsystem
-    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
+    //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
    
     operatorXbox.povDown().onTrue(new RunClimber(climber));

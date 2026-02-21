@@ -50,6 +50,7 @@ import java.awt.Desktop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -71,28 +72,38 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
 
-    private final PIDController shooterPID = new PIDController(0.029166, 0, 0.0); //found with sysid
+    private double convertToDouble(DoubleSupplier value) {
+        return value.getAsDouble();
+    }
+
+    private final PIDController shooterPID = new PIDController(
+        convertToDouble(() -> Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT)), 
+        convertToDouble(() -> Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT)),
+        convertToDouble(() -> Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT))
+    ); //found with sysid
 
     public double setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.STARTING_HEIGHT-ShooterConstants.END_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
-        double velocity_rpm = velocity_inches * (120/(4*Math.PI));
+        double velocity_rpm = (velocity_inches * (120/(4*Math.PI)))*.75;
             System.out.println("speed" + velocity_rpm);
         
         velocity_rpm = MathUtil.clamp(velocity_rpm, 970, 6784);
 
-        shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
+        /*shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
         double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
 
         double feedforward = ShooterConstants.kS*Math.signum(velocity_rpm)+ShooterConstants.kV*velocity_rpm;
 
-        shooterMotor.setVoltage(pidOutput+feedforward);
+        shooterMotor.setVoltage(-(pidOutput+feedforward));
 
         return velocity_rpm;
+        */
+        
 
-        /* 
+
         if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
             double shooter_percentage = (velocity_rpm/6784); 
                         System.out.println("speed" + shooter_percentage);
@@ -101,15 +112,17 @@ public class Shooter extends SubsystemBase {
         } else {
             shooterMotor.set(-1.0); 
         }
-        */
+        return velocity_rpm;
     }
 
+    @AutoLogOutput
      public double shooterRPM() {
          return shooterEncoder.getVelocity();
      }
 
-    public void startShooting(double velocity){
-        shooterMotor.set(velocity);
+    public void startShooting(double rpm){
+        double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
+        shooterMotor.set(pidOutput);
     }
 
    public double targetShooterPosition(double shooterAngle) {
