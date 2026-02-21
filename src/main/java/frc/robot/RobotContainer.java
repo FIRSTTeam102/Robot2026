@@ -46,6 +46,7 @@ import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
 import frc.robot.commands.AimWhileMoving;
+import frc.robot.commands.AllianceCheck;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
@@ -159,7 +160,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
-    intake.pistonFoward();
+    //intake.pistonFoward();
   }
 
   private void configureBindings() {
@@ -226,6 +227,7 @@ public class RobotContainer {
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
    
     operatorXbox.povDown().onTrue(new RunClimber(climber));
+    operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
 
     testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     testerXbox.b().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
