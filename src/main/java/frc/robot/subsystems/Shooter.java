@@ -119,6 +119,8 @@ public class Shooter extends SubsystemBase {
         return velocity_rpm;
     }
 
+    
+
     @AutoLogOutput
      public double shooterRPM() {
          return shooterEncoder.getVelocity();
