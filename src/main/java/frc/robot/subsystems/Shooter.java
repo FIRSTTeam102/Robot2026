@@ -50,6 +50,7 @@ import java.awt.Desktop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -71,8 +72,16 @@ public class Shooter extends SubsystemBase {
     private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
 
-    private final PIDController shooterPID = new PIDController(0.029166, 0, 0.0); //found with sysid
 
+
+
+    private final PIDController shooterPID = new PIDController(
+        ShooterConstants.SHOOTER_P_DEFAULT,
+        ShooterConstants.SHOOTER_I_DEFAULT, 
+        ShooterConstants.SHOOTER_D_DEFAULT
+    );//found with sysid
+
+    @AutoLogOutput
     public double setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
@@ -83,33 +92,41 @@ public class Shooter extends SubsystemBase {
         
         velocity_rpm = MathUtil.clamp(velocity_rpm, 970, 6784);
 
-        shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
+        double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
+        shooterMotor.set(-pidOutput);
+
+
+        /*shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
         double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
 
         double feedforward = ShooterConstants.kS*Math.signum(velocity_rpm)+ShooterConstants.kV*velocity_rpm;
 
-        shooterMotor.setVoltage(pidOutput+feedforward);
+        shooterMotor.setVoltage(-(pidOutput+feedforward));
 
         return velocity_rpm;
+        */
+        
 
-        /* 
-        if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
+
+        /*if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
             double shooter_percentage = (velocity_rpm/6784); 
                         System.out.println("speed" + shooter_percentage);
 
             shooterMotor.set(-shooter_percentage);
         } else {
             shooterMotor.set(-1.0); 
-        }
-        */
+        }*/
+        return velocity_rpm;
     }
 
+    @AutoLogOutput
      public double shooterRPM() {
          return shooterEncoder.getVelocity();
      }
 
-    public void startShooting(double velocity){
-        shooterMotor.set(velocity);
+    public void startShooting(double rpm){
+        double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
+        shooterMotor.set(pidOutput);
     }
 
    public double targetShooterPosition(double shooterAngle) {
@@ -172,6 +189,16 @@ public class Shooter extends SubsystemBase {
         return sysIdRoutine.dynamic(direction);
     }
 
+    @Override
+public void periodic() {
+    // Update PID gains from NetworkTables every loop
+    System.out.println(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
+    if (Robot.ShooterP != null) {
+        shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
+        shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
+        shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+    }
+}
 
 }
  

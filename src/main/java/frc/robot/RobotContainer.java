@@ -47,6 +47,7 @@ import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
 import frc.robot.commands.AimWhileMoving;
+import frc.robot.commands.AllianceCheck;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
@@ -213,20 +214,22 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
-    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
-    operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+    //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
+    //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+    operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
 
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
-    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
+    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
    
     //combined subsystem
-    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
+    //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
    
     operatorXbox.povDown().onTrue(new RunClimber(climber));
+    operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
 
     testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     testerXbox.b().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
