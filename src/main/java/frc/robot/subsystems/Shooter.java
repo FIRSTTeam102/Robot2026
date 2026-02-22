@@ -193,8 +193,6 @@ public class Shooter extends SubsystemBase {
 
     @Override
 public void periodic() {
-    // Update PID gains from NetworkTables every loop
-    System.out.println(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
     if (Robot.ShooterP != null) {
         shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
         shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
