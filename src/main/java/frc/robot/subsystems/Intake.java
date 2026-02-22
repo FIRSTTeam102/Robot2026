@@ -65,12 +65,12 @@ public class Intake extends SubsystemBase {
           intakeMotor.set(speed);
         }
 
-        public void pistonOut(){
-    //      piston.
+        public void pistonFoward(){
+          piston.set(true); //extends piston 
         }
 
          public void pistonReverse(){
-          pistonReverse();
+          piston.set(false); //retracts piston 
         }
 
 
