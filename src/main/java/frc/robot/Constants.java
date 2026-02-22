@@ -83,7 +83,7 @@ public final class Constants
     public static final double ACTUATOR_EXTENSION = 0.80;
     public static final double SHOOTINGVELOCITY_DEFAULT = -4000;
 
-    public static final double SHOOTER_P_DEFAULT = 0.029166;
+    public static final double SHOOTER_P_DEFAULT = 0.000152;
     public static final double SHOOTER_I_DEFAULT = 0;
     public static final double SHOOTER_D_DEFAULT = 0;
 

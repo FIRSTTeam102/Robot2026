@@ -76,6 +76,9 @@ public class Robot extends LoggedRobot {
         ClimberSpeed.setDouble(Constants.ClimberConstants.CLIMBER_DEFAULT_SPEED);
         FeederSpeed.setDouble(Constants.IndexerConstants.FEEDER_DEFAULT_SPEED);
         Distance.setDouble(Constants.ShooterConstants.TESTING_DISTANCE_DEFAULT);
+        ShooterP.setDouble(Constants.ShooterConstants.SHOOTER_P_DEFAULT);
+        ShooterI.setDouble(Constants.ShooterConstants.SHOOTER_I_DEFAULT);
+        ShooterD.setDouble(Constants.ShooterConstants.SHOOTER_D_DEFAULT);
 
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
