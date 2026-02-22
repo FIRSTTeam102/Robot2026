@@ -215,13 +215,13 @@ public class RobotContainer {
     operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
-    operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(4000)));
+    operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
 
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
-    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
+    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
    
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));

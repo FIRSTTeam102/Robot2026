@@ -76,21 +76,22 @@ public class Shooter extends SubsystemBase {
         return value.getAsDouble();
     }
 
-    private final PIDController shooterPID = new PIDController(
-        convertToDouble(() -> Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT)), 
-        convertToDouble(() -> Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT)),
-        convertToDouble(() -> Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT))
-    ); //found with sysid
+    private final PIDController shooterPID = new PIDController(0.000152,0,0); //good
 
+    @AutoLogOutput
     public double setShooterSpeed(double distance_from_hub){
         
         double velocity_inches = (distance_from_hub)/
         (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.STARTING_HEIGHT-ShooterConstants.END_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
 
-        double velocity_rpm = (velocity_inches * (120/(4*Math.PI)))*.75;
+        double velocity_rpm = velocity_inches * (120/(4*Math.PI));
             System.out.println("speed" + velocity_rpm);
         
         velocity_rpm = MathUtil.clamp(velocity_rpm, 970, 6784);
+
+        double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
+        shooterMotor.set(-pidOutput);
+
 
         /*shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
         double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
@@ -104,14 +105,14 @@ public class Shooter extends SubsystemBase {
         
 
 
-        if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
+        /*if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
             double shooter_percentage = (velocity_rpm/6784); 
                         System.out.println("speed" + shooter_percentage);
 
             shooterMotor.set(-shooter_percentage);
         } else {
             shooterMotor.set(-1.0); 
-        }
+        }*/
         return velocity_rpm;
     }
 

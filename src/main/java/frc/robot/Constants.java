@@ -81,7 +81,7 @@ public final class Constants
     public static final double PASSING_VELOCITY = 0.5744;
     public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
-    public static final double SHOOTINGVELOCITY_DEFAULT = -1.0;
+    public static final double SHOOTINGVELOCITY_DEFAULT = -4000;
 
     public static final double SHOOTER_P_DEFAULT = 0.029166;
     public static final double SHOOTER_I_DEFAULT = 0;
