@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.swervedrive.Vision.Cameras;
 import java.io.File;
 import java.io.IOException;
@@ -142,12 +143,39 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    updateTunablePIDs();
     // When vision is enabled we must manually update odometry in SwerveDrive
     if (visionDriveTest)
     {
       swerveDrive.updateOdometry();
       vision.updatePoseEstimation(swerveDrive);
       swervePose = swerveDrive.getPose();
+    }
+  }
+
+  private void updateTunablePIDs() {
+    if (Robot.SwerveAngleP != null && Robot.SwerveDriveP != null) {
+      double angleP = Robot.SwerveAngleP.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_P_DEFAULT);
+      double angleI = Robot.SwerveAngleI.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_I_DEFAULT);
+      double angleD = Robot.SwerveAngleD.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_D_DEFAULT);
+    
+      double driveP = Robot.SwerveDriveP.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_P_DEFAULT);
+      double driveI = Robot.SwerveDriveI.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_I_DEFAULT);
+      double driveD = Robot.SwerveDriveD.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_D_DEFAULT);
+      
+      for (var module : swerveDrive.getModules()) {
+        module.configuration.anglePIDF.p = angleP;
+        module.configuration.anglePIDF.i = angleI;
+        module.configuration.anglePIDF.d = angleD;
+
+        module.configuration.velocityPIDF.p = driveP;
+        module.configuration.velocityPIDF.i = driveI;
+        module.configuration.velocityPIDF.d = driveD;
+
+        module.getAngleMotor().configurePIDF(module.configuration.anglePIDF);
+        module.getDriveMotor().configurePIDF(module.configuration.velocityPIDF);
+
+      }
     }
   }
 

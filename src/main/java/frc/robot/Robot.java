@@ -32,6 +32,14 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry ClimberSpeed;
   public static NetworkTableEntry FeederSpeed;
   public static NetworkTableEntry Distance;
+
+  public static NetworkTableEntry SwerveAngleP;
+  public static NetworkTableEntry SwerveAngleI;
+  public static NetworkTableEntry SwerveAngleD;
+  public static NetworkTableEntry SwerveDriveP;
+  public static NetworkTableEntry SwerveDriveI;
+  public static NetworkTableEntry SwerveDriveD;
+
   
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
@@ -62,6 +70,14 @@ public class Robot extends LoggedRobot {
         FeederSpeed = table.getEntry("Feeder Speed");
         Distance = table.getEntry("Manual Distance From Hub");
 
+        SwerveAngleP = table.getEntry("Swerve Angle - P");
+        SwerveAngleI = table.getEntry("Swerve Angle - I");
+        SwerveAngleD = table.getEntry("Swerve Angle - D");
+
+        SwerveDriveP = table.getEntry("Swerve Drive - P");
+        SwerveDriveI = table.getEntry("Swerve Drive - I");
+        SwerveDriveD = table.getEntry("Swerve Drive - D");
+
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
         IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
@@ -69,6 +85,14 @@ public class Robot extends LoggedRobot {
         ClimberSpeed.setDouble(Constants.ClimberConstants.CLIMBER_DEFAULT_SPEED);
         FeederSpeed.setDouble(Constants.IndexerConstants.FEEDER_DEFAULT_SPEED);
         Distance.setDouble(Constants.ShooterConstants.TESTING_DISTANCE_DEFAULT);
+
+        SwerveAngleP.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_P_DEFAULT);
+        SwerveAngleI.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_I_DEFAULT);
+        SwerveAngleD.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_D_DEFAULT);
+
+        SwerveDriveP.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_P_DEFAULT);
+        SwerveDriveI.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_I_DEFAULT);
+        SwerveDriveD.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_D_DEFAULT);
 
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value

@@ -58,6 +58,15 @@ public final class Constants
     public static final double WHEEL_LOCK_TIME = 10; // seconds
     public static double DriveFastScale = 1;
     public static double DrivePrecisionScale = 0.35;
+  
+    public static double SWERVE_ANGLE_P_DEFAULT = 0.0105;
+    public static double SWERVE_ANGLE_I_DEFAULT = 0;
+    public static double SWERVE_ANGLE_D_DEFAULT = 0.00005;
+
+    public static double SWERVE_DRIVE_P_DEFAULT = 0.0105;
+    public static double SWERVE_DRIVE_I_DEFAULT = 0;
+    public static double SWERVE_DRIVE_D_DEFAULT = 0.000005;
+    
   }
 
   public static class OperatorConstants
