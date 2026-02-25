@@ -35,6 +35,7 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry ShooterP;
   public static NetworkTableEntry ShooterI;
   public static NetworkTableEntry ShooterD;
+  public static NetworkTableEntry RunIntakeSlow;
   
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
@@ -67,6 +68,7 @@ public class Robot extends LoggedRobot {
         ShooterP = table.getEntry("Shooter P Value");
         ShooterI = table.getEntry("Shooter I Value");
         ShooterD = table.getEntry("Shooter D Value");
+        RunIntakeSlow = table.getEntry("Indexer idle mode");
         
 
 
@@ -79,6 +81,7 @@ public class Robot extends LoggedRobot {
         ShooterP.setDouble(Constants.ShooterConstants.SHOOTER_P_DEFAULT);
         ShooterI.setDouble(Constants.ShooterConstants.SHOOTER_I_DEFAULT);
         ShooterD.setDouble(Constants.ShooterConstants.SHOOTER_D_DEFAULT);
+        RunIntakeSlow.setBoolean(false);
 
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
