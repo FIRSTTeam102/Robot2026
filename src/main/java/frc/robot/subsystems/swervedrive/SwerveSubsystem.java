@@ -154,23 +154,27 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   private void updateTunablePIDs() {
-    if (Robot.SwerveAngleP != null && Robot.SwerveDriveP != null) {
+    if (Robot.SwerveAngleP != null && Robot.SwerveDriveP != null) { // If values are NULL (during startup) don't change, otherwise get values from NetworkTables
       double angleP = Robot.SwerveAngleP.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_P_DEFAULT);
       double angleI = Robot.SwerveAngleI.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_I_DEFAULT);
       double angleD = Robot.SwerveAngleD.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_D_DEFAULT);
+      double angleF = Robot.SwerveAngleF.getDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_F_DEFAULT);
     
       double driveP = Robot.SwerveDriveP.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_P_DEFAULT);
       double driveI = Robot.SwerveDriveI.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_I_DEFAULT);
       double driveD = Robot.SwerveDriveD.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_D_DEFAULT);
+      double driveF = Robot.SwerveDriveF.getDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_F_DEFAULT);
       
-      for (var module : swerveDrive.getModules()) {
+      for (var module : swerveDrive.getModules()) { // Apply NetworkTables values to PID configuration
         module.configuration.anglePIDF.p = angleP;
         module.configuration.anglePIDF.i = angleI;
         module.configuration.anglePIDF.d = angleD;
+        module.configuration.anglePIDF.f = angleF;
 
         module.configuration.velocityPIDF.p = driveP;
         module.configuration.velocityPIDF.i = driveI;
         module.configuration.velocityPIDF.d = driveD;
+        module.configuration.velocityPIDF.f = driveF;
 
         module.getAngleMotor().configurePIDF(module.configuration.anglePIDF);
         module.getDriveMotor().configurePIDF(module.configuration.velocityPIDF);
