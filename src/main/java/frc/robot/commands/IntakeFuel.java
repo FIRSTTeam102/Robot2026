@@ -25,6 +25,7 @@ public class IntakeFuel extends Command {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intake.pistonFoward();
     intake.IntakeTheFuel(speed.getAsDouble());
   }
 
@@ -36,6 +37,7 @@ public class IntakeFuel extends Command {
   @Override
   public void end(boolean interrupted) {
     intake.IntakeTheFuel(0);
+    intake.pistonReverse();
   }
 
   // Returns true when the command should end.

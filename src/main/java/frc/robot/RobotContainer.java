@@ -23,6 +23,7 @@ import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.IdleIntake;
 import frc.robot.commands.RunShooter;
 import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -227,7 +228,7 @@ public class RobotContainer {
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-   
+    operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     operatorXbox.povDown().onTrue(new RunClimber(climber));
     operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
 

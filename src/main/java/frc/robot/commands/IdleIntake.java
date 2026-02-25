@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ReversePiston extends Command {
+public class IdleIntake extends Command {
 Intake intake;
 
-  public ReversePiston(Intake intake) {
+  public IdleIntake(Intake intake) {
     this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -20,6 +20,7 @@ Intake intake;
   @Override
   public void initialize() {
     intake.pistonReverse();
+    intake.IntakeTheFuel(0.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,7 +29,9 @@ Intake intake;
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.IntakeTheFuel(0);
+  }
 
   // Returns true when the command should end.
   @Override
