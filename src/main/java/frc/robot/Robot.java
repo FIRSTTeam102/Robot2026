@@ -36,10 +36,12 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry SwerveAngleP;
   public static NetworkTableEntry SwerveAngleI;
   public static NetworkTableEntry SwerveAngleD;
+  public static NetworkTableEntry SwerveAngleF;
   public static NetworkTableEntry SwerveDriveP;
   public static NetworkTableEntry SwerveDriveI;
   public static NetworkTableEntry SwerveDriveD;
-
+  public static NetworkTableEntry SwerveDriveF;
+  
   
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
@@ -73,10 +75,12 @@ public class Robot extends LoggedRobot {
         SwerveAngleP = table.getEntry("Swerve Angle - P");
         SwerveAngleI = table.getEntry("Swerve Angle - I");
         SwerveAngleD = table.getEntry("Swerve Angle - D");
+        SwerveAngleF = table.getEntry("Swerve Angle - F");
 
         SwerveDriveP = table.getEntry("Swerve Drive - P");
         SwerveDriveI = table.getEntry("Swerve Drive - I");
         SwerveDriveD = table.getEntry("Swerve Drive - D");
+        SwerveDriveF = table.getEntry("Swerve Drive - F");
 
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
@@ -89,10 +93,12 @@ public class Robot extends LoggedRobot {
         SwerveAngleP.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_P_DEFAULT);
         SwerveAngleI.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_I_DEFAULT);
         SwerveAngleD.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_D_DEFAULT);
+        SwerveAngleF.setDouble(Constants.DrivebaseConstants.SWERVE_ANGLE_F_DEFAULT);
 
         SwerveDriveP.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_P_DEFAULT);
         SwerveDriveI.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_I_DEFAULT);
         SwerveDriveD.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_D_DEFAULT);
+        SwerveDriveF.setDouble(Constants.DrivebaseConstants.SWERVE_DRIVE_F_DEFAULT);
 
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value

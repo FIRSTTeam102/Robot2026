@@ -60,12 +60,14 @@ public final class Constants
     public static double DrivePrecisionScale = 0.35;
   
     public static double SWERVE_ANGLE_P_DEFAULT = 0.0105;
-    public static double SWERVE_ANGLE_I_DEFAULT = 0;
+    public static double SWERVE_ANGLE_I_DEFAULT = 0.0;
     public static double SWERVE_ANGLE_D_DEFAULT = 0.00005;
+    public static double SWERVE_ANGLE_F_DEFAULT = 0.0;
 
     public static double SWERVE_DRIVE_P_DEFAULT = 0.0105;
-    public static double SWERVE_DRIVE_I_DEFAULT = 0;
+    public static double SWERVE_DRIVE_I_DEFAULT = 0.0;
     public static double SWERVE_DRIVE_D_DEFAULT = 0.000005;
+    public static double SWERVE_DRIVE_F_DEFAULT = 0.0;
     
   }
 
@@ -76,7 +78,7 @@ public final class Constants
     public static final double DEADBAND        = 0.1;
     public static final double LEFT_Y_DEADBAND = 0.1;
     public static final double RIGHT_X_DEADBAND = 0.3;
-    public static final double TURN_CONSTANT    = 6;
+    public static final double TURN_CONSTANT    = 6.0;
   }
   public static final class ShooterConstants {
     public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
