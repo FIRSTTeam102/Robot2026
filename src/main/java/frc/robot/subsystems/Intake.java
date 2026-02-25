@@ -66,11 +66,11 @@ public class Intake extends SubsystemBase {
         }
 
         public void pistonFoward(){
-          pistonFoward();
+          //pistonFoward();
         }
 
          public void pistonReverse(){
-          pistonReverse();
+          //pistonReverse();
         }
 
 
