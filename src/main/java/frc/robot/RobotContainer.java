@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
+import frc.robot.commands.ZoneShooting;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.AllianceCheck;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -161,7 +162,13 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
+    NamedCommands.registerCommand("Hub Shot", new ZoneShooting(shooter, drivebase));
+    NamedCommands.registerCommand("Climb", new RunClimber(climber));
+    NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
+
     configureBindings();
+    DriverStation.silenceJoystickConnectionWarning(true);
     new FowardPiston(intake);
   }
 
@@ -196,8 +203,8 @@ public class RobotContainer {
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
         driverXbox.leftBumper().whileTrue(new AimWhileMoving(
           drivebase,
-            () -> -driverXbox.getLeftY(),
-            () -> -driverXbox.getLeftX()
+            () -> driverXbox.getLeftY(),
+            () -> driverXbox.getLeftX()
           )
         );
 
