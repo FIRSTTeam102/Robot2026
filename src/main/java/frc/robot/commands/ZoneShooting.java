@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
@@ -28,7 +30,8 @@ public class ZoneShooting extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double distance = swerve.distanceToHub();
+    //double distance = swerve.distanceToHub();
+    double distance = Robot.Distance.getDouble(ShooterConstants.TESTING_DISTANCE_DEFAULT);
     if(distance > 144){
       shooter.setActuatorExtension(0.7);
       shooter.startShooting(-6700.0); //equation
