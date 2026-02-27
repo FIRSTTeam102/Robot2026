@@ -234,8 +234,8 @@ public class RobotContainer {
    
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-    operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
+    //operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
+    operatorXbox.rightTrigger().whileTrue(new FowardPiston(intake));
     operatorXbox.povDown().onTrue(new RunClimber(climber));
     operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
 

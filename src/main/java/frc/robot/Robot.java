@@ -15,6 +15,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -51,6 +52,8 @@ public class Robot extends LoggedRobot {
   
   public Robot() {
     m_robotContainer = new RobotContainer();
+
+
   }
 
   @Override
@@ -70,6 +73,7 @@ public class Robot extends LoggedRobot {
         ShooterD = table.getEntry("Shooter D Value");
         RunIntakeSlow = table.getEntry("Indexer idle mode");
         
+          final PneumaticHub hub = new PneumaticHub(2);
 
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
@@ -96,8 +100,8 @@ public class Robot extends LoggedRobot {
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
 
+      hub.enableCompressorDigital();
       
-        
       
     }
 
@@ -141,7 +145,7 @@ public class Robot extends LoggedRobot {
       m_autonomousCommand.cancel();
     }
 
-    compressor.enableDigital();
+  
   }
 
   @Override

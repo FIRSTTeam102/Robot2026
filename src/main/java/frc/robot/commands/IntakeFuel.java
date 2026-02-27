@@ -25,13 +25,15 @@ public class IntakeFuel extends Command {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.pistonFoward();
-    intake.IntakeTheFuel(speed.getAsDouble());
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.pistonFoward();
+    intake.IntakeTheFuel(speed.getAsDouble());
+  }
 
   // Called once the command ends or is interrupted.
   @Override

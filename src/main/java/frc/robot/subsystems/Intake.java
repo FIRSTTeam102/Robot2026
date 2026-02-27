@@ -24,6 +24,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Alert.AlertType;
@@ -59,18 +61,21 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
         private SparkMax intakeMotor = new SparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
-        private Solenoid piston =  new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
+        private final Solenoid solenoid =  new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
         
         public void IntakeTheFuel(double speed){
           intakeMotor.set(speed);
         }
 
+        
         public void pistonFoward(){
-          piston.set(true); //extends piston 
+          solenoid.set(true);
+        //extends piston 
+        
         }
 
          public void pistonReverse(){
-          piston.set(false); //retracts piston 
+          solenoid.set(false); //retracts piston 
         }
 
 
