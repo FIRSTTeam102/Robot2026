@@ -221,7 +221,6 @@ public class RobotContainer {
     //running motors
     operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
-    operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
     operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
@@ -234,10 +233,17 @@ public class RobotContainer {
    
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    //operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-    operatorXbox.rightTrigger().whileTrue(new FowardPiston(intake));
-    operatorXbox.povDown().onTrue(new RunClimber(climber));
+    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
+    operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
+
+
+
+
+
+
+
+
 
     testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     testerXbox.b().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
