@@ -35,7 +35,7 @@ Intake intake;
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.IntakeTheFuel(0);
+    intake.IntakeTheFuel(0.7);
   }
 
   // Returns true when the command should end.
