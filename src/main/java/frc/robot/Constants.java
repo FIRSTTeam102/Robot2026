@@ -87,6 +87,8 @@ public final class Constants
     public static final double SHOOTER_I_DEFAULT = 0;
     public static final double SHOOTER_D_DEFAULT = 0;
 
+    public static final double BASIC_SHOOTER_SPEED_DEFAULT = -4000;
+
     //testing diatnces 
     public static final double FRONT_TRENCH = 0.777;
     public static final double FRONT_TOWER = 0.7184;

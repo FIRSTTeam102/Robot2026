@@ -227,7 +227,10 @@ public class RobotContainer {
     operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
-    operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
+    operatorXbox.y().whileTrue(Commands.parallel(
+      new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
+      new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
+      ));
     operatorXbox.povRight().whileTrue(new FowardPiston(intake));
     operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));
     operatorXbox.povDown().whileTrue(new ReversePiston(intake));
