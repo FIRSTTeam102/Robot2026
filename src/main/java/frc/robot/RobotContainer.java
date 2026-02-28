@@ -166,7 +166,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Hub Shot", new ZoneShooting(shooter, drivebase));
     NamedCommands.registerCommand("Climb", new RunClimber(climber));
     NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
-
+    NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
+    
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
   }
