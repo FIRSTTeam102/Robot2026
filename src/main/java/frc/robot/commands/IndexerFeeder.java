@@ -36,10 +36,10 @@ public class IndexerFeeder extends Command {
   @Override
   public void execute() {
     counter++;
-    if (counter == 100){
-      indexer.stopIndexer();
+    if (counter == 50){
+      indexer.ReverseIndexer();
     }
-    else if (counter == 101){
+    else if (counter == 54){
       counter = 0;
       indexer.RunIndexer();
     }
