@@ -172,6 +172,8 @@ public class RobotContainer {
 
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
+
+     
   }
 
   private void configureBindings() {

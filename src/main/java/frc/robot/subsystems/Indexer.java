@@ -63,8 +63,8 @@ public class Indexer extends SubsystemBase {
   
   
   public void RunIndexer(){
-      indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
-
+    indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
+      
   }
 
   public void stopIndexer(){
