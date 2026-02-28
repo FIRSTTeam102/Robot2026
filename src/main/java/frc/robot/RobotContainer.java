@@ -169,7 +169,6 @@ public class RobotContainer {
 
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
-    new FowardPiston(intake);
   }
 
   private void configureBindings() {
@@ -224,7 +223,7 @@ public class RobotContainer {
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
     operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
-
+    operatorXbox.povRight().whileTrue(new FowardPiston(intake));
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
@@ -234,7 +233,7 @@ public class RobotContainer {
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-    operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
+    //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
 
 

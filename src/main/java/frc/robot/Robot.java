@@ -73,8 +73,6 @@ public class Robot extends LoggedRobot {
         ShooterD = table.getEntry("Shooter D Value");
         RunIntakeSlow = table.getEntry("Indexer idle mode");
         
-          final PneumaticHub hub = new PneumaticHub(2);
-
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
         IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
@@ -100,7 +98,6 @@ public class Robot extends LoggedRobot {
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
 
-      hub.enableCompressorDigital();
       
       
     }
@@ -129,6 +126,7 @@ public class Robot extends LoggedRobot {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
 
+
   }
 
    
@@ -145,7 +143,6 @@ public class Robot extends LoggedRobot {
       m_autonomousCommand.cancel();
     }
 
-  
   }
 
   @Override
