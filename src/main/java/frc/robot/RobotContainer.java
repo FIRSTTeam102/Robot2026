@@ -23,6 +23,7 @@ import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
 import frc.robot.commands.IdleIntake;
@@ -230,7 +231,7 @@ public class RobotContainer {
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
-      new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
+      new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
     operatorXbox.povRight().whileTrue(new FowardPiston(intake));
     operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));

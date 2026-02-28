@@ -4,32 +4,43 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Indexer;
+import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ReverseFeeder extends Command {
-  /** Creates a new ReverseFeeder. */
-  Indexer indexer;
-  public ReverseFeeder(Indexer indexer) {
-    this.indexer = indexer;
-    addRequirements(indexer);
+public class IntakeNoPneumatics extends Command {
+  Intake intake;    
+  DoubleSupplier speed;
+  /** Creates a new IntakeFuel. */
+  public IntakeNoPneumatics(Intake intake, DoubleSupplier speed) {
+    this.intake =intake;
+    this.speed = speed;
+    addRequirements(intake);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    indexer.reverseFeeder();
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.IntakeTheFuel(speed.getAsDouble());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexer.stopFeeder();
+    intake.IntakeTheFuel(0);
+    intake.pistonReverse();
   }
 
   // Returns true when the command should end.
