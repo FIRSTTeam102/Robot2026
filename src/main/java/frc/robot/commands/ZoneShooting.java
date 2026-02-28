@@ -32,18 +32,15 @@ public class ZoneShooting extends Command {
   public void execute() {
     //double distance = swerve.distanceToHub();
     double distance = Robot.Distance.getDouble(ShooterConstants.TESTING_DISTANCE_DEFAULT);
-    if(distance > 144){
+    if(distance > 120){
       shooter.setActuatorExtension(0.7);
-      shooter.startShooting(-6700.0); //equation
+      shooter.startShooting((-14.27526 * distance) - 1601.22854); //equation
     }
-     else if (distance > 125.5 && distance <= 144){
-        shooter.setActuatorExtension(0.6);
-        shooter.startShooting((-40.50633* distance )+1043.03797); //TODO need to get more data for better equation
+     else if (distance <= 120){
+        shooter.setActuatorExtension(0.3);
+        shooter.startShooting((-0.0052478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076 ); 
        }
-     else {
-       shooter.setActuatorExtension(0.3);
-       shooter.startShooting(-0.0120833 * Math.pow(distance, 3) + 2.12207 * Math.pow(distance, 2)- (130.7185 * distance));
-     }
+     
   }
 
   // Called once the command ends or is interrupted.
