@@ -80,6 +80,10 @@ public class Indexer extends SubsystemBase {
     feederMotor.set(Robot.FeederSpeed.getDouble(IndexerConstants.FEEDER_DEFAULT_SPEED));
   }
 
+  public void reverseFeeder() {
+    feederMotor.set(-(Robot.FeederSpeed.getDouble(IndexerConstants.FEEDER_DEFAULT_SPEED)));
+  }
+
   public void stopFeeder() {
     feederMotor.stopMotor();
   }
