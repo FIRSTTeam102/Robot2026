@@ -24,6 +24,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -77,13 +78,13 @@ public class Intake extends SubsystemBase {
 
         
         public void pistonFoward(){
-          solenoid.set(true);
+          solenoid.set(false);
         //extends piston 
         
         }
 
          public void pistonReverse(){
-          solenoid.set(false); //retracts piston 
+          solenoid.set(true); //retracts piston 
         }
 
         @AutoLogOutput
@@ -91,7 +92,17 @@ public class Intake extends SubsystemBase {
           return solenoid.get();
         }
 
+        @AutoLogOutput
+        public boolean pressureFull() {
+          return !hub.getPressureSwitch();
+        }
+
+        @AutoLogOutput
+        public boolean compressorEnabled() {
+          return hub.getCompressor();
+        }
+
+
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 }

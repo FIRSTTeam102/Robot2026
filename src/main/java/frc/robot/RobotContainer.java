@@ -23,7 +23,9 @@ import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.ReversePiston;
 import frc.robot.commands.IdleIntake;
+import frc.robot.commands.IndexerFeeder;
 import frc.robot.commands.RunShooter;
 import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -167,7 +169,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb", new RunClimber(climber));
     NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
-    
+
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
   }
@@ -225,6 +227,8 @@ public class RobotContainer {
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
     operatorXbox.y().whileTrue(new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(-4000)));
     operatorXbox.povRight().whileTrue(new FowardPiston(intake));
+    operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));
+    operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));

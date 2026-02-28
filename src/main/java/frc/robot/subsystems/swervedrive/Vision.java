@@ -336,14 +336,14 @@ public class Vision
   enum Cameras
   {
     FRONTLEFT_CAM("FL",
-             new Rotation3d(0, Math.toRadians(-15), Math.toRadians(17)),
+             new Rotation3d(0, Math.toRadians(-15), Math.toRadians(15)),
              new Translation3d(Units.inchesToMeters(-10.401),
                                Units.inchesToMeters(8.549),
                                Units.inchesToMeters(19.49)),
              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
   
     FRONTRIGHT_CAM("FR",
-              new Rotation3d(0, Math.toRadians(-15), Math.toRadians(-17)),
+              new Rotation3d(0, Math.toRadians(-15), Math.toRadians(-15)),
               new Translation3d(Units.inchesToMeters(-10.401),
                                Units.inchesToMeters(-8.549),
                                Units.inchesToMeters(19.49)),
