@@ -39,7 +39,7 @@ public class IndexerFeeder extends Command {
     if (counter == 50){
       indexer.ReverseIndexer();
     }
-    else if (counter == 54){
+    else if (counter == 64){
       counter = 0;
       indexer.RunIndexer();
     }
