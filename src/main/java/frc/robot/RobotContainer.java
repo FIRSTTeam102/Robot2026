@@ -225,17 +225,17 @@ public class RobotContainer {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
     //running motors
-    operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
-    operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
+    //operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
+   // operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
-    operatorXbox.povRight().whileTrue(new FowardPiston(intake));
+   // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
     operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));
-    operatorXbox.povDown().whileTrue(new ReversePiston(intake));
+   // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
