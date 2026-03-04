@@ -66,7 +66,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
-import frc.robot.commands.RunClimber;
+import frc.robot.commands.ExtendClimber;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
@@ -168,7 +168,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
     NamedCommands.registerCommand("Hub Shot", new ZoneShooting(shooter, drivebase));
-    NamedCommands.registerCommand("Climb", new RunClimber(climber));
+    NamedCommands.registerCommand("Climb", new ExtendClimber(climber));
     NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
 

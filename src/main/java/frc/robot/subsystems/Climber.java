@@ -19,7 +19,9 @@ public class Climber extends SubsystemBase {
   private DigitalInput limitSwitch = new DigitalInput(ClimberConstants.LIMIT_SWITCH_PORT);
   private DigitalInput opticalSensor = new DigitalInput(0);//TODO change channel
 
-  public Climber() {}
+  public Climber() {
+    zeroEncoder();
+  }
 
   public void SetClimberSpeed(double speed) {
     climberMotor.set(speed);
@@ -44,8 +46,7 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (limitSwitchPressed()) {
-      zeroEncoder();
-    }
+    System.out.println("Encoder postion:" + getEncoderPosition());
+    
   }
 }

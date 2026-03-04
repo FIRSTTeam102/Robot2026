@@ -14,32 +14,30 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunClimber extends Command {
+public class ExtendClimber extends Command {
 
   Climber climber;
   private double target = 0;
 
-  public RunClimber(Climber climber) {
+  public ExtendClimber(Climber climber) {
     this.climber = climber;
     addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    if ((climber.getEncoderPosition())>(ClimberConstants.CLIMBER_ENCODER_EXTENSION/2)) { //already extended
-      climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));
-      target = ClimberConstants.CLIMBER_ENCODER_MIN_EXTENSION;
-    }
-    else {
-      climber.SetClimberSpeed(Robot.ClimberSpeed.getDouble(ClimberConstants.CLIMBER_DEFAULT_SPEED));
-      target = ClimberConstants.CLIMBER_ENCODER_EXTENSION;
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (climber.getEncoderPosition() == ClimberConstants.CLIMBER_ENCODER_EXTENSION){
+      climber.SetClimberSpeed(0);
+    }
+    else {
+      climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
+  }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
