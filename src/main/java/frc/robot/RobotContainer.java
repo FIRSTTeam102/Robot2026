@@ -19,6 +19,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
+import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
@@ -229,11 +230,12 @@ public class RobotContainer {
    // operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
     //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
     //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
-    operatorXbox.rightBumper().whileTrue(Commands.sequence(
+    /*operatorXbox.rightBumper().whileTrue(Commands.sequence(
       new ZoneShooting(shooter, drivebase),
       Commands.waitSeconds(2),
       new RunFeeder(indexer)
-    ));
+    ));*/
+    operatorXbox.rightBumper().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
