@@ -10,6 +10,7 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
 import frc.robot.Constants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.FowardPiston;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -145,6 +146,7 @@ public class Robot extends LoggedRobot {
       m_autonomousCommand.cancel();
     }
 
+    m_robotContainer.climber.teleopClimb();
   }
 
   @Override

@@ -82,7 +82,7 @@ public class RobotContainer {
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
-  private final Climber climber = new Climber();
+  public final Climber climber = new Climber();
 
 
   private final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),

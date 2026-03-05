@@ -27,7 +27,7 @@ Climber climber;
     if (climber.getEncoderPosition() == 5){//chnage so 5 inches is in encoder positon 
       climber.SetClimberSpeed(0);
     }
-   else { climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
+   else { climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
   }
 }
 

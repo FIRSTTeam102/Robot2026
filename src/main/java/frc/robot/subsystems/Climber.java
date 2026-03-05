@@ -9,6 +9,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -33,6 +34,13 @@ public class Climber extends SubsystemBase {
 
   public boolean checkOptical(){
     return !opticalSensor.get();
+  }
+
+  public void teleopClimb(){
+    climberMotor.set(ClimberConstants.CLIMBER_DEFAULT_SPEED);
+      Commands.waitSeconds(0.5);
+    climberMotor.set(0);
+    
   }
 
   public void zeroEncoder() {
