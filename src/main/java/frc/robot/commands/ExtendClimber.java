@@ -31,7 +31,7 @@ public class ExtendClimber extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (climber.getEncoderPosition() == ClimberConstants.CLIMBER_ENCODER_EXTENSION){
+    if (climber.getEncoderPosition() <= ClimberConstants.CLIMBER_ENCODER_EXTENSION){  //stops if we are near or at max extension
       climber.SetClimberSpeed(0);
     }
     else {

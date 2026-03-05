@@ -24,7 +24,7 @@ Climber climber;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (climber.getEncoderPosition() == 5){//chnage so 5 inches is in encoder positon 
+    if (climber.getEncoderPosition() <= -19.599 ){ //if above or near climb position
       climber.SetClimberSpeed(0);
     }
    else { climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
