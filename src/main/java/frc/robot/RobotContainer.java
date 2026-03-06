@@ -7,6 +7,7 @@ package frc.robot;
 
 
 import java.io.File;
+import java.util.Optional;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -290,6 +292,64 @@ public class RobotContainer {
 
   public void ZeroGyro(){
     drivebase.zeroGyroWithAlliance();
+  }
+
+
+  public boolean isHubActive() {
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if (alliance.isEmpty()) { //No alliance
+      return false;
+    }
+  // Auto: both hubs enabled
+    if (DriverStation.isAutonomousEnabled()) {
+      return true;
+    }
+  // No hub if we aren't in teleop
+    if (!DriverStation.isTeleopEnabled()) {
+      return false;
+    }
+
+    double matchTime = DriverStation.getMatchTime();
+    String gameData = DriverStation.getGameSpecificMessage();
+  // No game data, we're assuming that the hub is always enabled
+    if (gameData.isEmpty()) {
+      return true;
+    }
+    boolean redInactiveFirst = false;
+    switch (gameData.charAt(0)) {
+      case 'R' -> redInactiveFirst = true;
+      case 'B' -> redInactiveFirst = false;
+      default -> {
+        // If the game data isn't right, we're going to default to enabled
+        return true;
+      }
+    }
+
+    // Shift 1 will be blue active if red won auto, and vice versa for red
+    boolean shift1Active = switch (alliance.get()) {
+      case Red -> !redInactiveFirst;
+      case Blue -> redInactiveFirst;
+    };
+
+    if (matchTime > 130) {
+      // TRANSITION SHIFT
+        return true;
+    } else if (matchTime > 105) {
+      // SHIFT 1
+        return shift1Active;
+    } else if (matchTime > 80) {
+      // SHIFT 2
+        return !shift1Active;
+    } else if (matchTime > 55) {
+      // SHIFT 3
+        return shift1Active;
+    } else if (matchTime > 30) {
+      // SHIFT 4
+        return !shift1Active;
+    } else {
+      // Endgame (last 30s): both hubs active
+        return true;
+    }
   }
 
   public void setDriveMode()
