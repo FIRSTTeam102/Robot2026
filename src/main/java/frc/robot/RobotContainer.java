@@ -85,7 +85,7 @@ public class RobotContainer {
   public final Climber climber = new Climber();
 
 
-  private final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
                                                                           
                                                                                 
