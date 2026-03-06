@@ -17,7 +17,6 @@ public class Climber extends SubsystemBase {
 
   private SparkMax climberMotor = new SparkMax(ClimberConstants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
   private RelativeEncoder climberEncoder = climberMotor.getEncoder();
-  private DigitalInput limitSwitch = new DigitalInput(ClimberConstants.LIMIT_SWITCH_PORT);
   private DigitalInput opticalSensor = new DigitalInput(0);//TODO change channel
 
   public Climber() {
@@ -47,14 +46,10 @@ public class Climber extends SubsystemBase {
     climberEncoder.setPosition(0.0);
   }
 
-  public boolean limitSwitchPressed() {
-    //if pressed returns true
-    return !limitSwitch.get();
-  }
-
   @Override
   public void periodic() {
-    System.out.println("Encoder postion:" + getEncoderPosition());
-    
+    if (checkOptical()) {
+      zeroEncoder();
+    }
   }
 }
