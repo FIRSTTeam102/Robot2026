@@ -289,6 +289,7 @@ public class SwerveSubsystem extends SubsystemBase
     return new Rotation2d(Math.atan2(cornerY-leadY, cornerX-leadX));
   }
 
+  @AutoLogOutput
   public double distanceToHub(){
     Pose2d robotpose = getPose();
     Translation2d robotposition = new Translation2d(robotpose.getX(),robotpose.getY());
