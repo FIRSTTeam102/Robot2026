@@ -40,8 +40,9 @@ public class IndexerFeeder extends Command {
       indexer.ReverseIndexer();
     }
     else if (counter == 67){
-      counter = 0;
       indexer.RunIndexer();
+      counter = 0;
+
     }
     
   }
