@@ -46,6 +46,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -249,6 +250,7 @@ public class RobotContainer {
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
     operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
+
 
     //chnaging acuator 
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
