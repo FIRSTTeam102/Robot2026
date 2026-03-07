@@ -35,24 +35,11 @@ public class CompShooting extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    counter = 0;
-    indexer.RunIndexer();
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    counter++;
-    if (counter == 50){
-      indexer.ReverseIndexer();
-    }
-    else if (counter == 67){
-      counter = 0;
-      indexer.RunIndexer();
-    }
 
     Pose2d robotpose = swerve.getPose();
     double distance = Units.metersToInches(swerve.distanceToHub());
@@ -62,6 +49,7 @@ public class CompShooting extends Command {
       shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
       if (MathUtil.isNear(ShooterConstants.PASSING_VELOCITY, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
               indexer.runFeeder();
+              indexer.RunIndexer();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
     }
@@ -71,14 +59,17 @@ public class CompShooting extends Command {
       shooter.startShooting(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
               indexer.runFeeder();
+              indexer.RunIndexer();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
     }
     else if (distance <= 120){
         shooter.setActuatorExtension(0.3);
         double expectedRPM = (-0.0052478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076; 
+        shooter.startShooting(expectedRPM);
         if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
               indexer.runFeeder();
+              indexer.RunIndexer();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
         }
       }
