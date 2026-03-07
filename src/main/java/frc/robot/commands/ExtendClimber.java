@@ -17,7 +17,6 @@ import frc.robot.subsystems.Climber;
 public class ExtendClimber extends Command {
 
   Climber climber;
-  private double target = 0;
 
   public ExtendClimber(Climber climber) {
     this.climber = climber;
@@ -26,18 +25,14 @@ public class ExtendClimber extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if (climber.getEncoderPosition() <= ClimberConstants.CLIMBER_ENCODER_EXTENSION){  //stops if we are near or at max extension
-      climber.SetClimberSpeed(0);
-    }
-    else {
-      climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
-  }
-  }
+  public void execute() {}
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -48,11 +43,12 @@ public class ExtendClimber extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (MathUtil.isNear(target, climber.getEncoderPosition(), ClimberConstants.CLIMBER_ENCODER_TOLERANCE)) {
+    if (climber.getEncoderPosition()<=ClimberConstants.CLIMBER_ENCODER_EXTENSION) {
       return true;
     }
     else {
       return false;
     }
   }
+
 }

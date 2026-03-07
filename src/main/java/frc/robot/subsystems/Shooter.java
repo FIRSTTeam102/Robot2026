@@ -147,7 +147,6 @@ public class Shooter extends SubsystemBase {
 
     public void setShooterangle(double shooterAngle){
        double actuatorPosition = (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
-        System.out.println("actuator position" + actuatorPosition);
     
 
        if (actuatorPosition >= 0.0 && actuatorPosition <= 1.0 ){

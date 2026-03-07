@@ -27,6 +27,8 @@ import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.IntakeNoPneumatics;
+import frc.robot.commands.JoystickClimb;
+import frc.robot.commands.ResetEncoder;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
 import frc.robot.commands.IdleIntake;
@@ -242,6 +244,7 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue(new ExtendClimber(climber));
     operatorXbox.leftBumper().whileTrue(new Climbing(climber));
 
+
     operatorXbox.rightBumper().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
@@ -256,13 +259,14 @@ public class RobotContainer {
     operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
     operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
-   
+   operatorXbox.rightStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getRightY()));
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
     operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
     //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
+    operatorXbox.povUp().onTrue(new ResetEncoder(climber));
 
 
 

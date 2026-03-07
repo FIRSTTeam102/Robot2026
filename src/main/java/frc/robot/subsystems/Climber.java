@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import org.littletonrobotics.junction.AutoLogOutput;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 
@@ -20,19 +23,21 @@ public class Climber extends SubsystemBase {
   private DigitalInput opticalSensor = new DigitalInput(0);//TODO change channel
 
   public Climber() {
-    zeroEncoder();
+    climberEncoder.setPosition(-100);
   }
 
   public void SetClimberSpeed(double speed) {
     climberMotor.set(speed);
   }
 
+  @AutoLogOutput
   public double getEncoderPosition() {
     return climberEncoder.getPosition();
   }
 
+  @AutoLogOutput
   public boolean checkOptical(){
-    return !opticalSensor.get();
+    return opticalSensor.get();
   }
 
   public void teleopClimb(){
@@ -44,6 +49,10 @@ public class Climber extends SubsystemBase {
 
   public void zeroEncoder() {
     climberEncoder.setPosition(0.0);
+  }
+
+  public void hundredEncoder() {
+    climberEncoder.setPosition(-100);
   }
 
   @Override
