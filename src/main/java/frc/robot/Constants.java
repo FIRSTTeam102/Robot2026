@@ -38,7 +38,7 @@ public final class Constants
   public static final double BLUE_CORNER_X = 0.5;
   public static final double RED_CORNER_X = 16.1;
 
-  public static final double ALIGN_TOLERANCE = 1.0; //degrees, tolerance for robot angle alignment
+  public static final double ALIGN_TOLERANCE = 2.5; //degrees, tolerance for robot angle alignment
 
 //  public static final class AutonConstants
 //  {

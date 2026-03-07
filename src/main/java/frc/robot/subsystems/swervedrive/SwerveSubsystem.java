@@ -251,6 +251,7 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
+  @AutoLogOutput
   public Rotation2d aimAtHub() {
     Pose2d robotpose = getPose();
     ChassisSpeeds speeds = getFieldVelocity();
