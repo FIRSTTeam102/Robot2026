@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
@@ -22,6 +23,7 @@ public class CompShooting extends Command {
   SwerveSubsystem swerve;
   Intake intake;
   Indexer indexer;
+  static int counter;
 
   public CompShooting(Shooter shooter, SwerveSubsystem swerve, Intake intake, Indexer indexer) {
   this.shooter = shooter;
@@ -34,6 +36,8 @@ public class CompShooting extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    counter = 0;
+    indexer.RunIndexer();
 
   }
 
@@ -41,14 +45,22 @@ public class CompShooting extends Command {
   @Override
   public void execute() {
 
+    counter++;
+    if (counter == 50){
+      indexer.ReverseIndexer();
+    }
+    else if (counter == 67){
+      counter = 0;
+      indexer.RunIndexer();
+    }
+
     Pose2d robotpose = swerve.getPose();
-    double distance = swerve.distanceToHub();
+    double distance = Units.metersToInches(swerve.distanceToHub());
 
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
       shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
       if (MathUtil.isNear(ShooterConstants.PASSING_VELOCITY, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
-              indexer.RunIndexer();
               indexer.runFeeder();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
@@ -58,7 +70,6 @@ public class CompShooting extends Command {
       double expectedRPM = (-14.27526 * distance) - 1601.22854;
       shooter.startShooting(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
-              indexer.RunIndexer();
               indexer.runFeeder();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
@@ -67,7 +78,6 @@ public class CompShooting extends Command {
         shooter.setActuatorExtension(0.3);
         double expectedRPM = (-0.0052478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076; 
         if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.PIDRPMTOLERANCE)) {
-              indexer.RunIndexer();
               indexer.runFeeder();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
         }
