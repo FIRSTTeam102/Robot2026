@@ -24,11 +24,13 @@ import frc.robot.commands.Climbing;
 import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
+import frc.robot.commands.FullClimbing;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
+import frc.robot.commands.ReverseClimb;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
 import frc.robot.commands.IdleIntake;
@@ -173,7 +175,7 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
-    NamedCommands.registerCommand("Intake", new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
     NamedCommands.registerCommand("Hub Shot", new ZoneShooting(shooter, drivebase));
     NamedCommands.registerCommand("Climb", new ExtendClimber(climber));
     NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
@@ -231,45 +233,42 @@ public class RobotContainer {
     {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
-    //running motors
-    //operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
-   // operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
-    //operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
-    //operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+  
     /*operatorXbox.rightBumper().whileTrue(Commands.sequence(
       new ZoneShooting(shooter, drivebase),
       Commands.waitSeconds(2),
       new RunFeeder(indexer)
     ));*/
-    operatorXbox.leftTrigger().whileTrue(new ExtendClimber(climber));
-    operatorXbox.leftBumper().whileTrue(new Climbing(climber));
+
+//Gavin's bindings BUBBLE TEAAA
+    operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
+    operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
+    operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
+    operatorXbox.povDown().whileTrue(new ReverseClimb(climber));
+    operatorXbox.leftBumper().whileTrue(new FullClimbing(climber));
+    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
 
 
-    operatorXbox.rightBumper().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
-    operatorXbox.povLeft().whileTrue(new IndexerFeeder(indexer));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
 
     //chnaging acuator 
-    operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
-    operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
-    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
-   operatorXbox.rightStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getRightY()));
+    
     //combined subsystem
     //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
+    
     //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
     operatorXbox.povUp().onTrue(new ResetEncoder(climber));
 
 
-
+operatorXbox.leftTrigger().whileTrue(new IndexerFeeder(indexer));
 
 
 

@@ -121,7 +121,7 @@ public final class Constants
     public static final int LIMIT_SWITCH_PORT = 6; //temp
     public static final double CLIMBER_DEFAULT_SPEED = 0.25; //worked in testing but may need to be increased
     public static final double CLIMBER_ENCODER_EXTENSION = -71.879; //-78.098 found on rev on test bed
-    public static final double CLIMBER_ENCODER_MIN_EXTENSION = 0.0; 
+    public static final double CLIMBER_ENCODER_MIN_EXTENSION = -23.0; 
     public static final double CLIMBER_ENCODER_TOLERANCE = 20.0; //seems like a reasonable tolerance but may need adjusting
   } 
 
