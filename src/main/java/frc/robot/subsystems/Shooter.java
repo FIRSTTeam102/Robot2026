@@ -129,7 +129,6 @@ public class Shooter extends SubsystemBase {
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
         shooterMotor.set(pidOutput);
-        System.out.println(pidOutput);
     }
 
    public double targetShooterPosition(double shooterAngle) {

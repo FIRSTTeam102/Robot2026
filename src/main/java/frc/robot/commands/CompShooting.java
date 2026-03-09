@@ -35,7 +35,8 @@ public class CompShooting extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -66,9 +67,9 @@ public class CompShooting extends Command {
     else if (distance <= 120){
         shooter.setActuatorExtension(0.3);
         double expectedRPM = (-0.0052478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076;
-        System.out.println(expectedRPM); 
         shooter.startShooting(expectedRPM);
-        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
+        System.out.println(expectedRPM);
+      if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
               indexer.runFeeder();
               indexer.jiggleIndexer();
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
