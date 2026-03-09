@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class TeleClimb extends Command {
 Climber climber;
 SwerveSubsystem swerve;
-private boolean isUp = false;
-private boolean climbed = true;
+private static boolean isUp = false;
+private static boolean climbed = true;
   public TeleClimb(Climber climber, SwerveSubsystem swerve) {
     this.climber = climber;
     this.swerve = swerve;

@@ -35,26 +35,7 @@ public class CompShooting extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    Pose2d robotpose = swerve.getPose();
-    double distance = Units.metersToInches(swerve.distanceToHub());
-
-    if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
-      shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
-      shooter.startShooting(ShooterConstants.PASSING_VELOCITY);
-    }
-    else if(distance > 120){
-      shooter.setActuatorExtension(0.7);
-      double expectedRPM = (-14.27526 * distance) - 1601.22854;
-      shooter.startShooting(expectedRPM);
-    }
-    else if (distance <= 120){
-        shooter.setActuatorExtension(0.3);
-        double expectedRPM = (-0.0052478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076;
-        System.out.println(expectedRPM); 
-        shooter.startShooting(expectedRPM);
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
