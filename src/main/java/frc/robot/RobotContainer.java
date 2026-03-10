@@ -176,9 +176,10 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
-    NamedCommands.registerCommand("Hub Shot", new ZoneShooting(shooter, drivebase));
-    NamedCommands.registerCommand("Climb", new ExtendClimber(climber));
-    NamedCommands.registerCommand("Aim robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
+    NamedCommands.registerCommand("Hub Shot", new CompShooting(shooter, drivebase, intake, indexer));
+    NamedCommands.registerCommand("Climb Up", new ExtendClimber(climber));
+    NamedCommands.registerCommand("Climb Position", new Climbing(climber));
+    NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
 
     configureBindings();
