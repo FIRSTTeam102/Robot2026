@@ -268,7 +268,7 @@ public class RobotContainer {
     operatorXbox.povUp().onTrue(new ResetEncoder(climber));
 
 
-operatorXbox.leftTrigger().whileTrue(new IndexerFeeder(indexer));
+operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
 
 

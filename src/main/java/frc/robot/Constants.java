@@ -78,7 +78,7 @@ public final class Constants
     public static final int SERVO_CHANNEL = 2;
     public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 45.0;
-    public static final double PASSING_VELOCITY = 6784.0;
+    public static final double PASSING_VELOCITY = -6084.0;
     public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
     public static final double PASSING_EXTENSION = 1.0;
