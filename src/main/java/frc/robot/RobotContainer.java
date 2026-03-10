@@ -248,6 +248,7 @@ public class RobotContainer {
     operatorXbox.leftBumper().whileTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
 
+    operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
@@ -268,7 +269,6 @@ public class RobotContainer {
     operatorXbox.povUp().onTrue(new ResetEncoder(climber));
 
 
-operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
 
 
