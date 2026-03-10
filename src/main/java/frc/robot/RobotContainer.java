@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Lights.AnimationTypes;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -52,6 +53,7 @@ import java.io.File;
 import frc.robot.commands.RunIndexer;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Lights;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.ShooterConstants;
@@ -252,6 +254,9 @@ public class RobotContainer {
 
   public void ZeroGyro(){
     drivebase.zeroGyroWithAlliance();
+  }
+
+  public void setLightPattern(AnimationTypes animation) {
   }
 
   public void setDriveMode()

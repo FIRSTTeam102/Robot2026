@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Lights.AnimationTypes;
 
 public class Robot extends LoggedRobot {
   private NetworkTableEntry PIDinputentry;
@@ -91,7 +93,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic() {
     
-
     CommandScheduler.getInstance().run();
   }
 

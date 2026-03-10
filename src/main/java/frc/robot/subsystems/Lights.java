@@ -6,15 +6,36 @@
 */
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.led.Animation;
+import com.ctre.phoenix6.configs.CANdleConfiguration;
+import com.ctre.phoenix6.configs.CANdleConfigurator;
+import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.signals.StripTypeValue;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
+import com.ctre.phoenix6.controls.ColorFlowAnimation;
+import com.ctre.phoenix6.controls.LarsonAnimation;
+import com.ctre.phoenix6.controls.RainbowAnimation;
+import com.ctre.phoenix6.controls.RgbFadeAnimation;
+import com.ctre.phoenix6.controls.SingleFadeAnimation;
+import com.ctre.phoenix6.controls.StrobeAnimation;
+import com.ctre.phoenix6.controls.TwinkleAnimation;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-// TODO 1: import CANdle/LED files
-// TODO 2: import driverstation & Subsystembase
+import swervelib.encoders.CanAndMagSwerve;
 
 public class Lights extends SubsystemBase {
-  // TODO 3: Create a CANdle object
 
-  // TODO 4: Define total # of LEDs on robot
+  private CANdle candle;
+  private int numberofLights = 60;
+
+  public enum AnimationTypes {
+    RedAlliance,
+    BlueAlliance,
+    Rainbow
+  }
+
+  private AnimationTypes previousAnimation = AnimationTypes.Rainbow;
+
 
   // TODO 5: Create enum of LED patterns (one for every action + more(ex: robot enabeld, rebot diabled, shooting)) (reserch Paterns :D)
  
@@ -22,19 +43,19 @@ public class Lights extends SubsystemBase {
     // Requirement: Prevent constantly restarting the same animation
     // TEST Confirm LEDs do not flicker when repeatedly setting same pattern
   
-  public Lights() {}
-    // INITIALIZATION 
-      // TODO 7: Initialize CANdle with correct CAN ID
-        // TEST Confirm CANdle is detected on CAN bus (Phoenix Tuner)
+  public Lights() {
+    candle = new CANdle(6);
 
-      // TODO 8: Configure CANdle brightness
-        // Requirement: LEDs should not be blinding in the pit
-        // TEST Visually confirm brightness is reduced to safe level
+    CANdleConfiguration config = new CANdleConfiguration();
+      config.LED.BrightnessScalar = 0.5;
+      config.LED.StripType = StripTypeValue.RGB;
+    candle.getConfigurator().apply(config); 
+  }
 
-      // TODO 9:  Configure LED strip type (GRB vs RGB)
-        // Requirement: Colors must display correctly
-        // TEST Set LEDs to solid red:
-          // If they appear green or blue, strip type is wrong
+  public void setPattern(AnimationTypes animation) {
+    var toAnimate = new RainbowAnimation(0, 67);
+    candle.setControl(toAnimate);
+  }
 
     // LED CONTROL METHOD
       // TODO 10: Create method: setPattern(AnimationType type)
@@ -57,6 +78,8 @@ public class Lights extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println("hi");
+    setPattern(AnimationTypes.Rainbow);
     // This method runs every scheduler cycle (~20ms)
 
     // TODO 14: Decide if periodic() should:
