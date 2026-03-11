@@ -245,8 +245,8 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
-    operatorXbox.povDown().whileTrue(new ReverseClimb(climber));
-    operatorXbox.leftBumper().whileTrue(new FullClimbing(climber));
+    operatorXbox.povDown().onTrue(new ReverseClimb(climber));
+    operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
