@@ -264,7 +264,7 @@ public class SwerveSubsystem extends SubsystemBase
        }
 
        Transform2d transform = currentPose.minus(targetPose);
-
+      driveToPose(targetPose);
       transform.getX();
       transform.getY();
       transform.getRotation();  //may need to convert to degrees to match robot 
