@@ -27,6 +27,7 @@ import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullClimbing;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.AlignToClimb;
 import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
@@ -255,6 +256,8 @@ public class RobotContainer {
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
+    
+    driverXbox.rightBumper().whileTrue(new AlignToClimb(drivebase));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
