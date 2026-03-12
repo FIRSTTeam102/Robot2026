@@ -253,9 +253,10 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  public void alignClimb(){
+  public Command alignClimb(){
       Pose2d currentPose = getPose();
       Pose2d targetPose = new Pose2d();
+
        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == Alliance.Blue){
           targetPose = new Pose2d(15.373,3.529, Rotation2d.fromDegrees(-5.51));
        }
@@ -264,10 +265,11 @@ public class SwerveSubsystem extends SubsystemBase
        }
 
        Transform2d transform = currentPose.minus(targetPose);
-      driveToPose(targetPose);
-      transform.getX();
-      transform.getY();
-      transform.getRotation();  //may need to convert to degrees to match robot 
+       transform.getX();
+       transform.getY();
+       transform.getRotation();
+     return driveToPose(targetPose);
+        //may need to convert to degrees to match robot 
   }
 
   @AutoLogOutput
