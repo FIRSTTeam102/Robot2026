@@ -35,9 +35,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
+import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -46,6 +50,7 @@ import com.revrobotics.spark.config.SparkFlexConfigAccessor;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.ClosedLoopConfigAccessor;
 import com.revrobotics.spark.config.FeedForwardConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.RobotController;
@@ -75,19 +80,24 @@ public class Shooter extends SubsystemBase {
 
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
-    private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
+    private RelativeEncoder shooterEncoder;
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
-    private FeedForwardConfig feedForwardConfig = new FeedForwardConfig();
-    //private ClosedLoopConfig closedLoop = new ClosedLoopConfig();
+    private SparkClosedLoopController shooterMotorClosedLoop;
 
      public Shooter() {
-        feedForwardConfig
-            .kV(0.00017);
-        shooterConfig
-            .closedLoop
-                .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
-                .apply(feedForwardConfig);
+        shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
+        shooterConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
+            .outputRange(-1.0, 1.0).
+            feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS);
+
+        shooterConfig.encoder.velocityConversionFactor(1.0);
+         
+        shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        shooterMotorClosedLoop = shooterMotor.getClosedLoopController();
+        shooterEncoder = shooterMotor.getEncoder();
     }
     
 
@@ -157,6 +167,10 @@ public class Shooter extends SubsystemBase {
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
         shooterPID.setSetpoint(pidOutput);
+    }
+
+    public void setShooterRPM(double rpm) {
+        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity);
     }
 
    public double targetShooterPosition(double shooterAngle) {
