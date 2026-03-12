@@ -65,7 +65,6 @@ public class Indexer extends SubsystemBase {
     private RelativeEncoder indexerEncoder = indexerMotor.getEncoder();
     private SparkMax feederMotor = new SparkMax(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
     private RelativeEncoder feederEncoder = feederMotor.getEncoder();
-    int counter = 0;
 
   
   public void RunIndexer(){
@@ -94,7 +93,7 @@ public class Indexer extends SubsystemBase {
     feederMotor.stopMotor();
   }
 
-  public void jiggleIndexer(){
+  public void jiggleIndexer(int counter){
     counter++;
     RunIndexer();
     if (counter == 50){

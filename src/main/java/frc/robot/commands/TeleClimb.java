@@ -27,9 +27,10 @@ private static boolean climbed = true;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!MathUtil.isNear(0, climber.getEncoderPosition(), 10)) {
+    if (!MathUtil.isNear(0, climber.getEncoderPosition(), 5)) {
       climber.SetClimberSpeed(-0.35);
       climbed = true;
+      isUp = false;
     }
     else {
       climbed = false;

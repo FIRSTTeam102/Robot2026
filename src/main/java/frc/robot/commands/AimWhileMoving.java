@@ -59,7 +59,7 @@ public class AimWhileMoving extends Command {
     }
 
     double omega = rotationPID.calculate (
-      swerve.getPose().getRotation().getRadians(),
+      swerve.getPose().getRotation().getRadians(), 
       targetAngle.getRadians()
     );
 
