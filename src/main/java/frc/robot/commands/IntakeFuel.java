@@ -41,11 +41,13 @@ public class IntakeFuel extends Command {
   public void end(boolean interrupted) {
     if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.RunIntakeSlow.getBoolean(false)) {
       intake.IntakeTheFuel(0.2);
+      intake.pistonReverse();
     }
     else {
       intake.IntakeTheFuel(0);
+      intake.pistonReverse();
     }
-    intake.pistonReverse();
+    
   }
 
   // Returns true when the command should end.

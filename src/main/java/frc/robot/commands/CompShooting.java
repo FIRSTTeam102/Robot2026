@@ -48,7 +48,7 @@ public class CompShooting extends Command {
 
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
-      shooter.setShooterRPM(ShooterConstants.PASSING_VELOCITY);
+      shooter.startShooting(ShooterConstants.PASSING_VELOCITY*2);
       if (shooter.shooterRPM()<=-6000) {
           counter ++;
               indexer.runFeeder();
@@ -66,7 +66,7 @@ public class CompShooting extends Command {
     else if(distance > 120){
       shooter.setActuatorExtension(0.7);
       double expectedRPM = (-14.27526 * distance) - 1601.22854;
-      shooter.setShooterRPM(expectedRPM);
+      shooter.startShooting(expectedRPM*2);
       System.out.println(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
         counter ++;     
@@ -85,7 +85,7 @@ public class CompShooting extends Command {
     else if (distance <= 120){
         shooter.setActuatorExtension(0.3);
         double expectedRPM = (-0.00552478*Math.pow(distance, 3)) + (1.30763 * Math.pow(distance, 2)) - (118.31419 * distance) + 801.97076;
-        shooter.setShooterRPM(expectedRPM);
+        shooter.startShooting(expectedRPM*2);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
           counter ++;      
