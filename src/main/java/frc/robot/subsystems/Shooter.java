@@ -222,9 +222,15 @@ public class Shooter extends SubsystemBase {
     @Override
 public void periodic() {
     if (Robot.ShooterP != null) {
-        shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
-        shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
-        shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+        // shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
+        // shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
+        // shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+
+        shooterConfig.closedLoop.pid(
+            Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT),
+            Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT),
+            Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT)
+            );
     }
 }
 
