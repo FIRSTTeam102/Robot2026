@@ -166,7 +166,7 @@ public class Shooter extends SubsystemBase {
 
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
-        shooterPID.setSetpoint(pidOutput);
+        shooterMotor.set(pidOutput);
     }
 
    /* public void setShooterRPM(double rpm) {
