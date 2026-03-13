@@ -161,8 +161,9 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    new TeleClimb(m_robotContainer.climber, m_robotContainer.drivebase).schedule();                  
+    if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.RunIntakeSlow.getBoolean(false)) {
+      new TeleClimb(m_robotContainer.climber, m_robotContainer.drivebase).schedule();
+    }
   }
 
   @Override

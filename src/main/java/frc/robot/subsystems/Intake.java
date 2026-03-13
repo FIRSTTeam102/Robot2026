@@ -78,13 +78,13 @@ public class Intake extends SubsystemBase {
 
         
         public void pistonFoward(){
-          solenoid.set(false);
+          solenoid.set(true);
         //extends piston 
         
         }
 
          public void pistonReverse(){
-          solenoid.set(true); //retracts piston 
+          solenoid.set(false); //retracts piston 
         }
 
         @AutoLogOutput

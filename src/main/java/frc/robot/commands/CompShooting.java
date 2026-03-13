@@ -23,7 +23,7 @@ public class CompShooting extends Command {
   SwerveSubsystem swerve;
   Intake intake;
   Indexer indexer;
-  static int counter;
+  static int counter = 0;
 
   public CompShooting(Shooter shooter, SwerveSubsystem swerve, Intake intake, Indexer indexer) {
   this.shooter = shooter;
@@ -36,6 +36,7 @@ public class CompShooting extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,9 +50,17 @@ public class CompShooting extends Command {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
       shooter.startShooting(ShooterConstants.PASSING_VELOCITY*2);
       if (shooter.shooterRPM()<=-6000) {
+          counter ++;
               indexer.runFeeder();
-              indexer.jiggleIndexer();
-              intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+               if (counter <= 60){
+              indexer.RunIndexer();}
+            else if (counter > 60){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 72){
+                counter = 0;
+            }
+          intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
     }
     else if(distance > 120){
@@ -60,8 +69,16 @@ public class CompShooting extends Command {
       shooter.startShooting(expectedRPM*2);
       System.out.println(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-              indexer.runFeeder();
-              indexer.jiggleIndexer();
+        counter ++;     
+        indexer.runFeeder();
+              if (counter <= 60){
+              indexer.RunIndexer();}
+            else if (counter > 60){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 72){
+                counter = 0;
+            }
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
     }
@@ -71,12 +88,20 @@ public class CompShooting extends Command {
         shooter.startShooting(expectedRPM*2);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-              indexer.runFeeder();
-              indexer.jiggleIndexer();
+          counter ++;      
+          indexer.runFeeder();
+                 if (counter <= 60){
+              indexer.RunIndexer();}
+            else if (counter > 60){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 72){
+                counter = 0;
+            }
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
         } 
       }
-     
+    
   }
 
   // Called once the command ends or is interrupted.
