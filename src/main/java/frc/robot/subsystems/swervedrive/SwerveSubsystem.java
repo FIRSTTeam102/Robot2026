@@ -258,18 +258,20 @@ public class SwerveSubsystem extends SubsystemBase
       Pose2d targetPose = new Pose2d();
 
        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == Alliance.Blue){
-          targetPose = new Pose2d(15.373,3.529, Rotation2d.fromDegrees(-5.51));
+            targetPose = new Pose2d(1.159,4.544,Rotation2d.fromDegrees(173.96));
+             return ( driveToPose(targetPose));
        }
        else if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == Alliance.Red){
-          targetPose = new Pose2d(1.159,4.544,Rotation2d.fromDegrees(173.96));
+            targetPose = new Pose2d(15.373,3.529, Rotation2d.fromDegrees(-5.51));
+           return ( driveToPose(targetPose));
+
+       }
+       else {
+        return null;
        }
 
-       Transform2d transform = currentPose.minus(targetPose);
-       transform.getX();
-       transform.getY();
-       transform.getRotation();
-     return driveToPose(targetPose);
-        //may need to convert to degrees to match robot 
+  
+       //may need to convert to degrees to match robot 
   }
 
   @AutoLogOutput

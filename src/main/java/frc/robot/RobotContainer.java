@@ -8,11 +8,13 @@ package frc.robot;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.Set;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
@@ -27,7 +29,6 @@ import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullClimbing;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
-import frc.robot.commands.AlignToClimb;
 import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
@@ -256,7 +257,8 @@ public class RobotContainer {
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
     
-    driverXbox.rightBumper().whileTrue(new AlignToClimb(drivebase));
+      Set<Subsystem> alignClimbSet = Set.of(drivebase);
+    driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimb(),alignClimbSet));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
