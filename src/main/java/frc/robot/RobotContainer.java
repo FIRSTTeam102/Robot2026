@@ -27,6 +27,7 @@ import frc.robot.commands.FowardPiston;
 import frc.robot.commands.FullClimbing;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.AlignToClimb;
 import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
@@ -245,8 +246,8 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
-    operatorXbox.povDown().whileTrue(new ReverseClimb(climber));
-    operatorXbox.leftBumper().whileTrue(new FullClimbing(climber));
+    operatorXbox.povDown().onTrue(new ReverseClimb(climber));
+    operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
@@ -255,6 +256,8 @@ public class RobotContainer {
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
+    
+    driverXbox.rightBumper().whileTrue(new AlignToClimb(drivebase));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 

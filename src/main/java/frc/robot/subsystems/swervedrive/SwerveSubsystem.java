@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -27,6 +28,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -249,6 +251,23 @@ public class SwerveSubsystem extends SubsystemBase
         }
       }
     });
+  }
+
+  public void alignClimb(){
+      Pose2d currentPose = getPose();
+      Pose2d targetPose = new Pose2d();
+       if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == Alliance.Blue){
+          targetPose = new Pose2d(15.373,3.529, Rotation2d.fromDegrees(-5.51));
+       }
+       else if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == Alliance.Red){
+          targetPose = new Pose2d(1.159,4.544,Rotation2d.fromDegrees(173.96));
+       }
+
+       Transform2d transform = currentPose.minus(targetPose);
+      driveToPose(targetPose);
+      transform.getX();
+      transform.getY();
+      transform.getRotation();  //may need to convert to degrees to match robot 
   }
 
   @AutoLogOutput

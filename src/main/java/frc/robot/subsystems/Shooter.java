@@ -39,7 +39,13 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkFlexConfigAccessor;
+import com.revrobotics.spark.config.ClosedLoopConfig;
+import com.revrobotics.spark.config.ClosedLoopConfigAccessor;
+import com.revrobotics.spark.config.FeedForwardConfig;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.RobotController;
@@ -71,9 +77,30 @@ public class Shooter extends SubsystemBase {
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
+    private SparkFlexConfig shooterConfig = new SparkFlexConfig();
+    private FeedForwardConfig feedForwardConfig = new FeedForwardConfig();
+    //private ClosedLoopConfig closedLoop = new ClosedLoopConfig();
+
+     public Shooter() {
+        feedForwardConfig
+            .kV(0.00017);
+        shooterConfig
+            .closedLoop
+                .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
+                .apply(feedForwardConfig);
+    }
+    
 
 
+       // .PID(ShooterConstants.SHOOTER_P_DEFAULT,ShooterConstants.SHOOTER_I_DEFAULT,Sh)
 
+        // Set PID values for position control. We don't need to pass a closed loop
+        // slot, as it will default to slot 0.
+        // Set PID values for velocity control in slot 1
+        //ClosedLoopConfig pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT);
+        
+        //.velocityFF(0.000015. ClosedLoopSlot.kSlot1)
+        //.outputRange(ElevatorConstants.kMinOutput,ElevatorConstants.kMaxOutput, ClosedLoopSlot.kSlot1);
 
     private final PIDController shooterPID = new PIDController(
         ShooterConstants.SHOOTER_P_DEFAULT,
@@ -94,6 +121,7 @@ public class Shooter extends SubsystemBase {
 
         double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
         shooterMotor.set(-pidOutput);
+        shooterPID.setSetpoint(pidOutput);
 
 
         /*shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
@@ -128,7 +156,7 @@ public class Shooter extends SubsystemBase {
 
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
-        shooterMotor.set(pidOutput);
+        shooterPID.setSetpoint(pidOutput);
     }
 
    public double targetShooterPosition(double shooterAngle) {
