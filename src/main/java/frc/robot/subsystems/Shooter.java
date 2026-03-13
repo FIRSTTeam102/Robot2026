@@ -231,6 +231,8 @@ public void periodic() {
             Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT),
             Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT)
             );
+        shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        
     }
 }
 
