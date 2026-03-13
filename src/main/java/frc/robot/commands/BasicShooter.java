@@ -24,7 +24,7 @@ public class BasicShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.startShooting(velocity.getAsDouble());
+      shooter.setShooterRPM(velocity.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

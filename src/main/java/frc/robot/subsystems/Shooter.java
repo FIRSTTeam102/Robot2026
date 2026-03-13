@@ -80,38 +80,33 @@ public class Shooter extends SubsystemBase {
 
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
-    private RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
+    private RelativeEncoder shooterEncoder;
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
-    /*private SparkFlexConfig shooterConfig = new SparkFlexConfig();
-    private SparkClosedLoopController shooterMotorClosedLoop;*/
+    private SparkFlexConfig shooterConfig = new SparkFlexConfig();
+    private SparkClosedLoopController shooterMotorClosedLoop;
 
+    
      public Shooter() {
-       /*  shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
+        shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
         shooterConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            
             .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
-            .outputRange(-1.0, 1.0);
-            //.feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS);
+            .outputRange(-1.0, 1.0)
+            .feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS);
+
+        shooterConfig.inverted(true);
 
         shooterConfig.encoder.velocityConversionFactor(1.0);
          
         shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         shooterMotorClosedLoop = shooterMotor.getClosedLoopController();
-        shooterEncoder = shooterMotor.getEncoder(); */
+        shooterEncoder = shooterMotor.getEncoder(); 
     }
     
 
-
-       // .PID(ShooterConstants.SHOOTER_P_DEFAULT,ShooterConstants.SHOOTER_I_DEFAULT,Sh)
-
-        // Set PID values for position control. We don't need to pass a closed loop
-        // slot, as it will default to slot 0.
-        // Set PID values for velocity control in slot 1
-        //ClosedLoopConfig pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT);
-        
-        //.velocityFF(0.000015. ClosedLoopSlot.kSlot1)
-        //.outputRange(ElevatorConstants.kMinOutput,ElevatorConstants.kMaxOutput, ClosedLoopSlot.kSlot1);
-
+    
+     
     private final PIDController shooterPID = new PIDController(
         ShooterConstants.SHOOTER_P_DEFAULT,
         ShooterConstants.SHOOTER_I_DEFAULT, 
@@ -134,15 +129,7 @@ public class Shooter extends SubsystemBase {
         shooterPID.setSetpoint(pidOutput);
 
 
-        /*shooterPID.setTolerance(ShooterConstants.PIDRPMTOLERANCE);
-        double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
-
-        double feedforward = ShooterConstants.kS*Math.signum(velocity_rpm)+ShooterConstants.kV*velocity_rpm;
-
-        shooterMotor.setVoltage(-(pidOutput+feedforward));
-
-        return velocity_rpm;
-        */
+       
         
 
 
@@ -169,9 +156,9 @@ public class Shooter extends SubsystemBase {
         shooterMotor.set(pidOutput);
     }
 
-   /* public void setShooterRPM(double rpm) {
+    public void setShooterRPM(double rpm) {
         shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity);
-    }*/
+    }
 
    public double targetShooterPosition(double shooterAngle) {
     return (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
