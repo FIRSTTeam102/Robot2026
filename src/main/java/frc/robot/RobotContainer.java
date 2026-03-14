@@ -65,6 +65,7 @@ import frc.robot.commands.TurnToHub;
 import frc.robot.commands.ZoneShooting;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.AllianceCheck;
+import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
@@ -183,6 +184,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb Position", new Climbing(climber));
     NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
+    NamedCommands.registerCommand("Trench Shot", new AutoShooter(shooter, 3500));
+    NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
 
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
