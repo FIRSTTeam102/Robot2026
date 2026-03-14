@@ -84,11 +84,11 @@ public final class Constants
     public static final double PASSING_EXTENSION = 1.0;
     public static final double SHOOTINGVELOCITY_DEFAULT = 4000;
 
-    public static final double SHOOTER_P_DEFAULT = 0.000152;
+    public static final double SHOOTER_P_DEFAULT = 0.008;
     public static final double SHOOTER_I_DEFAULT = 0;
-    public static final double SHOOTER_D_DEFAULT = 0;
+    public static final double SHOOTER_D_DEFAULT = 0.3;
 
-    public static final double BASIC_SHOOTER_SPEED_DEFAULT = -4000;
+    public static final double BASIC_SHOOTER_SPEED_DEFAULT = 4000;
 
     //testing diatnces 
     public static final double FRONT_TRENCH = 0.777;

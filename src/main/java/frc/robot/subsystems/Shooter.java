@@ -93,7 +93,8 @@ public class Shooter extends SubsystemBase {
             
             .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
             .outputRange(-1.0, 1.0)
-            .feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS);
+            // .feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
+            ;
 
         shooterConfig.inverted(true);
 
