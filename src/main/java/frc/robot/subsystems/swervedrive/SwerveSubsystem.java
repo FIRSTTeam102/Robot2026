@@ -253,8 +253,7 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  public Command alignClimb(){
-      Pose2d currentPose = getPose();
+  public Command alignClimbLeft(){ //from POV of driver station
       Pose2d targetPose = new Pose2d();
 
        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == Alliance.Blue){

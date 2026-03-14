@@ -261,7 +261,7 @@ public class RobotContainer {
       ));
     
       Set<Subsystem> alignClimbSet = Set.of(drivebase);
-    driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimb(),alignClimbSet));
+    driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
