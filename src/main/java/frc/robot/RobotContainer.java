@@ -65,6 +65,7 @@ import frc.robot.commands.TurnToHub;
 import frc.robot.commands.ZoneShooting;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.AllianceCheck;
+import frc.robot.commands.AutoActuator;
 import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
@@ -175,8 +176,6 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
     NamedCommands.registerCommand("Hub Shot", new CompShooting(shooter, drivebase, intake, indexer));
@@ -185,11 +184,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
     NamedCommands.registerCommand("Trench Shot", new AutoShooter(shooter, 3500));
     NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
+    NamedCommands.registerCommand("Zone 2 Angle", new AutoActuator(shooter, 0.7));
+    NamedCommands.registerCommand("Zone 1 Angle", new AutoActuator(shooter, 0.3));
+
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
-
-     
   }
 
   private void configureBindings() {
@@ -250,7 +253,7 @@ public class RobotContainer {
     operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
     operatorXbox.povDown().onTrue(new ReverseClimb(climber));
     operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
-    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.5)));
+    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 

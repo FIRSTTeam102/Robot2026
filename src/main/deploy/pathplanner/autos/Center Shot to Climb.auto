@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Pop_Off_Center"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [

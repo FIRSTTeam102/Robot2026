@@ -28,7 +28,7 @@ private static boolean climbed = true;
   @Override
   public void initialize() {
     if (!MathUtil.isNear(0, climber.getEncoderPosition(), 5)) {
-      climber.SetClimberSpeed(-0.35);
+      climber.SetClimberSpeed(-ClimberConstants.CLIMBER_DEFAULT_SPEED);
       climbed = true;
       isUp = false;
     }
@@ -47,7 +47,7 @@ private static boolean climbed = true;
       isUp = true;
     }
     else if ((((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>2.0)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<14.1))) && (isUp)) {
-      climber.SetClimberSpeed(0.35);
+      climber.SetClimberSpeed(ClimberConstants.CLIMBER_DEFAULT_SPEED);
     }
   }
 
