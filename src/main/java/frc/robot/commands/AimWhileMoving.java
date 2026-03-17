@@ -20,16 +20,12 @@ import java.util.function.DoubleSupplier;
 public class AimWhileMoving extends Command {
   /** Creates a new AimWhileMoving. */
 
-  private final SwerveSubsystem swerve;
-  private final PIDController rotationPID;
-  private final DoubleSupplier xSupplier;
-  private final DoubleSupplier ySupplier;
+  SwerveSubsystem swerve;
+  PIDController rotationPID;
+  DoubleSupplier xSupplier;
+  DoubleSupplier ySupplier;
 
-  public AimWhileMoving(
-    SwerveSubsystem swerve,
-    DoubleSupplier xSupplier,
-    DoubleSupplier ySupplier
-   ) 
+  public AimWhileMoving(SwerveSubsystem swerve,DoubleSupplier xSupplier,DoubleSupplier ySupplier) 
    {
     
     this.swerve = swerve;
@@ -38,7 +34,7 @@ public class AimWhileMoving extends Command {
 
     rotationPID = new PIDController(5.0, 0.0, 0.0);
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
-    rotationPID.setTolerance(Math.toRadians(Constants.AlignTolerance));
+    rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
     addRequirements(swerve);
   }
@@ -63,7 +59,7 @@ public class AimWhileMoving extends Command {
     }
 
     double omega = rotationPID.calculate (
-      swerve.getPose().getRotation().getRadians(),
+      swerve.getPose().getRotation().getRadians(), 
       targetAngle.getRadians()
     );
 

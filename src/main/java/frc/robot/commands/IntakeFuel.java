@@ -6,7 +6,9 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.Intake;;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -14,9 +16,8 @@ public class IntakeFuel extends Command {
   Intake intake;    
   DoubleSupplier speed;
   /** Creates a new IntakeFuel. */
-  public IntakeFuel(Intake intake, DoubleSupplier speed) {
+  public IntakeFuel(Intake intake) {
     this.intake =intake;
-    this.speed = speed;
     addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -25,17 +26,28 @@ public class IntakeFuel extends Command {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.IntakeTheFuel(speed.getAsDouble());
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.pistonFoward();
+    intake.IntakeTheFuel(1.0);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.IntakeTheFuel(0);
+    if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.RunIntakeSlow.getBoolean(false)) {
+      intake.IntakeTheFuel(0.2);
+      intake.pistonReverse();
+    }
+    else {
+      intake.IntakeTheFuel(0);
+      intake.pistonReverse();
+    }
+    
   }
 
   // Returns true when the command should end.

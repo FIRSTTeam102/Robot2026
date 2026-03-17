@@ -7,11 +7,14 @@ package frc.robot;
 
 
 import java.io.File;
+import java.util.Optional;
+import java.util.Set;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
@@ -19,9 +22,21 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
+import frc.robot.commands.Climbing;
+import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
+import frc.robot.commands.FowardPiston;
+import frc.robot.commands.FullClimbing;
 import frc.robot.commands.FullFuelCycle;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.IntakeNoPneumatics;
+import frc.robot.commands.JoystickClimb;
+import frc.robot.commands.ResetEncoder;
+import frc.robot.commands.ReverseClimb;
+import frc.robot.commands.ReverseFeeder;
+import frc.robot.commands.ReversePiston;
+import frc.robot.commands.IdleIntake;
+import frc.robot.commands.IndexerFeeder;
 import frc.robot.commands.RunShooter;
 import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -36,6 +51,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,7 +62,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
+import frc.robot.commands.ZoneShooting;
 import frc.robot.commands.AimWhileMoving;
+import frc.robot.commands.AllianceCheck;
+import frc.robot.commands.AutoActuator;
+import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
@@ -58,7 +79,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
-import frc.robot.commands.RunClimber;
+import frc.robot.commands.ExtendClimber;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
@@ -73,10 +94,10 @@ public class RobotContainer {
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
-  private final Climber climber = new Climber();
+  public final Climber climber = new Climber();
 
 
-  private final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve"));
                                                                           
                                                                                 
@@ -144,7 +165,7 @@ public class RobotContainer {
                                                                   .robotRelative(false)
                                                                   .withControllerRotationAxis(() -> driverXbox.getRightX() * -1)
                                                                   .deadband(OperatorConstants.DEADBAND)
-                                                                  .scaleTranslation(DrivebaseConstants.DriveFastScale)
+                                                                  .scaleTranslation(DrivebaseConstants.DRIVE_FAST_SCALE)
                                                                   .allianceRelativeControl(true);
   
   Command driveRobotOrientAngularVelocity = drivebase.driveRobotOriented(driveRobotOriented);
@@ -155,11 +176,23 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
+    NamedCommands.registerCommand("Hub Shot", new CompShooting(shooter, drivebase, intake, indexer));
+    NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
+    NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
+    NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
+    NamedCommands.registerCommand("Trench Shot", new AutoShooter(shooter, 3500));
+    NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
+    NamedCommands.registerCommand("Zone 2 Angle", new AutoActuator(shooter, 0.7));
+    NamedCommands.registerCommand("Zone 1 Angle", new AutoActuator(shooter, 0.3));
+
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
-    intake.pistonFoward();
+    DriverStation.silenceJoystickConnectionWarning(true);
   }
 
   private void configureBindings() {
@@ -173,11 +206,11 @@ public class RobotContainer {
         driveDirectAngleKeyboard);
 
         driverXbox.leftTrigger().onTrue(Commands.runOnce(
-          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DrivePrecisionScale)
+          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_PRECISION_SCALE)
                                   .scaleRotation(0.3)
                                   ))
                       .onFalse(Commands.runOnce(
-          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DriveFastScale)
+          ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_FAST_SCALE)
                                   .scaleRotation(0.5)));
                                   
         //Enable robotRelative driving if the right trigger is pressed.
@@ -193,12 +226,11 @@ public class RobotContainer {
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
         driverXbox.leftBumper().whileTrue(new AimWhileMoving(
           drivebase,
-            () -> -driverXbox.getLeftY(),
-            () -> -driverXbox.getLeftX()
+            () -> driverXbox.getLeftY(),
+            () -> driverXbox.getLeftX()
           )
         );
 
-        driverXbox.rightBumper().whileTrue(new TurnToHub(drivebase));
         
         
     if (RobotBase.isSimulation())
@@ -208,30 +240,50 @@ public class RobotContainer {
     {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
-    //running motors
-    operatorXbox.leftTrigger().whileTrue(new RunIndexer(indexer));
-    operatorXbox.leftBumper().whileTrue(new RunFeeder(indexer));
-    operatorXbox.povLeft().whileTrue(new RunShooter(shooter));
-    operatorXbox.rightBumper().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TRENCH));
-    operatorXbox.povRight().whileTrue(new BasicShooter(shooter,ShooterConstants.FRONT_TOWER));
+  
+    /*operatorXbox.rightBumper().whileTrue(Commands.sequence(
+      new ZoneShooting(shooter, drivebase),
+      Commands.waitSeconds(2),
+      new RunFeeder(indexer)
+    ));*/
+
+//Gavin's bindings BUBBLE TEAAA
+    operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
+    operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
+    operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
+    operatorXbox.povDown().onTrue(new ReverseClimb(climber));
+    operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
+    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
+
+    operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
+
+    operatorXbox.y().whileTrue(Commands.parallel(
+      new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
+      new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
+      ));
+    
+      Set<Subsystem> alignClimbSet = Set.of(drivebase);
+    driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
+   // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
+   // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
 
     //chnaging acuator 
-    operatorXbox.a().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.HIGH_SHOOTER_ANGLE));
-    operatorXbox.b().onTrue(new ChangeShooterAngle(shooter, ShooterConstants.PASSING_ANGLE));
-    operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(1.0)));
-   
+    
     //combined subsystem
-    operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    operatorXbox.rightTrigger().whileTrue(new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)));
-    operatorXbox.back().whileTrue(new SequentialCommandGroup(
-                        new IntakeFuel(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED)),
-                        new RunIndexer(indexer)));
+    //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
+    
+    //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
+    //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
+    operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
+    operatorXbox.povUp().onTrue(new ResetEncoder(climber));
 
-    operatorXbox.start().whileTrue(new SequentialCommandGroup(
-      new RunFeeder(indexer),
-      new RunShooter(shooter)));
-    operatorXbox.povDown().onTrue(new RunClimber(climber));
+
+
+
+
+
+
 
     testerXbox.a().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     testerXbox.b().whileTrue(shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
@@ -252,6 +304,64 @@ public class RobotContainer {
 
   public void ZeroGyro(){
     drivebase.zeroGyroWithAlliance();
+  }
+
+
+  public boolean isHubActive() {
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if (alliance.isEmpty()) { //No alliance
+      return false;
+    }
+  // Auto: both hubs enabled
+    if (DriverStation.isAutonomousEnabled()) {
+      return true;
+    }
+  // No hub if we aren't in teleop
+    if (!DriverStation.isTeleopEnabled()) {
+      return false;
+    }
+
+    double matchTime = DriverStation.getMatchTime();
+    String gameData = DriverStation.getGameSpecificMessage();
+  // No game data, we're assuming that the hub is always enabled
+    if (gameData.isEmpty()) {
+      return true;
+    }
+    boolean redInactiveFirst = false;
+    switch (gameData.charAt(0)) {
+      case 'R' -> redInactiveFirst = true;
+      case 'B' -> redInactiveFirst = false;
+      default -> {
+        // If the game data isn't right, we're going to default to enabled
+        return true;
+      }
+    }
+
+    // Shift 1 will be blue active if red won auto, and vice versa for red
+    boolean shift1Active = switch (alliance.get()) {
+      case Red -> !redInactiveFirst;
+      case Blue -> redInactiveFirst;
+    };
+
+    if (matchTime > 130) {
+      // TRANSITION SHIFT
+        return true;
+    } else if (matchTime > 105) {
+      // SHIFT 1
+        return shift1Active;
+    } else if (matchTime > 80) {
+      // SHIFT 2
+        return !shift1Active;
+    } else if (matchTime > 55) {
+      // SHIFT 3
+        return shift1Active;
+    } else if (matchTime > 30) {
+      // SHIFT 4
+        return !shift1Active;
+    } else {
+      // Endgame (last 30s): both hubs active
+        return true;
+    }
   }
 
   public void setDriveMode()

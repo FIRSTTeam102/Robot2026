@@ -31,6 +31,7 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.ShooterConstants;
 
 import com.google.flatbuffers.Constants;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -59,11 +62,18 @@ public class Indexer extends SubsystemBase {
   /** Creates a new Intake. */
   public Indexer() {}
     private SparkMax indexerMotor = new SparkMax(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
+    private RelativeEncoder indexerEncoder = indexerMotor.getEncoder();
     private SparkMax feederMotor = new SparkMax(IndexerConstants.FEEDER_CAN_ID, MotorType.kBrushless); 
-  
+    private RelativeEncoder feederEncoder = feederMotor.getEncoder();
+
   
   public void RunIndexer(){
-      indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
+    indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
+      
+  }
+
+  public void ReverseIndexer(){
+        indexerMotor.set(-(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED)));
 
   }
 
@@ -75,8 +85,34 @@ public class Indexer extends SubsystemBase {
     feederMotor.set(Robot.FeederSpeed.getDouble(IndexerConstants.FEEDER_DEFAULT_SPEED));
   }
 
+  public void reverseFeeder() {
+    feederMotor.set(-(Robot.FeederSpeed.getDouble(IndexerConstants.FEEDER_DEFAULT_SPEED)));
+  }
+
   public void stopFeeder() {
     feederMotor.stopMotor();
+  }
+
+  public void jiggleIndexer(int counter){
+    counter++;
+    RunIndexer();
+    if (counter == 50){
+      ReverseIndexer();
+    }
+    else if(counter == 67){
+      RunIndexer();
+    }
+
+  }
+
+  @AutoLogOutput
+  public double indexerRPM() {
+    return indexerEncoder.getVelocity();
+  }
+
+  @AutoLogOutput
+  public double feederRPM() {
+    return feederEncoder.getVelocity();
   }
 
 

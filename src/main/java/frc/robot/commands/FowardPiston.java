@@ -11,7 +11,7 @@ import frc.robot.subsystems.Intake;
 public class FowardPiston extends Command {
 Intake intake;
 
-  public FowardPiston(Intake inatke) {
+  public FowardPiston(Intake intake) {
     this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -19,12 +19,14 @@ Intake intake;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.pistonFoward();
+    //intake.pistonFoward();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.pistonFoward();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

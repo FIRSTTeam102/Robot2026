@@ -24,6 +24,9 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Alert.AlertType;
@@ -40,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -59,22 +64,47 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
         private SparkMax intakeMotor = new SparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
-        private Solenoid piston =  new Solenoid(PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
+        private PneumaticHub hub = new PneumaticHub(2);
+        private  Solenoid solenoid =  new Solenoid(2, PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
+
+        public void startCompressor(){
+          hub.enableCompressorDigital();
+        }
+
         
         public void IntakeTheFuel(double speed){
           intakeMotor.set(speed);
         }
 
+        
         public void pistonFoward(){
-          pistonFoward();
+          solenoid.set(true);
+        //extends piston 
+        
         }
 
          public void pistonReverse(){
-          pistonReverse();
+          solenoid.set(false); //retracts piston 
+        }
+
+        @AutoLogOutput
+        public boolean pistonExtended() {
+          return solenoid.get();
+        }
+
+        @AutoLogOutput
+        public boolean pressureFull() {
+          return !hub.getPressureSwitch();
+        }
+
+        @AutoLogOutput
+        public boolean compressorEnabled() {
+          return hub.getCompressor();
         }
 
 
   @Override
   public void periodic() {
+    
   }
 }
