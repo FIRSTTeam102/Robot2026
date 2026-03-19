@@ -254,6 +254,10 @@ public class RobotContainer {
     operatorXbox.povDown().onTrue(new ReverseClimb(climber));
     operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
+    operatorXbox.a().onTrue(new AutoActuator(shooter, 0.3));
+    operatorXbox.b().onTrue(new AutoActuator(shooter, 0.7));
+
+
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
@@ -261,7 +265,6 @@ public class RobotContainer {
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
-    
       Set<Subsystem> alignClimbSet = Set.of(drivebase);
     driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
