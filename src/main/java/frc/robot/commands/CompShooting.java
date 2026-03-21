@@ -49,23 +49,19 @@ public class CompShooting extends Command {
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
       shooter.setShooterRPM(ShooterConstants.PASSING_VELOCITY);
-      // if (shooter.shooterRPM()<=-6000) {
-      //     counter ++;
-      //         indexer.runFeeder();
-      //          if (counter <= 60){
-      //         indexer.RunIndexer();}
-      //       else if (counter > 60){
-      //         indexer.ReverseIndexer();
-      //       }
-      //       if (counter > 72){
-      //           counter = 0;
-      //       }
-      //     intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
-      // }
-      indexer.RunIndexer();
-      indexer.runFeeder();
-      intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
-
+      if (shooter.shooterRPM()<=-6000) {
+          counter ++;
+              indexer.runFeeder();
+               if (counter <= 20){
+              indexer.RunIndexer();}
+            else if (counter > 20){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 30){
+                counter = 0;
+            }
+          intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+      }
     }
     else if(distance > 120){
       shooter.setActuatorExtension(0.7);
@@ -73,9 +69,17 @@ public class CompShooting extends Command {
       shooter.setShooterRPM(expectedRPM);
       System.out.println(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-         indexer.RunIndexer();
+        counter ++;     
         indexer.runFeeder();
-        intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+              if (counter <= 20){
+              indexer.RunIndexer();}
+            else if (counter > 20){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 30){
+                counter = 0;
+            }
+              intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
       }
     }
     else if (distance <= 120){
@@ -84,9 +88,17 @@ public class CompShooting extends Command {
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-         indexer.RunIndexer();
+          counter ++;      
           indexer.runFeeder();
-          intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+                 if (counter <= 20){
+              indexer.RunIndexer();}
+            else if (counter > 20){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 30){
+                counter = 0;
+            }
+              intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
         } 
       }
     
