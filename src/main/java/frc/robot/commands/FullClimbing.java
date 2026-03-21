@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
@@ -46,7 +47,7 @@ static boolean isUp;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((isUp && climber.getEncoderPosition() >= ClimberConstants.CLIMBER_ENCODER_MIN_EXTENSION) || (climber.getEncoderPosition() <= ClimberConstants.CLIMBER_ENCODER_EXTENSION && !isUp)){
+    if ((isUp && MathUtil.isNear(ClimberConstants.CLIMBER_ENCODER_MIN_EXTENSION, climber.getEncoderPosition(), 3)) || (climber.getEncoderPosition() <= ClimberConstants.CLIMBER_ENCODER_EXTENSION && !isUp)){
       return true;
     }
     else {
