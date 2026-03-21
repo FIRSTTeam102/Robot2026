@@ -38,7 +38,7 @@ public class AimWhileMoving extends Command {
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
     rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
-    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Blue){
+    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue){
     orientation = -1;
   }
 
