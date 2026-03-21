@@ -24,6 +24,8 @@ public class AimWhileMoving extends Command {
   PIDController rotationPID;
   DoubleSupplier xSupplier;
   DoubleSupplier ySupplier;
+  int orientation = 1; 
+
 
   public AimWhileMoving(SwerveSubsystem swerve,DoubleSupplier xSupplier,DoubleSupplier ySupplier) 
    {
@@ -36,6 +38,11 @@ public class AimWhileMoving extends Command {
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
     rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
+    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Blue){
+    orientation = -1;
+  }
+
+
     addRequirements(swerve);
   }
 
@@ -47,8 +54,8 @@ public class AimWhileMoving extends Command {
   @Override
   public void execute() {
     Translation2d translation = new Translation2d (
-          xSupplier.getAsDouble(),
-          ySupplier.getAsDouble()
+          xSupplier.getAsDouble()*orientation,
+          ySupplier.getAsDouble()*orientation
     );
 
     Pose2d robotpose = swerve.getPose();
