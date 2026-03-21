@@ -83,12 +83,6 @@
         {
           "type": "named",
           "data": {
-            "name": "Aim Robot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Hub Shot"
           }
         }
