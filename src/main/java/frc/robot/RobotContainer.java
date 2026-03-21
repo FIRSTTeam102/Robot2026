@@ -254,6 +254,8 @@ public class RobotContainer {
     operatorXbox.povDown().onTrue(new ReverseClimb(climber));
     operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
+    operatorXbox.a().onTrue(new AutoActuator(shooter, 0.7));
+
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
