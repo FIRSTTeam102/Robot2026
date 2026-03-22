@@ -24,7 +24,7 @@ public class AimWhileMoving extends Command {
   PIDController rotationPID;
   DoubleSupplier xSupplier;
   DoubleSupplier ySupplier;
-  int orientation = 1; 
+  static int orientation = 1; 
 
 
   public AimWhileMoving(SwerveSubsystem swerve,DoubleSupplier xSupplier,DoubleSupplier ySupplier) 
@@ -38,17 +38,19 @@ public class AimWhileMoving extends Command {
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
     rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
-    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue){
-    orientation = -1;
-  }
-
-
     addRequirements(swerve);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) {
+      orientation = -1;
+    }
+    else {
+      orientation = 1;
+    }
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
