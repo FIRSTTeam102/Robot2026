@@ -37,7 +37,7 @@ import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
 import frc.robot.commands.IdleIntake;
 import frc.robot.commands.IndexerFeeder;
-import frc.robot.commands.RunShooter;
+import frc.robot.commands.ReverseIntake;
 import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -255,6 +255,7 @@ public class RobotContainer {
     operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
     operatorXbox.a().onTrue(new AutoActuator(shooter, 0.7));
+    operatorXbox.b().whileTrue(new ReverseIntake (intake));
 
 
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
@@ -263,6 +264,7 @@ public class RobotContainer {
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
       new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
       ));
+      
     
       Set<Subsystem> alignClimbSet = Set.of(drivebase);
     driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
