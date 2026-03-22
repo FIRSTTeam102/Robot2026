@@ -102,6 +102,11 @@ public class Intake extends SubsystemBase {
           return hub.getCompressor();
         }
 
+        @AutoLogOutput
+       public double checkTempIntake(){
+           return intakeMotor.getMotorTemperature();
+        }
+
 
   @Override
   public void periodic() {
