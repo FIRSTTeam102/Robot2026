@@ -152,6 +152,11 @@ public class Shooter extends SubsystemBase {
          return shooterEncoder.getVelocity();
      }
 
+     @AutoLogOutput
+  public double checkTempShoot(){
+    return shooterMotor.getMotorTemperature();
+  }
+
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
         shooterMotor.set(pidOutput);
