@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
@@ -115,6 +116,8 @@ public class Robot extends LoggedRobot {
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
+
+      DataLogManager.start();
 
       
       
