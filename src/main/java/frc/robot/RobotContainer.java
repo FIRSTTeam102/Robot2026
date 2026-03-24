@@ -35,6 +35,8 @@ import frc.robot.commands.ResetEncoder;
 import frc.robot.commands.ReverseClimb;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
+import frc.robot.commands.RobotBackward;
+import frc.robot.commands.RobotForward;
 import frc.robot.commands.IdleIntake;
 import frc.robot.commands.IndexerFeeder;
 import frc.robot.commands.ReverseIntake;
@@ -214,7 +216,7 @@ public class RobotContainer {
                                   .scaleRotation(0.5)));
                                   
         //Enable robotRelative driving if the right trigger is pressed.
-        driverXbox.rightTrigger().onTrue(Commands.runOnce(
+        driverXbox.y().onTrue(Commands.runOnce(
           ()->driveAngularVelocity.robotRelative(true)
                                   .allianceRelativeControl(false)
                                   ))
@@ -222,9 +224,22 @@ public class RobotContainer {
           ()->driveAngularVelocity.robotRelative(false)
                                   .allianceRelativeControl(true)
                         ));
+        driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly()); //x-stance
         driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
         driverXbox.back().whileTrue(drivebase.centerModulesCommand());
         driverXbox.leftBumper().whileTrue(new AimWhileMoving(
+          drivebase,
+            () -> driverXbox.getLeftY(),
+            () -> driverXbox.getLeftX()
+          )
+        );
+        driverXbox.rightTrigger().whileTrue(new RobotForward(
+          drivebase,
+            () -> driverXbox.getLeftY(),
+            () -> driverXbox.getLeftX()
+          )
+        );
+        driverXbox.rightBumper().whileTrue(new RobotBackward(
           drivebase,
             () -> driverXbox.getLeftY(),
             () -> driverXbox.getLeftX()
@@ -267,7 +282,7 @@ public class RobotContainer {
       
     
       Set<Subsystem> alignClimbSet = Set.of(drivebase);
-    driverXbox.rightBumper().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
+    driverXbox.b().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
