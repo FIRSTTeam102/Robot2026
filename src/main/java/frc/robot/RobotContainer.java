@@ -213,7 +213,7 @@ public class RobotContainer {
                                   ))
                       .onFalse(Commands.runOnce(
           ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_FAST_SCALE)
-                                  .scaleRotation(0.75)));
+                                  .scaleRotation(0.5)));
                                   
         //Enable robotRelative driving if the right trigger is pressed.
         driverXbox.y().onTrue(Commands.runOnce(
