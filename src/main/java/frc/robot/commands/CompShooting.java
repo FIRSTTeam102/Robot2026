@@ -52,12 +52,12 @@ public class CompShooting extends Command {
       if (shooter.shooterRPM()<=-6000) {
           counter ++;
               indexer.runFeeder();
-               if (counter <= 60){
+               if (counter <= 20){
               indexer.RunIndexer();}
-            else if (counter > 60){
+            else if (counter > 20){
               indexer.ReverseIndexer();
             }
-            if (counter > 72){
+            if (counter > 30){
                 counter = 0;
             }
           intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
@@ -71,12 +71,12 @@ public class CompShooting extends Command {
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
         counter ++;     
         indexer.runFeeder();
-              if (counter <= 60){
+              if (counter <= 20){
               indexer.RunIndexer();}
-            else if (counter > 60){
+            else if (counter > 20){
               indexer.ReverseIndexer();
             }
-            if (counter > 72){
+            if (counter > 30){
                 counter = 0;
             }
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
@@ -90,12 +90,12 @@ public class CompShooting extends Command {
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
           counter ++;      
           indexer.runFeeder();
-                 if (counter <= 60){
+                 if (counter <= 20){
               indexer.RunIndexer();}
-            else if (counter > 60){
+            else if (counter > 20){
               indexer.ReverseIndexer();
             }
-            if (counter > 72){
+            if (counter > 30){
                 counter = 0;
             }
               intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);

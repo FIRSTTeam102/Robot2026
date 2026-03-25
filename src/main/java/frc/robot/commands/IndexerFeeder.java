@@ -35,15 +35,15 @@ public class IndexerFeeder extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    counter++;
-    if (counter == 50){
-      indexer.ReverseIndexer();
-    }
-    else if (counter == 67){
-      indexer.RunIndexer();
-      counter = 0;
-
-    }
+      counter ++;
+               if (counter <= 20){
+              indexer.RunIndexer();}
+            else if (counter > 20){
+              indexer.ReverseIndexer();
+            }
+            if (counter > 30){
+                counter = 0;
+            }
     
   }
 

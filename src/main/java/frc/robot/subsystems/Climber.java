@@ -40,6 +40,11 @@ public class Climber extends SubsystemBase {
     return opticalSensor.get();
   }
 
+  @AutoLogOutput
+  public double checkTempClimb(){
+    return climberMotor.getMotorTemperature();
+  }
+
   public void teleopClimb(){
     climberMotor.set(ClimberConstants.CLIMBER_DEFAULT_SPEED);
       Commands.waitSeconds(0.5);

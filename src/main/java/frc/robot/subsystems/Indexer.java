@@ -67,6 +67,8 @@ public class Indexer extends SubsystemBase {
     private RelativeEncoder feederEncoder = feederMotor.getEncoder();
 
   
+
+
   public void RunIndexer(){
     indexerMotor.set(Robot.IndexerSpeed.getDouble(IndexerConstants.INDEXER_DEFAULT_SPEED));
       
@@ -113,6 +115,17 @@ public class Indexer extends SubsystemBase {
   @AutoLogOutput
   public double feederRPM() {
     return feederEncoder.getVelocity();
+  }
+
+  
+     @AutoLogOutput
+  public double checkTempIndex(){
+    return indexerMotor.getMotorTemperature();
+  }
+
+  @AutoLogOutput
+  public double checkTempFeed(){
+    return feederMotor.getMotorTemperature();
   }
 
 
