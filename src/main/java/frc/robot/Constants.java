@@ -57,7 +57,7 @@ public final class Constants
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
     public static final double DRIVE_FAST_SCALE = 1; //speed of robot
-    public static final double DRIVE_PRECISION_SCALE = 0.35; //percent of max speed in precise mode
+    public static final double DRIVE_PRECISION_SCALE = 0.15; //percent of max speed in precise mode
   }
 
   public static class OperatorConstants
