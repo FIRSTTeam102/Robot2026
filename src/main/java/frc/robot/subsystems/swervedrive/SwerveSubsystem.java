@@ -321,7 +321,7 @@ public class SwerveSubsystem extends SubsystemBase
       hubX = Constants.BLUE_HUB_X;
     }
     Translation2d hubposition = new Translation2d(hubX,Constants.HUB_Y);
-    return(robotposition.getDistance(hubposition));
+    return(Units.metersToInches(robotposition.getDistance(hubposition)));
   }
 
   /**

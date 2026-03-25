@@ -152,10 +152,11 @@ public class Shooter extends SubsystemBase {
          return shooterEncoder.getVelocity();
      }
 
-     @AutoLogOutput
-  public double checkTempShoot(){
-    return shooterMotor.getMotorTemperature();
-  }
+    @AutoLogOutput
+    public double checkTempShoot(){
+        return shooterMotor.getMotorTemperature();
+    }
+
 
     public void startShooting(double rpm){
         double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
@@ -170,8 +171,14 @@ public class Shooter extends SubsystemBase {
     return (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
    }
 
+   @AutoLogOutput
    public double getShooterPosition() {
-    return actuatorMotor.getPosition();
+    return ((actuatorMotor.getPosition()*1.5625)-0.296875);
+   }
+
+   @AutoLogOutput
+   public double shooterCurrent() {
+    return shooterMotor.getOutputCurrent();
    }
     
 

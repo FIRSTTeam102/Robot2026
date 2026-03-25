@@ -276,8 +276,7 @@ public class RobotContainer {
     operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
 
     operatorXbox.y().whileTrue(Commands.parallel(
-      new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT)),
-      new IntakeNoPneumatics(intake, () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED))
+      new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))
       ));
       
     
