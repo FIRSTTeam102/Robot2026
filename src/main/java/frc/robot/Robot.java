@@ -111,6 +111,7 @@ public class Robot extends LoggedRobot {
         RunIntakeSlow.setBoolean(false);
         doVibrateController.setBoolean(false);
 
+        ShiftTime.setDouble(0);
 
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
@@ -133,6 +134,9 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    ShiftTime.setDouble(RobotContainer.timeLeftInShiftSeconds(DriverStation.getMatchTime()));
+
   }
 
   @Override
@@ -227,6 +231,7 @@ public class Robot extends LoggedRobot {
     else {
       operatorXbox.setRumble(RumbleType.kBothRumble, 0);
     }
+    
   }
     //taking out bc we just used actuatorPositionEntry.getDouble instead of using variable
     // double actuatorPosition = actuatorPositionEntry.getDouble(0);

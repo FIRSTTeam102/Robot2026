@@ -382,6 +382,52 @@ public class RobotContainer {
     }
   }
 
+  public static boolean ourAllianceActiveShift1() {
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    String gameData = DriverStation.getGameSpecificMessage();
+  // No game data, we're assuming that the hub is always enabled
+    if (gameData.isEmpty()) {
+      return true;
+    }
+    switch (gameData.charAt(0)) {
+      case 'R': if (alliance.get() == Alliance.Red) {return false;} else {return true;}
+      case 'B': if (alliance.get() == Alliance.Blue) {return false;} else {return true;}
+      default: {
+        // If the game data isn't right, we're going to default to enabled
+        return true;
+      }
+    }
+
+  }
+
+  public static int timeLeftInShiftSeconds(double currentMatchTime) {
+        if (currentMatchTime >= 140) {
+            return (int) (currentMatchTime - 130);
+        } else if (currentMatchTime >= 130 && currentMatchTime < 140) { //transition
+            if (ourAllianceActiveShift1()) {
+              return (int) (currentMatchTime - 105);
+            }
+            else {
+              return (int) (currentMatchTime - 130);
+            }
+        } else if (currentMatchTime >= 105 && currentMatchTime < 130) { //s1
+            return (int) (currentMatchTime - 105);
+        } else if (currentMatchTime >= 80 && currentMatchTime < 105) { //s2
+            return (int) (currentMatchTime - 80);
+        } else if (currentMatchTime >= 55 && currentMatchTime < 80) { //s3
+            return (int) (currentMatchTime - 55);
+        } else if (currentMatchTime >= 30 && currentMatchTime < 55) { //s4
+            if (ourAllianceActiveShift1()) {
+              return (int) (currentMatchTime - 30);
+            }
+            else {
+              return (int) currentMatchTime;
+            }
+        } else { //endgame
+            return (int) currentMatchTime;
+        }
+    }
+
   public void setDriveMode()
   {
     configureBindings();
