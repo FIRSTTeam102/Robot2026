@@ -209,7 +209,7 @@ public class RobotContainer {
 
         driverXbox.leftTrigger().onTrue(Commands.runOnce(
           ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_PRECISION_SCALE)
-                                  .scaleRotation(0.3)
+                                  .scaleRotation(0.15)
                                   ))
                       .onFalse(Commands.runOnce(
           ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_FAST_SCALE)
