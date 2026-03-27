@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -51,6 +53,9 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry ShooterD;
   public static NetworkTableEntry RunIntakeSlow;
   public static NetworkTableEntry doVibrateController;
+  public static NetworkTableEntry ShiftTime;
+
+  public static Field2d field = new Field2d();
   
   private RobotContainer m_robotContainer;
   public static NetworkTableEntry actuatorPositionEntry; 
@@ -90,7 +95,9 @@ public class Robot extends LoggedRobot {
         ShooterD = table.getEntry("Shooter D Value");
         RunIntakeSlow = table.getEntry("Indexer idle mode & friends");
         doVibrateController = table.getEntry("VIBRATE THE CONTORLLER????/?");
-        
+        ShiftTime = table.getEntry("Shift Time Remaining");
+      
+        SmartDashboard.putData("Robot Pose", field);
 
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
         IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
@@ -125,7 +132,6 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotPeriodic() {
-
     CommandScheduler.getInstance().run();
   }
 
