@@ -54,6 +54,7 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry RunIntakeSlow;
   public static NetworkTableEntry doVibrateController;
   public static NetworkTableEntry ShiftTime;
+  public static NetworkTableEntry isHubActive;
 
   public static Field2d field = new Field2d();
   
@@ -96,6 +97,7 @@ public class Robot extends LoggedRobot {
         RunIntakeSlow = table.getEntry("Indexer idle mode & friends");
         doVibrateController = table.getEntry("VIBRATE THE CONTORLLER????/?");
         ShiftTime = table.getEntry("Shift Time Remaining");
+        isHubActive = table.getEntry("Hub Active");
       
         SmartDashboard.putData("Robot Pose", field);
 
@@ -110,6 +112,7 @@ public class Robot extends LoggedRobot {
         ShooterD.setDouble(Constants.ShooterConstants.SHOOTER_D_DEFAULT);
         RunIntakeSlow.setBoolean(false);
         doVibrateController.setBoolean(false);
+        isHubActive.setBoolean(false);
 
         ShiftTime.setDouble(0);
 
@@ -136,6 +139,7 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
 
     ShiftTime.setDouble(RobotContainer.timeLeftInShiftSeconds(DriverStation.getMatchTime()));
+    isHubActive.setBoolean(RobotContainer.isHubActive());
 
   }
 

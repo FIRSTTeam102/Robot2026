@@ -325,7 +325,7 @@ public class RobotContainer {
   }
 
 
-  public boolean isHubActive() {
+  public static boolean isHubActive() {
     Optional<Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isEmpty()) { //No alliance
       return false;
