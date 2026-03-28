@@ -382,6 +382,15 @@ public class RobotContainer {
     }
   }
 
+  public static boolean hasGameData() {
+    if (DriverStation.getGameSpecificMessage().isEmpty()) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
   public static boolean ourAllianceActiveShift1() {
     Optional<Alliance> alliance = DriverStation.getAlliance();
     String gameData = DriverStation.getGameSpecificMessage();
@@ -404,10 +413,10 @@ public class RobotContainer {
         if (currentMatchTime >= 140) {
             return (int) (currentMatchTime - 130);
         } else if (currentMatchTime >= 130 && currentMatchTime < 140) { //transition
-            if (ourAllianceActiveShift1()) {
+            if (ourAllianceActiveShift1() && hasGameData()) { // Runs if we are active shift 1 & have game data
               return (int) (currentMatchTime - 105);
             }
-            else {
+            else { // Runs if we aren't shift 1, or if we don't have game data as a fallback (just show each shift individually)
               return (int) (currentMatchTime - 130);
             }
         } else if (currentMatchTime >= 105 && currentMatchTime < 130) { //s1
