@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Robot;
@@ -92,10 +93,9 @@ public class Shooter extends SubsystemBase {
         shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
         shooterConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            
             .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
             .outputRange(-1.0, 1.0)
-            // .feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
+            //.feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
             ;
 
         shooterConfig.inverted(true);
@@ -106,7 +106,11 @@ public class Shooter extends SubsystemBase {
         shooterMotorClosedLoop = shooterMotor.getClosedLoopController();
         shooterEncoder = shooterMotor.getEncoder(); 
     }
-    
+
+    public void changeShooterPID() {
+        shooterConfig.closedLoop.pid(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT), Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT), Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+        shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    }    
 
     
      

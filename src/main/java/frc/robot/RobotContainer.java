@@ -73,6 +73,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
 import frc.robot.commands.RunIndexer;
+import frc.robot.commands.ShooterPIDReset;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
 import frc.robot.Constants;
@@ -278,7 +279,6 @@ public class RobotContainer {
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))
       ));
-      
     
       Set<Subsystem> alignClimbSet = Set.of(drivebase);
     driverXbox.b().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
@@ -295,7 +295,7 @@ public class RobotContainer {
     //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
     operatorXbox.povUp().onTrue(new ResetEncoder(climber));
-
+    //operatorXbox.povLeft().onTrue(new ShooterPIDReset(shooter)); //for tuning rev shooter pid
 
 
 

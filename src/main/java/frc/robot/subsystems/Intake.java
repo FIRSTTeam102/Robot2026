@@ -34,6 +34,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Robot;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -66,6 +68,8 @@ public class Intake extends SubsystemBase {
         private SparkMax intakeMotor = new SparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
         private PneumaticHub hub = new PneumaticHub(2);
         private  Solenoid solenoid =  new Solenoid(2, PneumaticsModuleType.REVPH, IntakeConstants.PISTON_ID);
+        private RelativeEncoder intakeEncoder = intakeMotor.getEncoder();
+
 
         public void startCompressor(){
           hub.enableCompressorDigital();
@@ -107,6 +111,10 @@ public class Intake extends SubsystemBase {
            return intakeMotor.getMotorTemperature();
         }
 
+        @AutoLogOutput
+        public double getIntakeRPM() {
+          return intakeEncoder.getVelocity();
+        }
 
   @Override
   public void periodic() {

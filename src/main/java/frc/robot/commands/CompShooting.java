@@ -44,7 +44,7 @@ public class CompShooting extends Command {
   public void execute() {
 
     Pose2d robotpose = swerve.getPose();
-    double distance = Units.metersToInches(swerve.distanceToHub());
+    double distance = swerve.distanceToHub();
 
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
