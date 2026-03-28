@@ -84,6 +84,8 @@ public class Shooter extends SubsystemBase {
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
     private SparkClosedLoopController shooterMotorClosedLoop;
+    private static boolean fuelShot = false;
+    private static int fuelCount = 0;
 
     
      public Shooter() {
@@ -187,6 +189,16 @@ public class Shooter extends SubsystemBase {
         shooterPID.reset();
     }
 
+    @AutoLogOutput
+    public int fuelCounter() {
+        return fuelCount;
+    }
+
+    @AutoLogOutput 
+    public double shooterSetpoint() {
+        return shooterMotor.get();
+    }
+
     public void setShooterangle(double shooterAngle){
        double actuatorPosition = (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
     
@@ -238,6 +250,18 @@ public void periodic() {
         shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
         shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
         shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
+    }
+
+    if (shooterCurrent()>12.0 || !fuelShot) {
+        fuelShot = true;
+        fuelCount++;
+    }
+    else if (shooterCurrent()<=12.0) {
+        fuelShot = false;
+    }
+
+    if (shooterRPM()<=300) {
+        fuelCount = 0;
     }
 }
 
