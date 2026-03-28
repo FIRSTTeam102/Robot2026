@@ -116,6 +116,7 @@ public class Robot extends LoggedRobot {
 
         ShiftTime.setDouble(0);
 
+      DataLogManager.start();
       Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       Logger.start();
