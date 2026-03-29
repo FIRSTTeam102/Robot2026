@@ -49,7 +49,7 @@ public class CompShooting extends Command {
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
       shooter.setShooterRPM(ShooterConstants.PASSING_VELOCITY);
-      if (shooter.shooterRPM()<=5500) {
+      if (shooter.shooterRPM()<=3500) {
           counter ++;
               indexer.runFeeder();
                if (counter <= 20){
@@ -65,7 +65,7 @@ public class CompShooting extends Command {
     }
     else if(distance <= 69.0){// ZONE 1
       shooter.setActuatorExtension(0.2);
-      double expectedRPM = (12.2469 * distance) + 2312.83883;
+      double expectedRPM = (12.2469 * distance) + 2312.83883 - 50;
       shooter.setShooterRPM(expectedRPM);
       System.out.println(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -84,7 +84,7 @@ public class CompShooting extends Command {
     }
     else if (distance > 69.0 && distance <= 107.0){//ZONE 2
         shooter.setActuatorExtension(0.3);
-        double expectedRPM = ((0.0101225*Math.pow(distance, 3)) - (2.80835 * Math.pow(distance, 2)) + (273.46177 * distance) - 6057.16432);
+        double expectedRPM = ((0.0101225*Math.pow(distance, 3)) - (2.80835 * Math.pow(distance, 2)) + (273.46177 * distance) - 6057.16432 - 50);
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -104,7 +104,7 @@ public class CompShooting extends Command {
     
      else if (distance > 107.0 && distance <= 129.0  ){//ZONE 3
         shooter.setActuatorExtension(0.4);
-        double expectedRPM =(16.00512 * distance) + 1394.0781;
+        double expectedRPM =(16.00512 * distance) + 1394.0781 - 50;
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -144,7 +144,7 @@ public class CompShooting extends Command {
 
       else if (distance > 150.0 ){//ZONE 5
         shooter.setActuatorExtension(0.6);
-        double expectedRPM = (29.84938 * distance) - 1371.79234;
+        double expectedRPM = (29.84938 * distance) - 1371.79234 - 50;
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {

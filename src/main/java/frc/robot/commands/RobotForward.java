@@ -37,7 +37,7 @@ public class RobotForward extends Command {
     this.xSupplier = xSupplier;
     this.ySupplier = ySupplier;
 
-    rotationPID = new PIDController(5.0, 0.0, 0.0);
+    rotationPID = new PIDController(4.0, 0.0, 0.0);
     rotationPID.enableContinuousInput(-Math.PI, Math.PI);
     rotationPID.setTolerance(Math.toRadians(Constants.ALIGN_TOLERANCE));
 
@@ -88,11 +88,6 @@ public class RobotForward extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (MathUtil.isNear(targetAngle.getDegrees(), swerve.getHeading().getDegrees(), 1.5)) {
-      return true;
-    }
-    else {
       return false;
-    }
   }
 }

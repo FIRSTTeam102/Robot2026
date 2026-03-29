@@ -31,32 +31,6 @@
           }
         },
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Right_Trench_to_Outpost"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Hub Shot"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "race",
           "data": {
             "commands": [
