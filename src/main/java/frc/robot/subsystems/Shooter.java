@@ -256,11 +256,11 @@ public void periodic() {
         shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
     }
 
-    if (shooterCurrent()>12.0 || !fuelShot) {
+    if (shooterCurrent()>25.0 || !fuelShot) {
         fuelShot = true;
         fuelCount++;
     }
-    else if (shooterCurrent()<=12.0) {
+    else if (shooterCurrent()<=25.0) {
         fuelShot = false;
     }
 

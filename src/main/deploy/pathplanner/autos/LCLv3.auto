@@ -11,7 +11,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 0.5
                 }
               },
               {
@@ -28,9 +28,28 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Hub Shot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
                 "type": "path",
                 "data": {
-                  "pathName": "Right_Rush"
+                  "pathName": "LCv2"
                 }
               },
               {
@@ -62,7 +81,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center_to_Right_Trench"
+                  "pathName": "CLv2"
                 }
               },
               {

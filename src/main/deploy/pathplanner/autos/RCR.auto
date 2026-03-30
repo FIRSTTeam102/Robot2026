@@ -75,9 +75,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "Center_to_Right_Trench"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_to_Right_Trench"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rev Shooter"
+                }
+              }
+            ]
           }
         },
         {

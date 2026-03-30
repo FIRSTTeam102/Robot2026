@@ -75,7 +75,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -88,6 +88,12 @@
                 "type": "named",
                 "data": {
                   "name": "Climb Position"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rev Shooter"
                 }
               }
             ]
