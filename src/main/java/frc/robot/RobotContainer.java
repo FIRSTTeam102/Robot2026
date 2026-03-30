@@ -185,9 +185,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
     NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
-    NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3000));
+    NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3500));
     NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
-    NamedCommands.registerCommand("Zone 2 Angle", new AutoActuator(shooter, 0.7));
+    NamedCommands.registerCommand("Zone 4 Angle", new AutoActuator(shooter, 0.5));
     NamedCommands.registerCommand("Zone 1 Angle", new AutoActuator(shooter, 0.3));
 
 

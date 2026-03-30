@@ -28,28 +28,9 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 4.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Hub Shot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "LCv2"
+                  "pathName": "Left_Trench_to_Center"
                 }
               },
               {
@@ -59,7 +40,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.5
+                        "waitTime": 0.5
                       }
                     },
                     {
@@ -81,7 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CLv2"
+                  "pathName": "Center_to_Left_Trench"
                 }
               },
               {
@@ -102,7 +83,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": true
 }

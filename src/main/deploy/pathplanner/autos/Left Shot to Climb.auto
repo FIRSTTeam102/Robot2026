@@ -45,7 +45,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "left_trench_to_climb"
+            "pathName": "Left_Trench_to_Climb"
           }
         },
         {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "left_climb"
+                  "pathName": "Left_Climb"
                 }
               },
               {
