@@ -82,7 +82,10 @@ public class Shooter extends SubsystemBase {
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
+    private SparkFlex followerMotor = new SparkFlex(ShooterConstants.FOLLOWER_CAN_ID, MotorType.kBrushless);
+    private RelativeEncoder followerEncoder;
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
+    private Servo followerActuator = new Servo(ShooterConstants.FOLLOWER_SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
     private SparkClosedLoopController shooterMotorClosedLoop;
     private static boolean fuelShot = false;
@@ -101,10 +104,18 @@ public class Shooter extends SubsystemBase {
         shooterConfig.inverted(true);
 
         shooterConfig.encoder.velocityConversionFactor(1.0);
+
+        SparkFlexConfig followerConfig = new SparkFlexConfig();
+        followerConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
+        followerConfig.encoder.velocityConversionFactor(1.0);
+        followerConfig.follow(ShooterConstants.SHOOTER_CAN_ID, false);
+
          
         shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         shooterMotorClosedLoop = shooterMotor.getClosedLoopController();
         shooterEncoder = shooterMotor.getEncoder(); 
+        followerEncoder = followerMotor.getEncoder();
     }
 
     public void changeShooterPID() {
@@ -156,6 +167,11 @@ public class Shooter extends SubsystemBase {
     @AutoLogOutput
      public double shooterRPM() {
          return shooterEncoder.getVelocity();
+     }
+
+     @AutoLogOutput
+     public double followerRPM() {
+        return followerEncoder.getVelocity();
      }
 
     @AutoLogOutput
@@ -217,6 +233,7 @@ public class Shooter extends SubsystemBase {
 
     public void setActuatorExtension(double distance) {
       actuatorMotor.setPosition((distance+0.296875)/1.5625);
+      followerActuator.setPosition((distance+0.296875)/1.5625);
     }
     
     private final SysIdRoutine sysIdRoutine =

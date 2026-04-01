@@ -75,7 +75,9 @@ public final class Constants
     public static final double GRAVITY = -386.4; //inches per seconds squared
     public static final double SHOOTER_ANGLE = 85.0 * (Math.PI/180); //in degrees might need to convert 
     public static final int SHOOTER_CAN_ID = 40;
+    public static final int FOLLOWER_CAN_ID = 41;
     public static final int SERVO_CHANNEL = 2;
+    public static final int FOLLOWER_SERVO_CHANNEL = 3;
     public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
     public static final double PASSING_ANGLE = 45.0;
     public static final double PASSING_VELOCITY = 4000.0;
