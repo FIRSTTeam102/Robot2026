@@ -65,6 +65,8 @@ public class Robot extends LoggedRobot {
   Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
 
   final CommandXboxController operatorXbox = new CommandXboxController(1);
+  final CommandXboxController driverXbox = new CommandXboxController(0);
+
 
   
 
@@ -215,6 +217,7 @@ public class Robot extends LoggedRobot {
     if (matchTime >= 130.67 && matchTime <= 131) {
       if (!shift1Active) {
         operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
+        
       }
     }
     else if (matchTime >= 105.67 && matchTime <= 106) {
@@ -233,8 +236,26 @@ public class Robot extends LoggedRobot {
         operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
       }
     }
+    else if (matchTime >= 115.67 && matchTime <= 116) {
+      if (shift1Active) {
+        driverXbox.setRumble(RumbleType.kBothRumble, 1);
+      }
+    }
+    
+    else if (matchTime >= 90.67 && matchTime <= 91) {
+      if (!shift1Active) {
+        driverXbox.setRumble(RumbleType.kBothRumble, 1);
+      }
+    }
+    else if (matchTime >= 65.67 && matchTime <= 66) {
+      if (shift1Active) {
+        driverXbox.setRumble(RumbleType.kBothRumble, 1);
+      }
+    }
     else {
       operatorXbox.setRumble(RumbleType.kBothRumble, 0);
+      driverXbox.setRumble(RumbleType.kBothRumble, 0);
+      
     }
     
   }

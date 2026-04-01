@@ -234,13 +234,13 @@ public class RobotContainer {
             () -> driverXbox.getLeftX()
           )
         );
-        driverXbox.rightTrigger().whileTrue(new RobotForward(
+        driverXbox.rightBumper().whileTrue(new RobotForward(
           drivebase,
             () -> driverXbox.getLeftY(),
             () -> driverXbox.getLeftX()
           )
         );
-        driverXbox.rightBumper().whileTrue(new RobotBackward(
+        driverXbox.rightTrigger().whileTrue(new RobotBackward(
           drivebase,
             () -> driverXbox.getLeftY(),
             () -> driverXbox.getLeftX()
