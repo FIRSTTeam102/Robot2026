@@ -409,31 +409,31 @@ public class RobotContainer {
 
   }
 
-  public static int timeLeftInShiftSeconds(double currentMatchTime) {
+  public static double timeLeftInShiftSeconds(double currentMatchTime) {
         if (currentMatchTime >= 140) {
-            return (int) (currentMatchTime - 130);
+            return (double) (currentMatchTime - 130);
         } else if (currentMatchTime >= 130 && currentMatchTime < 140) { //transition
             if (ourAllianceActiveShift1() && hasGameData()) { // Runs if we are active shift 1 & have game data
-              return (int) (currentMatchTime - 105);
+              return (double) (currentMatchTime - 105);
             }
             else { // Runs if we aren't shift 1, or if we don't have game data as a fallback (just show each shift individually)
-              return (int) (currentMatchTime - 130);
+              return (double) (currentMatchTime - 130);
             }
         } else if (currentMatchTime >= 105 && currentMatchTime < 130) { //s1
-            return (int) (currentMatchTime - 105);
+            return (double) (currentMatchTime - 105);
         } else if (currentMatchTime >= 80 && currentMatchTime < 105) { //s2
-            return (int) (currentMatchTime - 80);
+            return (double) (currentMatchTime - 80);
         } else if (currentMatchTime >= 55 && currentMatchTime < 80) { //s3
-            return (int) (currentMatchTime - 55);
+            return (double) (currentMatchTime - 55);
         } else if (currentMatchTime >= 30 && currentMatchTime < 55) { //s4
             if (ourAllianceActiveShift1()) {
-              return (int) (currentMatchTime - 30);
+              return (double) (currentMatchTime - 30);
             }
             else {
-              return (int) currentMatchTime;
+              return (double) currentMatchTime;
             }
         } else { //endgame
-            return (int) currentMatchTime;
+            return (double) currentMatchTime;
         }
     }
 

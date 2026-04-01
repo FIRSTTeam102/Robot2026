@@ -52,9 +52,9 @@ public class Robot extends LoggedRobot {
   public static NetworkTableEntry ShooterI;
   public static NetworkTableEntry ShooterD;
   public static NetworkTableEntry RunIntakeSlow;
-  public static NetworkTableEntry doVibrateController;
   public static NetworkTableEntry ShiftTime;
   public static NetworkTableEntry isHubActive;
+  public static NetworkTableEntry runControllerVibrations;
 
   public static Field2d field = new Field2d();
   
@@ -97,9 +97,9 @@ public class Robot extends LoggedRobot {
         ShooterI = table.getEntry("Shooter I Value");
         ShooterD = table.getEntry("Shooter D Value");
         RunIntakeSlow = table.getEntry("Indexer idle mode & friends");
-        doVibrateController = table.getEntry("VIBRATE THE CONTORLLER????/?");
         ShiftTime = table.getEntry("Shift Time Remaining");
         isHubActive = table.getEntry("Hub Active");
+        runControllerVibrations = table.getEntry("Run Controller Vibrations");
       
         SmartDashboard.putData("Robot Pose", field);
 
@@ -113,8 +113,8 @@ public class Robot extends LoggedRobot {
         ShooterI.setDouble(Constants.ShooterConstants.SHOOTER_I_DEFAULT);
         ShooterD.setDouble(Constants.ShooterConstants.SHOOTER_D_DEFAULT);
         RunIntakeSlow.setBoolean(false);
-        doVibrateController.setBoolean(false);
         isHubActive.setBoolean(false);
+        runControllerVibrations.setBoolean(false);
 
         ShiftTime.setDouble(0);
 
@@ -189,73 +189,20 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
 
-  if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.doVibrateController.getBoolean(false)) {
+  if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.runControllerVibrations.getBoolean(false)) {
 
-    Optional<Alliance> alliance = DriverStation.getAlliance();
+    double shiftTime = RobotContainer.timeLeftInShiftSeconds(DriverStation.getMatchTime());
 
-    double matchTime = DriverStation.getMatchTime();
-    String gameData = DriverStation.getGameSpecificMessage();
-    
-    boolean redInactiveFirst = false;
-    boolean noGameData = false;
-    if (gameData.length() > 0) {
-      switch (gameData.charAt(0)) {
-        case 'R' -> redInactiveFirst = true;
-        case 'B' -> redInactiveFirst = false;
-        default -> {
-          noGameData = true;
-        }
-      }
+    if (shiftTime <= 10.41 && shiftTime >= 10) {
+      System.out.println("rumbling driver");
+      driverXbox.setRumble(RumbleType.kBothRumble, 1);
+    }
+    else if (shiftTime <= 0.41 && shiftTime >= 0) {
+      operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
     }
     else {
-      noGameData = true;
-    }
-    boolean shift1Active = switch (alliance.get()) {
-      case Red -> !redInactiveFirst;
-      case Blue -> redInactiveFirst;
-    };
-    if (matchTime >= 130.67 && matchTime <= 131) {
-      if (!shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-        
-      }
-    }
-    else if (matchTime >= 105.67 && matchTime <= 106) {
-      if (shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    
-    else if (matchTime >= 80.67 && matchTime <= 81) {
-      if (!shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    else if (matchTime >= 55.67 && matchTime <= 56) {
-      if (shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    else if (matchTime >= 115.67 && matchTime <= 116) {
-      if (shift1Active) {
-        driverXbox.setRumble(RumbleType.kBothRumble, 1);
-      }
-    }
-    
-    else if (matchTime >= 90.67 && matchTime <= 91) {
-      if (!shift1Active) {
-        driverXbox.setRumble(RumbleType.kBothRumble, 1);
-      }
-    }
-    else if (matchTime >= 65.67 && matchTime <= 66) {
-      if (shift1Active) {
-        driverXbox.setRumble(RumbleType.kBothRumble, 1);
-      }
-    }
-    else {
-      operatorXbox.setRumble(RumbleType.kBothRumble, 0);
       driverXbox.setRumble(RumbleType.kBothRumble, 0);
-      
+      operatorXbox.setRumble(RumbleType.kBothRumble, 0);
     }
     
   }
