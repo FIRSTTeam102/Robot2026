@@ -82,8 +82,6 @@ public class Shooter extends SubsystemBase {
    
     private SparkFlex shooterMotor = new SparkFlex(ShooterConstants.SHOOTER_CAN_ID, MotorType.kBrushless);
     private RelativeEncoder shooterEncoder;
-    private SparkFlex followerMotor = new SparkFlex(ShooterConstants.FOLLOWER_CAN_ID, MotorType.kBrushless);
-    private RelativeEncoder followerEncoder;
     private Servo actuatorMotor = new Servo(ShooterConstants.SERVO_CHANNEL);
     private Servo followerActuator = new Servo(ShooterConstants.FOLLOWER_SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
@@ -104,18 +102,10 @@ public class Shooter extends SubsystemBase {
         shooterConfig.inverted(true);
 
         shooterConfig.encoder.velocityConversionFactor(1.0);
-
-        SparkFlexConfig followerConfig = new SparkFlexConfig();
-        followerConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
-        followerConfig.encoder.velocityConversionFactor(1.0);
-        followerConfig.follow(ShooterConstants.SHOOTER_CAN_ID, false);
-
          
         shooterMotor.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         shooterMotorClosedLoop = shooterMotor.getClosedLoopController();
         shooterEncoder = shooterMotor.getEncoder(); 
-        followerEncoder = followerMotor.getEncoder();
     }
 
     public void changeShooterPID() {
@@ -129,50 +119,13 @@ public class Shooter extends SubsystemBase {
         ShooterConstants.SHOOTER_P_DEFAULT,
         ShooterConstants.SHOOTER_I_DEFAULT, 
         ShooterConstants.SHOOTER_D_DEFAULT
-    );//found with sysid
-
-    @AutoLogOutput
-    public double setShooterSpeed(double distance_from_hub){
-        
-        double velocity_inches = (distance_from_hub)/
-        (Math.sqrt(((2/ShooterConstants.GRAVITY) * (ShooterConstants.STARTING_HEIGHT-ShooterConstants.END_HEIGHT- Math.tan(ShooterConstants.SHOOTER_ANGLE)*  distance_from_hub))) * Math.cos(ShooterConstants.SHOOTER_ANGLE));
-
-        double velocity_rpm = velocity_inches * (120/(4*Math.PI));
-            System.out.println("speed" + velocity_rpm);
-        
-        velocity_rpm = MathUtil.clamp(velocity_rpm, 970, 6784);
-
-        double pidOutput = shooterPID.calculate(shooterRPM(),velocity_rpm);
-        shooterMotor.set(-pidOutput);
-        shooterPID.setSetpoint(pidOutput);
-
-
-       
-        
-
-
-        /*if (velocity_rpm < 6784 && velocity_rpm > 970 ) {
-            double shooter_percentage = (velocity_rpm/6784); 
-                        System.out.println("speed" + shooter_percentage);
-
-            shooterMotor.set(-shooter_percentage);
-        } else {
-            shooterMotor.set(-1.0); 
-        }*/
-        return velocity_rpm;
-    }
-
-    
+    );
 
     @AutoLogOutput
      public double shooterRPM() {
          return shooterEncoder.getVelocity();
      }
 
-     @AutoLogOutput
-     public double followerRPM() {
-        return followerEncoder.getVelocity();
-     }
 
     @AutoLogOutput
     public double checkTempShoot(){
@@ -271,18 +224,6 @@ public void periodic() {
         shooterPID.setP(Robot.ShooterP.getDouble(ShooterConstants.SHOOTER_P_DEFAULT));
         shooterPID.setI(Robot.ShooterI.getDouble(ShooterConstants.SHOOTER_I_DEFAULT));
         shooterPID.setD(Robot.ShooterD.getDouble(ShooterConstants.SHOOTER_D_DEFAULT));
-    }
-
-    if (shooterCurrent()>25.0 || !fuelShot) {
-        fuelShot = true;
-        fuelCount++;
-    }
-    else if (shooterCurrent()<=25.0) {
-        fuelShot = false;
-    }
-
-    if (shooterRPM()<=300) {
-        fuelCount = 0;
     }
 }
 
