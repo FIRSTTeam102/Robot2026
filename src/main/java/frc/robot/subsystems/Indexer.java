@@ -53,8 +53,7 @@ import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import swervelib.SwerveDrive;
-import swervelib.telemetry.SwerveDriveTelemetry;
+
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

@@ -13,21 +13,18 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CompShooting extends Command {
   Shooter shooter;
-  SwerveSubsystem swerve;
   Intake intake;
   Indexer indexer;
   static int counter = 0;
 
-  public CompShooting(Shooter shooter, SwerveSubsystem swerve, Intake intake, Indexer indexer) {
+  public CompShooting(Shooter shooter, Intake intake, Indexer indexer) {
   this.shooter = shooter;
-  this.swerve = swerve;
   this.intake = intake;
   this.indexer = indexer;
   addRequirements(shooter, indexer, intake);
@@ -43,8 +40,8 @@ public class CompShooting extends Command {
   @Override
   public void execute() {
 
-    Pose2d robotpose = swerve.getPose();
-    double distance = swerve.distanceToHub();
+    Pose2d robotpose = new Pose2d();
+    double distance = ShooterConstants.TESTING_DISTANCE_DEFAULT;
 
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);

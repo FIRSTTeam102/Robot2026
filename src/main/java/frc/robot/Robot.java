@@ -17,7 +17,6 @@ import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.Climbing;
 import frc.robot.commands.FowardPiston;
-import frc.robot.commands.TeleClimb;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -178,9 +177,6 @@ public class Robot extends LoggedRobot {
   public void teleopInit() {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-    }
-    if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.RunIntakeSlow.getBoolean(false)) {
-      new TeleClimb(m_robotContainer.climber, m_robotContainer.drivebase).schedule();
     }
   }
 
