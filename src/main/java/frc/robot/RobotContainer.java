@@ -31,6 +31,7 @@ import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.IntakeNoPneumatics;
 import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
+import frc.robot.commands.RevShooter;
 import frc.robot.commands.ReverseClimb;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
@@ -125,7 +126,7 @@ public class RobotContainer {
          
 
 //Gavin's bindings BUBBLE TEAAA
-    operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
+    operatorXbox.leftTrigger().whileTrue(new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, intake, indexer));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
     operatorXbox.a().onTrue(new AutoActuator(shooter, 0.7));
@@ -137,7 +138,8 @@ public class RobotContainer {
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))
       ));
-    
+
+    operatorXbox.leftBumper().whileTrue(new RevShooter(shooter));   
 
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));

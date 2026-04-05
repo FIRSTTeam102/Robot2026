@@ -41,6 +41,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
@@ -86,15 +87,16 @@ public class Shooter extends SubsystemBase {
     private Servo followerActuator = new Servo(ShooterConstants.FOLLOWER_SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
     private SparkClosedLoopController shooterMotorClosedLoop;
-    private static boolean fuelShot = false;
-    private static int fuelCount = 0;
+    private ClosedLoopSlot hubShotSlot;
+    private ClosedLoopSlot revUpSlot;
 
     
      public Shooter() {
         shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
         shooterConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
+            .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT, hubShotSlot)
+            .pid(1, 2, 3, revUpSlot)
             .outputRange(-1.0, 1.0)
             //.feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
             ;
@@ -139,7 +141,12 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setShooterRPM(double rpm) {
-        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity);
+        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, hubShotSlot);
+    }
+
+    public void revUpShooter(double rpm) {
+        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, revUpSlot);
+
     }
 
    public double targetShooterPosition(double shooterAngle) {
@@ -160,11 +167,6 @@ public class Shooter extends SubsystemBase {
     public void stopShooting(){
         shooterMotor.stopMotor();
         shooterPID.reset();
-    }
-
-    @AutoLogOutput
-    public int fuelCounter() {
-        return fuelCount;
     }
 
     @AutoLogOutput 
