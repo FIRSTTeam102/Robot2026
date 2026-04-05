@@ -95,15 +95,12 @@ public class Indexer extends SubsystemBase {
   }
 
   public void jiggleIndexer(int counter){
-    counter++;
-    RunIndexer();
-    if (counter == 50){
-      ReverseIndexer();
-    }
-    else if(counter == 67){
+    if (counter<=25) {
       RunIndexer();
     }
-
+    else {
+      ReverseIndexer();
+    }
   }
 
   @AutoLogOutput

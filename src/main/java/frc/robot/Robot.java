@@ -15,7 +15,6 @@ import com.thethriftybot.interfaces.DriverStationInterface;
 
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.commands.Climbing;
 import frc.robot.commands.FowardPiston;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

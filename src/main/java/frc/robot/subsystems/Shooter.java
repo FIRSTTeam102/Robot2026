@@ -135,11 +135,6 @@ public class Shooter extends SubsystemBase {
     }
 
 
-    public void startShooting(double rpm){
-        double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
-        shooterMotor.set(pidOutput);
-    }
-
     public void setShooterRPM(double rpm) {
         shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, hubShotSlot);
     }
@@ -148,10 +143,6 @@ public class Shooter extends SubsystemBase {
         shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, revUpSlot);
 
     }
-
-   public double targetShooterPosition(double shooterAngle) {
-    return (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
-   }
 
    @AutoLogOutput
    public double getShooterPosition() {

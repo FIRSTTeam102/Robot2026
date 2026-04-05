@@ -72,7 +72,6 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
-import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
 import frc.robot.commands.ExtendClimber;
 
@@ -104,7 +103,6 @@ public class RobotContainer {
 
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
-    NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
     NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3500));
     NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
@@ -145,13 +143,7 @@ public class RobotContainer {
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
 
-    //chnaging acuator 
     
-    //combined subsystem
-    //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    
-    //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
-    //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
     //operatorXbox.povLeft().onTrue(new ShooterPIDReset(shooter)); //for tuning rev shooter pid
 
