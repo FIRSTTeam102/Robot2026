@@ -43,7 +43,7 @@ public class CompShooting extends Command {
 
     if (((DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue) == DriverStation.Alliance.Blue) && (robotpose.getX()>5.625594)) || ((DriverStation.getAlliance().orElse(DriverStation.Alliance.Red) == DriverStation.Alliance.Red) && (robotpose.getX()<10.915394))) {
       shooter.setActuatorExtension(ShooterConstants.PASSING_EXTENSION);
-      shooter.revUpShooter(ShooterConstants.PASSING_VELOCITY);
+      shooter.setShooterRPM(ShooterConstants.PASSING_VELOCITY);
       if (shooter.shooterRPM()<=3500) {
         counter ++;
         indexer.jiggleIndexer(counter);

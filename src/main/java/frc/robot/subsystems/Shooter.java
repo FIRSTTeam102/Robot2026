@@ -87,16 +87,13 @@ public class Shooter extends SubsystemBase {
     private Servo followerActuator = new Servo(ShooterConstants.FOLLOWER_SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
     private SparkClosedLoopController shooterMotorClosedLoop;
-    private ClosedLoopSlot hubShotSlot;
-    private ClosedLoopSlot revUpSlot;
 
     
      public Shooter() {
         shooterConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40);
         shooterConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT, hubShotSlot)
-            .pid(1, 2, 3, revUpSlot)
+            .pid(ShooterConstants.SHOOTER_P_DEFAULT, ShooterConstants.SHOOTER_I_DEFAULT, ShooterConstants.SHOOTER_D_DEFAULT)
             .outputRange(-1.0, 1.0)
             //.feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
             ;
@@ -136,12 +133,7 @@ public class Shooter extends SubsystemBase {
 
 
     public void setShooterRPM(double rpm) {
-        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, hubShotSlot);
-    }
-
-    public void revUpShooter(double rpm) {
-        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity, revUpSlot);
-
+        shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity);
     }
 
    @AutoLogOutput
