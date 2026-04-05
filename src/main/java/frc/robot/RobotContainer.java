@@ -21,8 +21,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
-import frc.robot.commands.ChangeShooterAngle;
-import frc.robot.commands.Climbing;
 import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
