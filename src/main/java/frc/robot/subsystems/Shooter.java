@@ -142,6 +142,11 @@ public class Shooter extends SubsystemBase {
    }
 
    @AutoLogOutput
+   public double getFollowerPosition() {
+    return ((followerActuator.getPosition()*1.5625)-0.296875);
+   }
+
+   @AutoLogOutput
    public double shooterCurrent() {
     return shooterMotor.getOutputCurrent();
    }
