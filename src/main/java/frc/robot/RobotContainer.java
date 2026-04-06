@@ -89,7 +89,7 @@ public class RobotContainer {
 
                                                                           
                                                                                 
-  private final SendableChooser<Command> autoChooser;
+ // private final SendableChooser<Command> autoChooser;
 
 
 
@@ -107,8 +107,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Zone 1 Angle", new AutoActuator(shooter, 0.3));
 
 
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    /*autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);*/
 
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -157,9 +157,9 @@ public class RobotContainer {
 
   }
 
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     return autoChooser.getSelected();
-  }
+  }*/
 
 
 

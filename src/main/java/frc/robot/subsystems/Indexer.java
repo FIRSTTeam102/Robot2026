@@ -93,7 +93,7 @@ public class Indexer extends SubsystemBase {
   public void stopFeeder() {
     feederMotor.stopMotor();
   }
-
+  
   public void jiggleIndexer(int counter){
     if (counter<=25) {
       RunIndexer();
