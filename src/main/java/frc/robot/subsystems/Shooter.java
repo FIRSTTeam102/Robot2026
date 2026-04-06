@@ -41,6 +41,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
@@ -86,8 +87,6 @@ public class Shooter extends SubsystemBase {
     private Servo followerActuator = new Servo(ShooterConstants.FOLLOWER_SERVO_CHANNEL);
     private SparkFlexConfig shooterConfig = new SparkFlexConfig();
     private SparkClosedLoopController shooterMotorClosedLoop;
-    private static boolean fuelShot = false;
-    private static int fuelCount = 0;
 
     
      public Shooter() {
@@ -133,18 +132,9 @@ public class Shooter extends SubsystemBase {
     }
 
 
-    public void startShooting(double rpm){
-        double pidOutput = shooterPID.calculate(shooterRPM(),rpm);
-        shooterMotor.set(pidOutput);
-    }
-
     public void setShooterRPM(double rpm) {
         shooterMotorClosedLoop.setSetpoint(rpm, ControlType.kVelocity);
     }
-
-   public double targetShooterPosition(double shooterAngle) {
-    return (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
-   }
 
    @AutoLogOutput
    public double getShooterPosition() {
@@ -160,11 +150,6 @@ public class Shooter extends SubsystemBase {
     public void stopShooting(){
         shooterMotor.stopMotor();
         shooterPID.reset();
-    }
-
-    @AutoLogOutput
-    public int fuelCounter() {
-        return fuelCount;
     }
 
     @AutoLogOutput 

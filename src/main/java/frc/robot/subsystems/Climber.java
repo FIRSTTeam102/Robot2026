@@ -62,8 +62,8 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (checkOptical()) {
+    /*if (checkOptical()) {
       zeroEncoder();
-    }
+    }*/
   }
 }

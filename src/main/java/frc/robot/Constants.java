@@ -87,8 +87,8 @@ public final class Constants
     public static final double SHOOTINGVELOCITY_DEFAULT = 3000;
 
     public static final double SHOOTER_P_DEFAULT = 0.007; //0.008; aluminum pid tuning
-    public static final double SHOOTER_I_DEFAULT = 0.00000015; //0;
-    public static final double SHOOTER_D_DEFAULT = 0.3; //0.3;
+    public static final double SHOOTER_I_DEFAULT = 0.0000002; //0;
+    public static final double SHOOTER_D_DEFAULT = 0.18; //0.3;
 
     public static final double BASIC_SHOOTER_SPEED_DEFAULT = 4000;
 
