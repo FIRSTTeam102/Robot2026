@@ -95,6 +95,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void jiggleIndexer(int counter){
+    runFeeder();
     if (counter<=25) {
       RunIndexer();
     }
