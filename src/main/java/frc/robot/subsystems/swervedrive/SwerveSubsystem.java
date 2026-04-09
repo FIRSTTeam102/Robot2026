@@ -145,6 +145,9 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    if (swervePose != null) {
+      Robot.field.setRobotPose(swervePose);
+    }
     //Robot.field.setRobotPose(swervePose);
     // When vision is enabled we must manually update odometry in SwerveDrive
     if (visionDriveTest)
@@ -158,7 +161,7 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void simulationPeriodic()
   {
-    Robot.field.setRobotPose(swervePose.getMeasureX(), swervePose.getMeasureY(), swervePose.getRotation());
+    //Robot.field.setRobotPose(swervePose);
   }
 
   /**
