@@ -22,22 +22,20 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
 import frc.robot.commands.ChangeShooterAngle;
-import frc.robot.commands.Climbing;
+//import frc.robot.commands.Climbing;
 import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
-import frc.robot.commands.FullClimbing;
-import frc.robot.commands.FullFuelCycle;
+//import frc.robot.commands.FullClimbing;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.IntakeNoPneumatics;
-import frc.robot.commands.JoystickClimb;
+//import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.ResetEncoder;
-import frc.robot.commands.ReverseClimb;
+//import frc.robot.commands.ReverseClimb;
 import frc.robot.commands.ReverseFeeder;
 import frc.robot.commands.ReversePiston;
 import frc.robot.commands.RobotBackward;
 import frc.robot.commands.RobotForward;
-import frc.robot.commands.IdleIntake;
 import frc.robot.commands.IndexerFeeder;
 import frc.robot.commands.ReverseIntake;
 import frc.robot.Robot;
@@ -64,17 +62,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TurnToHub;
-import frc.robot.commands.ZoneShooting;
 import frc.robot.commands.AimWhileMoving;
-import frc.robot.commands.AllianceCheck;
 import frc.robot.commands.AutoActuator;
 import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
 import frc.robot.commands.RunIndexer;
+import frc.robot.commands.ShakeIndexer;
 import frc.robot.commands.ShooterPIDReset;
-import frc.robot.subsystems.Climber;
+//import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -82,7 +79,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.ChangeShooterAngle;
 import frc.robot.commands.RunFeeder;
-import frc.robot.commands.ExtendClimber;
+//import frc.robot.commands.ExtendClimber;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
@@ -97,7 +94,7 @@ public class RobotContainer {
   private final Indexer indexer = new Indexer();
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
-  public final Climber climber = new Climber();
+  //public final Climber climber = new Climber();
 
 
   public final SwerveSubsystem drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
@@ -182,7 +179,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
     NamedCommands.registerCommand("Hub Shot", new CompShooting(shooter, drivebase, intake, indexer));
-    NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
+    //NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
     NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
     NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3500));
@@ -264,11 +261,11 @@ public class RobotContainer {
     ));*/
 
 //Gavin's bindings BUBBLE TEAAA
-    operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
+    operatorXbox.leftTrigger().whileTrue(Commands.parallel(new IntakeFuel(intake), new ShakeIndexer(indexer)));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
-    operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
-    operatorXbox.povDown().onTrue(new ReverseClimb(climber));
-    operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
+    //operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
+    //operatorXbox.povDown().onTrue(new ReverseClimb(climber));
+    //operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
     operatorXbox.a().onTrue(new AutoActuator(shooter, 0.7));
     operatorXbox.b().whileTrue(new ReverseIntake (intake));
@@ -280,8 +277,8 @@ public class RobotContainer {
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))
       ));
     
-      Set<Subsystem> alignClimbSet = Set.of(drivebase);
-    driverXbox.b().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet));
+     /*  Set<Subsystem> alignClimbSet = Set.of(drivebase);
+    driverXbox.b().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet)); */
    // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
    // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
@@ -294,7 +291,7 @@ public class RobotContainer {
     //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
     //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
-    operatorXbox.povUp().onTrue(new ResetEncoder(climber));
+    //operatorXbox.povUp().onTrue(new ResetEncoder(climber));
     //operatorXbox.povLeft().onTrue(new ShooterPIDReset(shooter)); //for tuning rev shooter pid
 
 

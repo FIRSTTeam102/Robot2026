@@ -350,17 +350,17 @@ public class Vision
               VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
 
     BACKLEFT_CAM("BL",
-             new Rotation3d(0, Math.toRadians(0), Math.toRadians(135)),
-             new Translation3d(Units.inchesToMeters(-11.541),
-                               Units.inchesToMeters(7.739),
-                               Units.inchesToMeters(17.133)),
+             new Rotation3d(0, Math.toRadians(0), Math.toRadians(180)),
+             new Translation3d(Units.inchesToMeters(-11.822),
+                               Units.inchesToMeters(9.493),
+                               Units.inchesToMeters(18.685)),
              VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1)),
   
     BACKRIGHT_CAM("BR",
               new Rotation3d(0, Math.toRadians(0), Math.toRadians(-135)),
-              new Translation3d(Units.inchesToMeters(-11.541),
-                               Units.inchesToMeters(-7.739),
-                               Units.inchesToMeters(17.133)),
+              new Translation3d(Units.inchesToMeters(1.861),
+                               Units.inchesToMeters(-11.414),
+                               Units.inchesToMeters(14.786)),
               VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
 
     /**

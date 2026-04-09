@@ -5,7 +5,7 @@
   },
   "absoluteEncoderOffset": 26.803,
   "drive": {
-    "type": "sparkmax_vortex",
+    "type": "sparkflex_vortex",
     "id": 27,
     "canbus": null
   },

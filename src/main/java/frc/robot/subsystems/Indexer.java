@@ -53,8 +53,7 @@ import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
-import swervelib.SwerveDrive;
-import swervelib.telemetry.SwerveDriveTelemetry;
+
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -96,15 +95,22 @@ public class Indexer extends SubsystemBase {
   }
 
   public void jiggleIndexer(int counter){
-    counter++;
-    RunIndexer();
-    if (counter == 50){
-      ReverseIndexer();
-    }
-    else if(counter == 67){
+    runFeeder();
+    if (counter<=25) {
       RunIndexer();
     }
+    else {
+      ReverseIndexer();
+    }
+  }
 
+  public void shakeIndexer(int counter){
+    if (counter>=25) {
+      ReverseIndexer();
+    }
+    else {
+      stopIndexer();
+    }
   }
 
   @AutoLogOutput
