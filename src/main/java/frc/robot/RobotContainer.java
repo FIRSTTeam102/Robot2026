@@ -69,6 +69,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
 import frc.robot.commands.RunIndexer;
+import frc.robot.commands.ShakeIndexer;
 import frc.robot.commands.ShooterPIDReset;
 //import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
@@ -260,7 +261,7 @@ public class RobotContainer {
     ));*/
 
 //Gavin's bindings BUBBLE TEAAA
-    operatorXbox.leftTrigger().whileTrue( new IntakeFuel(intake));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
+    operatorXbox.leftTrigger().whileTrue(Commands.parallel(new IntakeFuel(intake), new ShakeIndexer(indexer)));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
     //operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
     //operatorXbox.povDown().onTrue(new ReverseClimb(climber));

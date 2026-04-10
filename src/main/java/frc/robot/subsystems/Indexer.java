@@ -104,6 +104,15 @@ public class Indexer extends SubsystemBase {
     }
   }
 
+  public void shakeIndexer(int counter){
+    if (counter>=25) {
+      ReverseIndexer();
+    }
+    else {
+      stopIndexer();
+    }
+  }
+
   @AutoLogOutput
   public double indexerRPM() {
     return indexerEncoder.getVelocity();
