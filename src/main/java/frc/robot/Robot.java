@@ -96,7 +96,7 @@ public class Robot extends LoggedRobot {
         ShooterI = table.getEntry("Shooter I Value");
         ShooterD = table.getEntry("Shooter D Value");
         RunIntakeSlow = table.getEntry("Indexer idle mode & friends");
-        doVibrateController = table.getEntry("VIBRATE THE CONTORLLER????/?");
+        doVibrateController = table.getEntry("VIBRATE THE CONTORLLER?????");
         ShiftTime = table.getEntry("Shift Time Remaining");
         isHubActive = table.getEntry("Hub Active");
       
@@ -197,6 +197,7 @@ public class Robot extends LoggedRobot {
       driverXbox.setRumble(RumbleType.kBothRumble, 1);
     }
     else if (shiftTime <= 0.41 && shiftTime >= 0) {
+      System.out.println("rumbling operator");
       operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
     }
     else {
