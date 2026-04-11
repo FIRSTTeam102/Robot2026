@@ -98,7 +98,7 @@ public class Shooter extends SubsystemBase {
             //.feedForward.kV(ShooterConstants.kV).kS(ShooterConstants.kS)
             ;
 
-        shooterConfig.inverted(false);
+        shooterConfig.inverted(true);
 
         shooterConfig.encoder.velocityConversionFactor(1.0);
          

@@ -54,9 +54,9 @@ public class CompShooting extends Command {
         indexer.jiggleIndexer(counter);
       }
     }
-    else if(distance <= 69.03){// ZONE 1
+    else if(distance <= 68.01){// ZONE 1
       shooter.setActuatorExtension(0.2);
-      double expectedRPM = 18.75*(distance)+1705.6875;
+      double expectedRPM = ((0.0135566*Math.pow(distance, 3)) - (2.20607 * Math.pow(distance, 2)) + (133.78116 * distance));
       shooter.setShooterRPM(expectedRPM);
       System.out.println(expectedRPM);
       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -64,9 +64,9 @@ public class CompShooting extends Command {
         indexer.jiggleIndexer(counter);
       }
     }
-    else if (distance <= 95.3){//ZONE 2
+    else if (distance <= 90.0){//ZONE 2
         shooter.setActuatorExtension(0.3);
-        double expectedRPM = ((0.00539274*Math.pow(distance, 3)) - (1.21256 * Math.pow(distance, 2)) + (100.1579 * distance));
+        double expectedRPM = ((0.00814142*Math.pow(distance, 3)) - (1.61802 * Math.pow(distance, 2)) + (116.85856 * distance));
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -75,9 +75,9 @@ public class CompShooting extends Command {
         } 
       }
     
-     else if (distance <= 112.6  ){//ZONE 3
+     else if (distance <= 106.3){//ZONE 3
         shooter.setActuatorExtension(0.4);
-        double expectedRPM = ((0.00423793*Math.pow(distance, 3)) - (1.00663 * Math.pow(distance, 2)) + (88.92211 * distance));
+        double expectedRPM = 11.41686*distance + 2053.40554;
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -85,32 +85,9 @@ public class CompShooting extends Command {
           indexer.jiggleIndexer(counter);
         } 
       }
-
-      else if (distance <= 132.8){//ZONE 4
-        shooter.setActuatorExtension(0.45);
-        double expectedRPM = ((0.00866571*Math.pow(distance, 3)) - (2.25932 * Math.pow(distance, 2)) + (172.06024 * distance));
-        shooter.setShooterRPM(expectedRPM);
-        System.out.println(expectedRPM);
-       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-          counter ++;      
-          indexer.jiggleIndexer(counter);
-        } 
-      }
-
-      else if (distance <= 142.2){//ZONE 5
+      else {//ZONE 4
         shooter.setActuatorExtension(0.5);
-        double expectedRPM = (26.59574 * distance - 231.91489);
-        shooter.setShooterRPM(expectedRPM);
-        System.out.println(expectedRPM);
-       if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
-          counter ++;      
-          indexer.jiggleIndexer(counter);
-        } 
-      }
-
-      else if (distance > 142.2 ){//ZONE 6
-        shooter.setActuatorExtension(0.6);
-        double expectedRPM = (2.84091 * distance) - 3146.02273;
+        double expectedRPM = (0.147374 * Math.pow(distance, 2)) + (7.14977 * distance) + 368.76315;
         shooter.setShooterRPM(expectedRPM);
         System.out.println(expectedRPM);
        if (MathUtil.isNear(expectedRPM, shooter.shooterRPM(), ShooterConstants.RPMTOLERANCE)) {
@@ -119,10 +96,9 @@ public class CompShooting extends Command {
         } 
       }
       if (counter > 30){
-                counter = 0;
+        counter = 0;
       }
       intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
-
   }
 
   // Called once the command ends or is interrupted.
