@@ -5,6 +5,25 @@
     "data": {
       "commands": [
         {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Hub Shot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 15.0
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Pop_Off_Center"
@@ -28,17 +47,11 @@
               }
             ]
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Hub Shot"
-          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": true
 }
