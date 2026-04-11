@@ -65,6 +65,7 @@ public class Robot extends LoggedRobot {
   Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
 
   final CommandXboxController operatorXbox = new CommandXboxController(1);
+  final CommandXboxController driverXbox = new CommandXboxController(0);
 
   
 
@@ -189,58 +190,19 @@ public class Robot extends LoggedRobot {
 
   if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.doVibrateController.getBoolean(false)) {
 
-    Optional<Alliance> alliance = DriverStation.getAlliance();
+    double shiftTime = RobotContainer.timeLeftInShiftSeconds(DriverStation.getMatchTime());
 
-    double matchTime = DriverStation.getMatchTime();
-    String gameData = DriverStation.getGameSpecificMessage();
-    
-    boolean redInactiveFirst = false;
-    boolean noGameData = false;
-    if (gameData.length() > 0) {
-      switch (gameData.charAt(0)) {
-        case 'R' -> redInactiveFirst = true;
-        case 'B' -> redInactiveFirst = false;
-        default -> {
-          noGameData = true;
-        }
-      }
+    if (shiftTime <= 10.41 && shiftTime >= 10) {
+      System.out.println("rumbling driver");
+      driverXbox.setRumble(RumbleType.kBothRumble, 1);
+    }
+    else if (shiftTime <= 0.41 && shiftTime >= 0) {
+      operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
     }
     else {
-      noGameData = true;
-    }
-    boolean shift1Active = switch (alliance.get()) {
-      case Red -> !redInactiveFirst;
-      case Blue -> redInactiveFirst;
-    };
-    if (matchTime >= 130.67 && matchTime <= 131) {
-      if (!shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    else if (matchTime >= 105.67 && matchTime <= 106) {
-      if (shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    
-    else if (matchTime >= 80.67 && matchTime <= 81) {
-      if (!shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    else if (matchTime >= 55.67 && matchTime <= 56) {
-      if (shift1Active) {
-        operatorXbox.setRumble(RumbleType.kBothRumble, 0.5);
-      }
-    }
-    else {
+      driverXbox.setRumble(RumbleType.kBothRumble, 0);
       operatorXbox.setRumble(RumbleType.kBothRumble, 0);
-    }
-    
-  }
-    //taking out bc we just used actuatorPositionEntry.getDouble instead of using variable
-    // double actuatorPosition = actuatorPositionEntry.getDouble(0);
-
+    } }
         
   }
 
