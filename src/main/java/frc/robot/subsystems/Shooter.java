@@ -162,6 +162,10 @@ public class Shooter extends SubsystemBase {
         return shooterMotor.get();
     }
 
+    public void setShooterOutput(double speed) {
+        shooterMotor.set(speed);
+    }
+
     public void setShooterangle(double shooterAngle){
        double actuatorPosition = (((((85.786-shooterAngle)/6.88) / 5.512))+0.296875)/1.5625;
     

@@ -9,15 +9,18 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IndexerFeeder extends Command {
   static int counter;
   Indexer indexer;    
+  Shooter shooter;
   DoubleSupplier speedSupplier;
     /** Creates a new IntakeFuel. */
-    public IndexerFeeder(Indexer indexer) {
+    public IndexerFeeder(Indexer indexer, Shooter shooter) {
       this.indexer =indexer;
+      this.shooter = shooter;
     addRequirements(indexer);
     
 
@@ -29,7 +32,9 @@ public class IndexerFeeder extends Command {
   public void initialize() {
     counter = 0;
     indexer.RunIndexer();
-    indexer.runFeeder();
+    if (shooter.shooterRPM()>1000) {
+        indexer.runFeeder();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

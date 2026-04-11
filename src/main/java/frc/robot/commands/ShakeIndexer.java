@@ -22,7 +22,9 @@ public class ShakeIndexer extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    indexer.reverseFeeder();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,6 +40,7 @@ public class ShakeIndexer extends Command {
   @Override
   public void end(boolean interrupted) {
     indexer.stopIndexer();
+    indexer.stopFeeder();
   }
 
   // Returns true when the command should end.

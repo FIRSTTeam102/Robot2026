@@ -183,7 +183,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
     NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3500));
-    NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer));
+    NamedCommands.registerCommand("Indexer Feeder", new IndexerFeeder(indexer,shooter));
     NamedCommands.registerCommand("Zone 4 Angle", new AutoActuator(shooter, 0.5));
     NamedCommands.registerCommand("Zone 1 Angle", new AutoActuator(shooter, 0.3));
 
@@ -271,7 +271,7 @@ public class RobotContainer {
     operatorXbox.b().whileTrue(new ReverseIntake (intake));
 
 
-    operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer));
+    operatorXbox.rightBumper().whileTrue(new IndexerFeeder(indexer, shooter));
 
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))

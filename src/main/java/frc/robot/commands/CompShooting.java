@@ -99,12 +99,15 @@ public class CompShooting extends Command {
         counter = 0;
       }
       intake.IntakeTheFuel(IntakeConstants.INTAKE_DEFAULT_SPEED);
+      if (shooter.shooterRPM()<=1000) {
+        indexer.stopFeeder();
+      }
   }
-
+  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopShooting();
+    shooter.setShooterOutput(0.2);
     indexer.stopFeeder();
     indexer.stopIndexer();
     intake.IntakeTheFuel(0);
