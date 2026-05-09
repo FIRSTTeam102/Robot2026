@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.LoggedRobot;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
  * class should not be used for any other purpose. All constants should be declared globally (i.e. public static). Do
@@ -69,17 +66,11 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.3;
     public static final double TURN_CONSTANT    = 6;
   }
-  public static final class ShooterConstants {
-    public static final double END_HEIGHT = 56.4; //in inches- might change based on air resistance 
-    public static final double STARTING_HEIGHT = 22.25; //TODO change based on final CAD model 
-    public static final double GRAVITY = -386.4; //inches per seconds squared
-    public static final double SHOOTER_ANGLE = 85.0 * (Math.PI/180); //in degrees might need to convert 
+  public static final class ShooterConstants { 
     public static final int SHOOTER_CAN_ID = 40;
     public static final int FOLLOWER_CAN_ID = 41;
     public static final int SERVO_CHANNEL = 2;
     public static final int FOLLOWER_SERVO_CHANNEL = 3;
-    public static final double HIGH_SHOOTER_ANGLE = 85.0; //TODO find good angles for all constants
-    public static final double PASSING_ANGLE = 45.0;
     public static final double PASSING_VELOCITY = 6000.0;
     public static final double TESTING_DISTANCE_DEFAULT = 91.0; //distance instead of pose to test shooter
     public static final double ACTUATOR_EXTENSION = 0.80;
@@ -116,16 +107,5 @@ public final class Constants
     public static final int INTAKE_MOTOR_ID = 30;
     public static final double INTAKE_DEFAULT_SPEED = 1.0; //change based on robot
     public static final int PISTON_ID = 14;
-  }
-
-  public static final class ClimberConstants {
-    public static final int CLIMBER_MOTOR_ID = 60; //final
-    public static final int LIMIT_SWITCH_PORT = 6; //temp
-    public static final double CLIMBER_DEFAULT_SPEED = 0.80; //worked in testing but may need to be increased
-    public static final double CLIMBER_ENCODER_EXTENSION = -71.879; //-78.098 found on rev on test bed
-    public static final double CLIMBER_ENCODER_MIN_EXTENSION = 0.0; 
-    public static final double CLIMBER_ENCODER_TOLERANCE = 20.0; //seems like a reasonable tolerance but may need adjusting
-  } 
-
-  
+  }  
 }

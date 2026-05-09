@@ -8,80 +8,39 @@ package frc.robot;
 
 import java.io.File;
 import java.util.Optional;
-import java.util.Set;
-
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.BasicShooter;
-import frc.robot.commands.ChangeShooterAngle;
-//import frc.robot.commands.Climbing;
 import frc.robot.commands.CompShooting;
 import frc.robot.commands.ExtendActuator;
 import frc.robot.commands.FowardPiston;
-//import frc.robot.commands.FullClimbing;
 import frc.robot.commands.IntakeFuel;
-import frc.robot.commands.IntakeNoPneumatics;
-//import frc.robot.commands.JoystickClimb;
-import frc.robot.commands.ResetEncoder;
-//import frc.robot.commands.ReverseClimb;
 import frc.robot.commands.ReverseFeeder;
-import frc.robot.commands.ReversePiston;
 import frc.robot.commands.RobotBackward;
 import frc.robot.commands.RobotForward;
 import frc.robot.commands.IndexerFeeder;
 import frc.robot.commands.ReverseIntake;
-import frc.robot.Robot;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.TurnToHub;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.AutoActuator;
 import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import java.io.File;
-
-import frc.robot.commands.RunIndexer;
 import frc.robot.commands.ShakeIndexer;
-import frc.robot.commands.ShooterPIDReset;
-//import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Indexer;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.ChangeShooterAngle;
-import frc.robot.commands.RunFeeder;
-//import frc.robot.commands.ExtendClimber;
 
-import org.littletonrobotics.junction.LoggedRobot;
 
 import swervelib.SwerveInputStream;
 
@@ -116,16 +75,7 @@ public class RobotContainer {
                                                             .allianceRelativeControl(true)
                                                             .robotRelative(false);
 
-  /**
-   * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
-   */
-  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-                                                                                             driverXbox::getRightY)
-                                                           .headingWhile(true);
-
-  /**
-   * Clone's the angular velocity input stream and converts it to a robotRelative input stream.
-   */
+  
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
                                                              .allianceRelativeControl(false);
 
@@ -137,27 +87,6 @@ public class RobotContainer {
                                                                     .deadband(OperatorConstants.DEADBAND)
                                                                     .scaleTranslation(1)
                                                                     .allianceRelativeControl(true);
-  // Derive the heading axis with math!
-  SwerveInputStream driveDirectAngleKeyboard     = driveAngularVelocityKeyboard.copy()
-                                                                               .withControllerHeadingAxis(() ->
-                                                                                                              Math.sin(
-                                                                                                                  driverXbox.getRawAxis(
-                                                                                                                      2) *
-                                                                                                                  Math.PI) *
-                                                                                                              (Math.PI *
-                                                                                                               2),
-                                                                                                          () ->
-                                                                                                              Math.cos(
-                                                                                                                  driverXbox.getRawAxis(
-                                                                                                                      2) *
-                                                                                                                  Math.PI) *
-                                                                                                              (Math.PI *
-                                                                                                               2))
-                                                                               .headingWhile(true)
-                                                                               .translationHeadingOffset(true)
-                                                                               .translationHeadingOffset(Rotation2d.fromDegrees(
-                                                                                   0));
-
 
   SwerveInputStream driveAngularVelocitySim = SwerveInputStream.of(drivebase.getSwerveDrive(),
                                                                     () -> -driverXbox.getLeftY(),
@@ -179,7 +108,6 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intake));
     NamedCommands.registerCommand("Hub Shot", new CompShooting(shooter, drivebase, intake, indexer));
-    //NamedCommands.registerCommand("Climb Position", new FullClimbing(climber));
     NamedCommands.registerCommand("Aim Robot", new AimWhileMoving(drivebase, () -> driverXbox.getLeftY(),() -> driverXbox.getLeftX()));
     NamedCommands.registerCommand("Extend Piston", new FowardPiston(intake));
     NamedCommands.registerCommand("Rev Shooter", new AutoShooter(shooter, 3500));
@@ -196,14 +124,8 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
-    Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
-    Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngle);
-    Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
-    Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
-        driveDirectAngleKeyboard);
 
         driverXbox.leftTrigger().onTrue(Commands.runOnce(
           ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_PRECISION_SCALE)
@@ -248,24 +170,14 @@ public class RobotContainer {
         
     if (RobotBase.isSimulation())
     {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityKeyboard);
     } else
     {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
-  
-    /*operatorXbox.rightBumper().whileTrue(Commands.sequence(
-      new ZoneShooting(shooter, drivebase),
-      Commands.waitSeconds(2),
-      new RunFeeder(indexer)
-    ));*/
 
-//Gavin's bindings BUBBLE TEAAA
     operatorXbox.leftTrigger().whileTrue(Commands.parallel(new IntakeFuel(intake), new ShakeIndexer(indexer)));// USE IF ELASTIC () -> Robot.IntakeSpeed.getDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED
     operatorXbox.rightTrigger().whileTrue(new CompShooting(shooter, drivebase, intake, indexer));
-    //operatorXbox.leftStick().whileTrue(new JoystickClimb(climber, () -> operatorXbox.getLeftY()));
-    //operatorXbox.povDown().onTrue(new ReverseClimb(climber));
-    //operatorXbox.leftBumper().onTrue(new FullClimbing(climber));
     operatorXbox.x().onTrue(new ExtendActuator(shooter, () -> Robot.actuatorPositionEntry.getDouble(0.0)));
     operatorXbox.a().onTrue(new AutoActuator(shooter, 0.7));
     operatorXbox.b().whileTrue(new ReverseIntake (intake));
@@ -276,23 +188,9 @@ public class RobotContainer {
     operatorXbox.y().whileTrue(Commands.parallel(
       new BasicShooter(shooter,() -> Robot.ShooterSpeed.getDouble(Constants.ShooterConstants.BASIC_SHOOTER_SPEED_DEFAULT))
       ));
-    
-     /*  Set<Subsystem> alignClimbSet = Set.of(drivebase);
-    driverXbox.b().whileTrue(Commands.defer(() -> drivebase.alignClimbLeft(),alignClimbSet)); */
-   // operatorXbox.povRight().whileTrue(new FowardPiston(intake));
-   // operatorXbox.povDown().whileTrue(new ReversePiston(intake));
 
-
-    //chnaging acuator 
-    
-    //combined subsystem
-    //operatorXbox.y().whileTrue(new FullFuelCycle(shooter, indexer, intake));
-    
-    //operatorXbox.rightTrigger().whileFalse(new IdleIntake(intake));
-    //operatorXbox.povUp().whileTrue(new AllianceCheck(shooter, drivebase, indexer));
     operatorXbox.start().whileTrue(new ReverseFeeder(indexer));
-    //operatorXbox.povUp().onTrue(new ResetEncoder(climber));
-    //operatorXbox.povLeft().onTrue(new ShooterPIDReset(shooter)); //for tuning rev shooter pid
+
 
 
 

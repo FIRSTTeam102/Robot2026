@@ -4,39 +4,26 @@
 
 package frc.robot;
 
-import java.util.Optional;
 
-import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 
-import com.thethriftybot.interfaces.DriverStationInterface;
 
-import frc.robot.Constants;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.commands.Climbing;
-import frc.robot.commands.FowardPiston;
-import frc.robot.commands.TeleClimb;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Intake;
 
 public class Robot extends LoggedRobot {
   private NetworkTableEntry PIDinputentry;
@@ -105,7 +92,6 @@ public class Robot extends LoggedRobot {
         IndexerSpeed.setDouble(Constants.IndexerConstants.INDEXER_DEFAULT_SPEED);
         IntakeSpeed.setDouble(Constants.IntakeConstants.INTAKE_DEFAULT_SPEED);
         ShooterSpeed.setDouble(Constants.ShooterConstants.SHOOTINGVELOCITY_DEFAULT);
-        ClimberSpeed.setDouble(Constants.ClimberConstants.CLIMBER_DEFAULT_SPEED);
         FeederSpeed.setDouble(Constants.IndexerConstants.FEEDER_DEFAULT_SPEED);
         Distance.setDouble(Constants.ShooterConstants.TESTING_DISTANCE_DEFAULT);
         ShooterP.setDouble(Constants.ShooterConstants.SHOOTER_P_DEFAULT);
@@ -180,9 +166,6 @@ public class Robot extends LoggedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    /*if (DriverStation.isFMSAttached() || DriverStation.isTest() || Robot.RunIntakeSlow.getBoolean(false)) {
-      new TeleClimb(m_robotContainer.climber, m_robotContainer.drivebase).schedule();
-    }*/
   }
 
   @Override
