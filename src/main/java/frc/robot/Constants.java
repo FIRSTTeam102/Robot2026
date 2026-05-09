@@ -5,6 +5,9 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -34,6 +37,8 @@ public final class Constants
   public static final double BOTTOM_CORNER_Y = 0.5; //coordinates of each corner to aim at while passing
   public static final double BLUE_CORNER_X = 0.5;
   public static final double RED_CORNER_X = 16.1;
+
+  public static final Pose2d TEST_POSE = new Pose2d(new Translation2d(8.0, 4.0), new Rotation2d(0.0));
 
   public static final double ALIGN_TOLERANCE = 2.5; //degrees, tolerance for robot angle alignment
 

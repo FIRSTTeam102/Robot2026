@@ -8,9 +8,12 @@ package frc.robot;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
@@ -35,6 +38,7 @@ import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AimWhileMoving;
 import frc.robot.commands.AutoActuator;
+import frc.robot.commands.AutoAlign;
 import frc.robot.commands.AutoShooter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.commands.ShakeIndexer;
@@ -127,6 +131,7 @@ public class RobotContainer {
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
 
+
         driverXbox.leftTrigger().onTrue(Commands.runOnce(
           ()->driveAngularVelocity.scaleTranslation(Constants.DrivebaseConstants.DRIVE_PRECISION_SCALE)
                                   .scaleRotation(0.15)
@@ -166,7 +171,7 @@ public class RobotContainer {
           )
         );
 
-        
+      driverXbox.b().whileTrue(new AutoAlign(drivebase, Constants.TEST_POSE));  
         
     if (RobotBase.isSimulation())
     {
